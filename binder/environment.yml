@@ -1,0 +1,10 @@
+name: binder
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.6
+  - pip:
+    - matplotlib
+    - watermark
+    - git+https://github.com/qucontrol/weylchamber.git@master#egg=weylchamber
