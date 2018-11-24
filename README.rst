@@ -70,4 +70,4 @@ To use ``weylchamber`` in a project::
 
 See the Tutorial_ for details.
 
-.. _Tutorial: tutorial.html
+.. _Tutorial: https://weylchamber.readthedocs.io/en/latest/tutorial.html
