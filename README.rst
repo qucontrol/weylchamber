@@ -67,3 +67,7 @@ Usage
 To use ``weylchamber`` in a project::
 
     import weylchamber
+
+See the Tutorial_ for details.
+
+.. _Tutorial: tutorial.html
