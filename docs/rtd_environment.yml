@@ -6,6 +6,7 @@ dependencies:
   - python=3.6
   - qutip
   - pip:
+    - sphinx-autodoc-typehints
     - gitpython
     - better-apidoc
     - nbsphinx
