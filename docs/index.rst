@@ -11,9 +11,9 @@ Welcome to weylchamber's documentation!
 .. image:: https://img.shields.io/travis/qucontrol/weylchamber.svg
    :alt: Travis Continuous Integration
    :target: https://travis-ci.org/qucontrol/weylchamber
-.. image:: https://img.shields.io/badge/appveyor-no%20id-red.svg
+.. image:: https://ci.appveyor.com/api/projects/status/a407jfh3gl74o1m4?svg=true
    :alt: AppVeyor Continuous Integration
-   :target: https://ci.appveyor.com/project/qucontrol/weylchamber
+   :target: https://ci.appveyor.com/project/goerz/weylchamber
 .. image:: https://img.shields.io/coveralls/github/qucontrol/weylchamber/badge.svg?branch=master:alt: Coveralls
    :target: https://coveralls.io/github/qucontrol/weylchamber?branch=master
 .. image:: https://readthedocs.org/projects/weylchamber/badge/?version=latest
