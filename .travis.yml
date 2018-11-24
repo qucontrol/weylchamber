@@ -11,11 +11,11 @@ install:
   - conda activate
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
-  - conda create -q -n test_env python=$TRAVIS_PYTHON_VERSION qutip
+  - conda create -q -n test_env python=$TRAVIS_PYTHON_VERSION
   - conda activate test_env
   - conda config --append channels conda-forge
+  - conda install qutip
   - pip install -e .[dev]
-  - pip freeze
   - pip install coveralls
   - pip freeze
 
