@@ -241,7 +241,7 @@ def to_magic(A: Gate) -> qutip.Qobj:
 
 
 def from_magic(A: Gate) -> qutip.Qobj:
-    """ The inverse of :func:`to_magic`"""
+    """ The inverse of :func:`.to_magic`"""
     if A.shape != (4, 4):
         raise ValueError("Gates must have a 4×4 shape")
     return Qmagic * qutip.Qobj(A, dims=[[2, 2], [2, 2]]) * Qmagic.dag()
