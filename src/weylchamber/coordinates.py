@@ -8,7 +8,7 @@ from numpy import less_equal as less_eq
 from numpy import greater_equal as greater_eq
 import qutip
 
-from ._gates import Qmagic, SxSx, SySy, SzSz
+from .gates import Qmagic, SxSx, SySy, SzSz
 from .prec import DEFAULT_WEYL_PRECISSION
 from ._types import Gate, CTuple
 
