@@ -10,7 +10,13 @@ from ._types import Gate, GTuple
 from .coordinates import to_magic, c1c2c3, _SQ_unitary
 from .cartan_decomposition import canonical_gate
 
-__all__ = ['g1g2g3', 'g1g2g3_from_c1c2c3', 'J_T_LI', 'closest_LI']
+__all__ = [
+    'g1g2g3',
+    'g1g2g3_from_c1c2c3',
+    'J_T_LI',
+    'closest_LI',
+    'make_LI_krotov_chi_constructor',
+]
 
 
 def g1g2g3(U: Gate, ndigits=DEFAULT_WEYL_PRECISSION) -> GTuple:
@@ -30,8 +36,8 @@ def g1g2g3(U: Gate, ndigits=DEFAULT_WEYL_PRECISSION) -> GTuple:
     UB = to_magic(U).full()  # instance of np.ndarray
     detU = np.linalg.det(UB)
     m = UB.T @ UB
-    g1_2 = (np.trace(m))**2 / (16.0 * detU)
-    g3 = (np.trace(m)**2 - np.trace(m@m)) / (4.0 * detU)
+    g1_2 = (np.trace(m)) ** 2 / (16.0 * detU)
+    g3 = (np.trace(m) ** 2 - np.trace(m @ m)) / (4.0 * detU)
     g1 = round(g1_2.real + 0.0, ndigits)  # adding 0.0 turns -0.0 into +0.0
     g2 = round(g1_2.imag + 0.0, ndigits)
     g3 = round(g3.real + 0.0, ndigits)
@@ -39,8 +45,8 @@ def g1g2g3(U: Gate, ndigits=DEFAULT_WEYL_PRECISSION) -> GTuple:
 
 
 def g1g2g3_from_c1c2c3(
-        c1: float, c2: float, c3: float,
-        ndigits=DEFAULT_WEYL_PRECISSION) -> GTuple:
+    c1: float, c2: float, c3: float, ndigits=DEFAULT_WEYL_PRECISSION
+) -> GTuple:
     """Calculate local invariants from the Weyl chamber coordinates
 
     Calculate the local invariants $(g_1, g_2, g_3)$ from the Weyl chamber
@@ -57,11 +63,13 @@ def g1g2g3_from_c1c2c3(
     c2 *= pi
     c3 *= pi
     g1 = round(
-        cos(c1)**2 * cos(c2)**2 * cos(c3)**2 -
-        sin(c1)**2 * sin(c2)**2 * sin(c3)**2 + 0.0,
-        ndigits)
-    g2 = round(0.25 * sin(2*c1) * sin(2*c2) * sin(2*c3) + 0.0, ndigits)
-    g3 = round(4*g1 - cos(2*c1) * cos(2*c2) * cos(2*c3) + 0.0, ndigits)
+        cos(c1) ** 2 * cos(c2) ** 2 * cos(c3) ** 2
+        - sin(c1) ** 2 * sin(c2) ** 2 * sin(c3) ** 2
+        + 0.0,
+        ndigits,
+    )
+    g2 = round(0.25 * sin(2 * c1) * sin(2 * c2) * sin(2 * c3) + 0.0, ndigits)
+    g3 = round(4 * g1 - cos(2 * c1) * cos(2 * c2) * cos(2 * c3) + 0.0, ndigits)
     return g1, g2, g3
 
 
@@ -74,7 +82,7 @@ def J_T_LI(O: Gate, U: Gate, form='g'):
         form (str): form of the functional to use, 'g' or 'c'
     """
     if form == 'g':
-        return np.sum(np.abs(np.array(g1g2g3(O)) - np.array(g1g2g3(U)))**2)
+        return np.sum(np.abs(np.array(g1g2g3(O)) - np.array(g1g2g3(U))) ** 2)
     elif form == 'c':
         delta_c = np.array(c1c2c3(O)) - np.array(c1c2c3(U))
         return np.prod(cos(np.pi * (delta_c) / 2.0))
@@ -83,8 +91,8 @@ def J_T_LI(O: Gate, U: Gate, form='g'):
 
 
 def closest_LI(
-        U: Gate, c1: float, c2: float, c3: float, method='leastsq',
-        limit=1.0e-6):
+    U: Gate, c1: float, c2: float, c3: float, method='leastsq', limit=1.0e-6
+):
     """Find the closest gate that has the given Weyl chamber coordinates
 
     The `c1`, `c2`, `c3` are given in units of π
@@ -97,7 +105,7 @@ def closest_LI(
     return _closest_gate(U, f_U, n=16, method=method, limit=limit)
 
 
-def _closest_gate(U, f_U, n, x_max=2*pi, method='leastsq', limit=1.0e-6):
+def _closest_gate(U, f_U, n, x_max=2 * pi, method='leastsq', limit=1.0e-6):
     """Find the closest gate to U that fulfills the parametrization implied by
     the function f_U
 
@@ -118,13 +126,18 @@ def _closest_gate(U, f_U, n, x_max=2*pi, method='leastsq', limit=1.0e-6):
     logger = logging.getLogger(__name__)
     logger.debug("_closests_gate with method %s", method)
     from scipy.optimize import minimize
+
     if method == 'leastsq':
+
         def f_minimize(p):
-            d = _vectorize(f_U(p)-U)
+            d = _vectorize(f_U(p) - U)
             return np.concatenate([d.real, d.imag])
+
     else:
+
         def f_minimize(p):
             return _norm(U - f_U(p))
+
     dist_min = None
     iter = 0
     while True:
@@ -151,15 +164,17 @@ def _closest_gate(U, f_U, n, x_max=2*pi, method='leastsq', limit=1.0e-6):
                 dist_min = dist
                 logger.debug("_closests_gate dist_min -> %.5e", dist_min)
             else:
-                logger.debug("_closests_gate delta_dist = %.5e",
-                             abs(dist-dist_min))
-                if abs(dist-dist_min) < limit:
+                logger.debug(
+                    "_closests_gate delta_dist = %.5e", abs(dist - dist_min)
+                )
+                if abs(dist - dist_min) < limit:
                     return U_min
                 else:
                     if dist < dist_min:
                         dist_min = dist
-                        logger.debug("_closests_gate dist_min -> %.5e",
-                                     dist_min)
+                        logger.debug(
+                            "_closests_gate dist_min -> %.5e", dist_min
+                        )
 
 
 def _vectorize(a, order='F'):
@@ -204,3 +219,40 @@ def _norm(v):
         return scipy.sparse.linalg.norm(v)
     else:
         return scipy.linalg.norm(v)
+
+
+def make_LI_krotov_chi_constructor(gate, canonical_basis, unitarity_weight=0):
+    r"""Return a constructor for the χ's in an LI optimization.
+
+    Return a `chi_constructor` that determines the boundary condition of the
+    backwards propagation in an optimization towards the local equivalence
+    class of `gate` in Krotov's method, based on the foward-propagtion of the
+    Bell states.
+
+    Args:
+        gate (qutip.Qobj): A 4×4 quantum gate, in the `canonical_basis`.
+        canonical_basis (list[qutip.Qobj]): A list of four basis states that
+            define the canonical basis $\ket{00}$, $\ket{01}$, $\ket{10}$, and
+            $\ket{11}$ of the logical subspace.
+        unitarity_weight (float): A weight in [0, 1] that determines how much
+            emphasis is placed on  maintaining population in the logical
+            subspace.
+
+    Returns:
+        callable: a function ``chi_constructor(fw_states_T, *args)`` that
+        receive the result of a foward propagation of the Bell states (obtained
+        from `canonical_basis` via :func:`weylchamber.gates.bell_basis`), and
+        returns a list of statex $\ket{\chi}$ that are the boundary condition
+        for the backward propagation in Krotov's method. Positional arguments
+        beyond `fw_states_T` are ignored.
+    """
+    # see make_PE_krotov_chi_constructor
+    raise NotImplementedError()
+
+
+def _get_a_kl_PE(UB):
+    """Return the 4×4 `A_kl` coefficient matrix (:class:`qutip.Qobj`)
+    for the perfect-entanglers functional, for a given gate `UB` in the Bell
+    basis.
+    """
+    raise NotImplementedError()

@@ -2,10 +2,21 @@ import numpy as np
 from numpy import pi, sin
 
 from .coordinates import _point_in_PE, weyl_region
+from .gates import (
+    Qmagic,
+    bell_basis as get_bell_basis,
+    gate as construct_gate,
+    mapped_basis as apply_gate,
+)
 from ._types import CTuple
 
 
-__all__ = ['project_to_PE', 'F_PE', 'concurrence']
+__all__ = [
+    'project_to_PE',
+    'F_PE',
+    'concurrence',
+    'make_PE_krotov_chi_constructor',
+]
 
 
 #: Dictionary of Weyl chamber region name to normal vectors for the
@@ -16,9 +27,10 @@ __all__ = ['project_to_PE', 'F_PE', 'concurrence']
 #: * 'W0*': region from the A2 point to the PE polyhedron
 #: * 'W1': region from the A2 point (SWAP gate) to the PE polyhedron
 _normal = {
-    'W0': (np.sqrt(2.0)/2.0)*np.array((-1, -1, 0)),
-    'W0*': (np.sqrt(2.0)/2.0)*np.array((1, -1, 0)),
-    'W1': (np.sqrt(2.0)/2.0)*np.array((0,  1, 1))}
+    'W0': (np.sqrt(2.0) / 2.0) * np.array((-1, -1, 0)),
+    'W0*': (np.sqrt(2.0) / 2.0) * np.array((1, -1, 0)),
+    'W1': (np.sqrt(2.0) / 2.0) * np.array((0, 1, 1)),
+}
 
 
 #: Dictionary of anchor points for the normal vectors (i.e., an arbitrary
@@ -27,7 +39,8 @@ _normal = {
 _anchor = {
     'W0': np.array((0.5, 0, 0)),
     'W0*': np.array((0.5, 0, 0)),
-    'W1': np.array((0.5, 0.5, 0))}
+    'W1': np.array((0.5, 0.5, 0)),
+}
 
 
 def project_to_PE(c1: float, c2: float, c3: float, check_weyl=True) -> CTuple:
@@ -67,7 +80,7 @@ def project_to_PE(c1: float, c2: float, c3: float, check_weyl=True) -> CTuple:
         p = np.array((c1, c2, c3))
         n = _normal[region]
         a = _anchor[region]
-        return p - np.inner((p-a), n) * n
+        return p - np.inner((p - a), n) * n
 
 
 def concurrence(c1: float, c2: float, c3: float) -> float:
@@ -83,7 +96,7 @@ def concurrence(c1: float, c2: float, c3: float) -> float:
         >>> '%.1f' % concurrence(*c1c2c3(qutip.gates.identity([2, 2])))
         '0.0'
     """
-    if ((c1 + c2) >= 0.5) and (c1-c2 <= 0.5) and ((c2+c3) <= 0.5):
+    if ((c1 + c2) >= 0.5) and (c1 - c2 <= 0.5) and ((c2 + c3) <= 0.5):
         # if we're inside the perfect-entangler polyhedron in the Weyl chamber
         # the concurrence is 1 by definition. the "regular" formula gives wrong
         # results in this case.
@@ -111,4 +124,51 @@ def F_PE(g1: float, g2: float, g3: float) -> float:
         >>> "%.1f" % F_PE(*g1g2g3(qutip.gates.identity([2, 2])))
         '2.0'
     """
-    return g3 * np.sqrt(g1**2 + g2**2) - g1 + 0.0
+    return g3 * np.sqrt(g1 ** 2 + g2 ** 2) - g1 + 0.0
+
+
+def make_PE_krotov_chi_constructor(canonical_basis, unitarity_weight=0):
+    r"""Return a constructor for the χ's in a PE optimization.
+
+    Return a `chi_constructor` that determines the boundary condition of the
+    backwards propagation in an optimization towards a perfect entangler in
+    Krotov's method, based on the foward-propagtion of the Bell states.
+
+    Args:
+        canonical_basis (list[qutip.Qobj]): A list of four basis states that
+            define the canonical basis $\ket{00}$, $\ket{01}$, $\ket{10}$, and
+            $\ket{11}$ of the logical subspace.
+        unitarity_weight (float): A weight in [0, 1] that determines how much
+            emphasis is placed on  maintaining population in the logical
+            subspace.
+
+    Returns:
+        callable: a function ``chi_constructor(fw_states_T, *args)`` that
+        receive the result of a foward propagation of the Bell states (obtained
+        from `canonical_basis` via :func:`weylchamber.gates.bell_basis`), and
+        returns a list of statex $\ket{\chi}$ that are the boundary condition
+        for the backward propagation in Krotov's method. Positional arguments
+        beyond `fw_states_T` are ignored.
+    """
+    # TODO: the docstring should give some equations, and include a reference
+    # to the derivation of the of the χ
+
+    bell_basis = get_bell_basis(canonical_basis)
+    # TODO: take into account `unitarity_weight`
+
+    def chi_constructor(fw_states_T, *args):
+        # *args is ignored, it exists so that the chi_constructor fits the
+        # krotov API directly
+        UB = construct_gate(bell_basis, fw_states_T)
+        A = (Qmagic * _get_a_kl_PE(UB)) / 2
+        return apply_gate(A, bell_basis)
+
+    return chi_constructor
+
+
+def _get_a_kl_PE(UB):
+    """Return the 4×4 `A_kl` coefficient matrix (:class:`qutip.Qobj`)
+    for the perfect-entanglers functional, for a given gate `UB` in the Bell
+    basis.
+    """
+    raise NotImplementedError()
