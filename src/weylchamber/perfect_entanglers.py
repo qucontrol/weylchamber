@@ -177,15 +177,30 @@ def make_PE_krotov_chi_constructor(canonical_basis, unitarity_weight=0):
 
     bell_basis = get_bell_basis(canonical_basis)
 
-    if not unitarity_weight==0:
-        raise NotImplementedError()
+    w = unitarity_weight
+    if w < 0:
+        w = 0
+    if w > 1:
+        w = 1
 
     def chi_constructor(fw_states_T, *args):
         # *args is ignored, it exists so that the chi_constructor fits the
         # krotov API directly
         UB = construct_gate(bell_basis, fw_states_T)
         A = (Qmagic * _get_a_kl_PE(UB)) / 2
-        return apply_gate(A, canonical_basis)
+
+        chis = apply_gate(A, canonical_basis)
+
+        # unitarity corrections
+        n = len(fw_states_T)
+        chis_out = []
+        for i in range(n):
+            bell_proj = qutip.Qobj(np.zeros(shape=fw_states_T[i].shape))
+            for j in range(n):
+                bell_proj += bell_basis[j].overlap(fw_states_T[i])            \
+                             * bell_basis[j]
+            chis_out.append((1.0-w) * chis[i] + 0.25*w * bell_proj)
+        return chis_out
 
     return chi_constructor
 
