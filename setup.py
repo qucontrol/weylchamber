@@ -30,7 +30,7 @@ dev_requirements = [
     'coverage', 'pytest', 'pytest-cov', 'pytest-xdist', 'twine', 'pep8',
     'flake8', 'wheel', 'sphinx', 'sphinx-autobuild', 'sphinx_rtd_theme',
     'sphinx-autodoc-typehints', 'gitpython', 'better-apidoc', 'jupyter',
-    'nbval', 'nbsphinx', 'watermark']
+    'nbval', 'nbsphinx', 'watermark', 'click']
 
 
 version = get_version('./src/weylchamber/__init__.py')
@@ -39,8 +39,8 @@ setup(
     author="Michael Goerz",
     author_email='mail@michaelgoerz.net',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
-        'Intended Audience :: Developers',
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Science/Research',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3.5',
