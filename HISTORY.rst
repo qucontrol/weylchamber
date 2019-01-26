@@ -2,6 +2,11 @@
 History
 =======
 
+0.3.0 (2019-01-26)
+------------------
+
+* Add: routine ``make_PE_krotov_chi_constructor`` for calculating the boundary conditions for the backward propagation in an optimization towards a perfect entangler using Krotov's method
+
 0.2.1 (2018-12-18)
 ------------------
 
