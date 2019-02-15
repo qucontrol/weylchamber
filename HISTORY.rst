@@ -2,6 +2,12 @@
 History
 =======
 
+0.3.1 (2019-02-15)
+------------------
+
+* Fix: the routine ``make_PE_krotov_chi_constructor`` now returns a function that is compatible with a stricter interface for ``chi_constructor`` in the `krotov` packages (which now requires that ``chi_constructor`` routines accept keyword arguments).
+
+
 0.3.0 (2019-01-26)
 ------------------
 
