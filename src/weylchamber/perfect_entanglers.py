@@ -167,12 +167,13 @@ def make_PE_krotov_chi_constructor(canonical_basis, unitarity_weight=0):
             subspace.
 
     Returns:
-        callable: a function ``chi_constructor(fw_states_T, *args)`` that
-        receive the result of a foward propagation of the Bell states (obtained
-        from `canonical_basis` via :func:`weylchamber.gates.bell_basis`), and
-        returns a list of statex $\ket{\chi_{i}}$ that are the boundary
-        condition for the backward propagation in Krotov's method. Positional
-        arguments beyond `fw_states_T` are ignored.
+        callable: a function ``chi_constructor(fw_states_T, **kwargs)`` that
+        receives the result of a foward propagation of the Bell states
+        (obtained from `canonical_basis` via
+        :func:`weylchamber.gates.bell_basis`), and returns a list of statex
+        $\ket{\chi_{i}}$ that are the boundary condition for the backward
+        propagation in Krotov's method. Positional arguments beyond
+        `fw_states_T` are ignored.
     """
 
     bell_basis = get_bell_basis(canonical_basis)
@@ -183,7 +184,7 @@ def make_PE_krotov_chi_constructor(canonical_basis, unitarity_weight=0):
     if w > 1:
         w = 1
 
-    def chi_constructor(fw_states_T, *args):
+    def chi_constructor(fw_states_T, **kwargs):
         # *args is ignored, it exists so that the chi_constructor fits the
         # krotov API directly
         UB = construct_gate(bell_basis, fw_states_T)
