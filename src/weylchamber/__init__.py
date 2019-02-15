@@ -1,6 +1,6 @@
 """Top-level package for weylchamber."""
 
-__version__ = '0.3.1'
+__version__ = '0.3.1+dev'
 
 from .cartan_decomposition import *
 from .coordinates import *
