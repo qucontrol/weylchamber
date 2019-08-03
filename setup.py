@@ -27,10 +27,26 @@ except OSError:
 requirements = ['numpy', 'scipy', 'matplotlib', 'qutip']
 
 dev_requirements = [
-    'coverage', 'pytest', 'pytest-cov', 'pytest-xdist', 'twine', 'pep8',
-    'flake8', 'wheel', 'sphinx', 'sphinx-autobuild', 'sphinx_rtd_theme',
-    'sphinx-autodoc-typehints', 'gitpython', 'better-apidoc', 'jupyter',
-    'nbval', 'nbsphinx', 'watermark', 'click']
+    'better-apidoc==0.3.1',
+    'click',
+    'coverage',
+    'flake8',
+    'gitpython',
+    'jupyter',
+    'nbsphinx',
+    'nbval',
+    'pep8',
+    'pytest',
+    'pytest-cov',
+    'pytest-xdist',
+    'sphinx',
+    'sphinx-autobuild',
+    'sphinx-autodoc-typehints',
+    'sphinx_rtd_theme',
+    'twine',
+    'watermark',
+    'wheel',
+]
 
 
 version = get_version('./src/weylchamber/__init__.py')
@@ -46,13 +62,14 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
-    description="Python package for analyzing two-qubit gates in the Weyl chamber",
+    description=(
+        "Python package for analyzing two-qubit gates in the Weyl chamber"
+    ),
     install_requires=requirements,
-    extras_require={
-        'dev': dev_requirements,
-    },
+    extras_require={'dev': dev_requirements},
     license="BSD license",
     long_description=readme + '\n\n' + history,
+    long_description_content_type='text/x-rst',
     include_package_data=True,
     keywords='weylchamber',
     name='weylchamber',

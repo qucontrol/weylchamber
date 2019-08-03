@@ -19,9 +19,11 @@ import weylchamber
 sys.path.insert(0, os.path.abspath('_extensions'))
 
 # -- Generate API documentation ------------------------------------------------
-def run_apidoc(_):
+def run_apidoc(app):
     """Generage API documentation"""
     import better_apidoc
+
+    better_apidoc.APP = app
     better_apidoc.main([
         'better-apidoc',
         '-t',
