@@ -48,10 +48,7 @@ __all__ = [
 
 Qmagic = (1.0 / np.sqrt(2.0)) * qutip.Qobj(
     np.array(
-        [[1,  0,  0,  1j],
-         [0, 1j,  1,  0],
-         [0, 1j, -1,  0],
-         [1,  0,  0, -1j]],
+        [[1, 0, 0, 1j], [0, 1j, 1, 0], [0, 1j, -1, 0], [1, 0, 0, -1j]],
         dtype=np.complex128,
     ),
     dims=[[2, 2], [2, 2]],
@@ -146,7 +143,7 @@ def mapped_basis(gate, basis):
     """
     return tuple(
         [
-            sum([gate[i, j] * basis[i] for i in range(gate.shape[0])])
+            sum([complex(gate[i, j]) * basis[i] for i in range(gate.shape[0])])
             for j in range(gate.shape[1])
         ]
     )
