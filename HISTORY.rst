@@ -2,6 +2,13 @@
 History
 =======
 
+0.3.2 (2019-08-02)
+------------------
+
+* Fix: adapt to changes in QuTiP 4.4
+* Fix: adapt to changes in Sphinx (better-apidoc 0.3.1)
+
+
 0.3.1 (2019-02-15)
 ------------------
 
