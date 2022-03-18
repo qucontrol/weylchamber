@@ -53,34 +53,27 @@ pep8: ## check style with pep8
 	pep8 src tests
 
 
-test:  test35 test36  ## run tests on every Python version
+test: test39 ## run tests on every Python version
 
-.venv/py34/bin/py.test:
-	@conda create -y -m --override-channels -c defaults -p .venv/py34 python=3.4
+.venv/py39/bin/py.test:
+	@conda create -y -m --override-channels -c defaults -p .venv/py39 python=3.9
 	@# if the conda installation does not work, simply comment out the following line, and let pip handle it
-	@conda install -y --override-channels -c defaults -c conda-forge -p .venv/py34 $(CONDA_PACKAGES)
-	@.venv/py34/bin/pip install -e .[dev]
+	@conda install -y --override-channels -c defaults -c conda-forge -p .venv/py39 $(CONDA_PACKAGES)
+	@.venv/py39/bin/pip install -e .[dev]
 
-test34: .venv/py34/bin/py.test ## run tests for Python 3.4
+test39: .venv/py39/bin/py.test ## run tests for Python 3.9
 	$(TESTENV) $< -v $(TESTOPTIONS) $(TESTS)
 
-.venv/py35/bin/py.test:
-	@conda create -y -m --override-channels -c defaults -p .venv/py35 python=3.5
-	@# if the conda installation does not work, simply comment out the following line, and let pip handle it
-	@conda install -y --override-channels -c defaults -c conda-forge -p .venv/py35 $(CONDA_PACKAGES)
-	@.venv/py35/bin/pip install -e .[dev]
 
-test35: .venv/py35/bin/py.test ## run tests for Python 3.5
+.venv/py38/bin/py.test:
+	@conda create -y -m --override-channels -c defaults -p .venv/py38 python=3.8
+	@# if the conda installation does not work, simply comment out the following line, and let pip handle it
+	#@conda install -y --override-channels -c defaults -c conda-forge -p .venv/py38 $(CONDA_PACKAGES)
+	@.venv/py38/bin/pip install -e .[dev]
+
+test38: .venv/py38/bin/py.test ## run tests for Python 3.8
 	$(TESTENV) $< -v $(TESTOPTIONS) $(TESTS)
 
-.venv/py36/bin/py.test:
-	@conda create -y -m --override-channels -c defaults -p .venv/py36 python=3.6
-	@# if the conda installation does not work, simply comment out the following line, and let pip handle it
-	@conda install -y --override-channels -c defaults -c conda-forge -p .venv/py36 $(CONDA_PACKAGES)
-	@.venv/py36/bin/pip install -e .[dev]
-
-test36: .venv/py36/bin/py.test ## run tests for Python 3.6
-	$(TESTENV) $< -v $(TESTOPTIONS) $(TESTS)
 
 .venv/py37/bin/py.test:
 	@conda create -y -m --override-channels -c defaults -p .venv/py37 python=3.7
@@ -88,45 +81,46 @@ test36: .venv/py36/bin/py.test ## run tests for Python 3.6
 	#@conda install -y --override-channels -c defaults -c conda-forge -p .venv/py37 $(CONDA_PACKAGES)
 	@.venv/py37/bin/pip install -e .[dev]
 
-test37: .venv/py37/bin/py.test ## run tests for Python 3.6
+test37: .venv/py37/bin/py.test ## run tests for Python 3.7
 	$(TESTENV) $< -v $(TESTOPTIONS) $(TESTS)
 
-.venv/py36/bin/python: .venv/py36/bin/py.test
 
-.venv/py36/bin/sphinx-build: .venv/py36/bin/py.test
+.venv/py39/bin/python: .venv/py39/bin/py.test
 
-docs: .venv/py36/bin/sphinx-build ## generate Sphinx HTML documentation, including API docs
-	$(MAKE) -C docs SPHINXBUILD=../.venv/py36/bin/sphinx-build clean
-	$(MAKE) -C docs SPHINXBUILD=../.venv/py36/bin/sphinx-build html
+.venv/py39/bin/sphinx-build: .venv/py39/bin/py.test
+
+docs: .venv/py39/bin/sphinx-build ## generate Sphinx HTML documentation, including API docs
+	$(MAKE) -C docs SPHINXBUILD=../.venv/py39/bin/sphinx-build clean
+	$(MAKE) -C docs SPHINXBUILD=../.venv/py39/bin/sphinx-build html
 	@echo "open docs/_build/html/index.html"
 
-spellcheck: .venv/py36/bin/sphinx-build ## check spelling in docs
-	@.venv/py36/bin/pip install sphinxcontrib-spelling
-	SPELLCHECK=en_US $(MAKE) -C docs SPHINXBUILD=../.venv/py36/bin/sphinx-build spelling
+spellcheck: .venv/py39/bin/sphinx-build ## check spelling in docs
+	@.venv/py39/bin/pip install sphinxcontrib-spelling
+	SPELLCHECK=en_US $(MAKE) -C docs SPHINXBUILD=../.venv/py39/bin/sphinx-build spelling
 
-coverage: test36  ## generate coverage report in ./htmlcov
-	.venv/py36/bin/coverage html
+coverage: test39  ## generate coverage report in ./htmlcov
+	.venv/py39/bin/coverage html
 	@echo "open htmlcov/index.html"
 
-test-upload: .venv/py36/bin/python clean-build clean-pyc dist ## package and upload a release to test.pypi.org
-	.venv/py36/bin/twine check dist/*
-	.venv/py36/bin/twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+test-upload: .venv/py39/bin/python clean-build clean-pyc dist ## package and upload a release to test.pypi.org
+	.venv/py39/bin/twine check dist/*
+	.venv/py39/bin/twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
-upload: .venv/py36/bin/python clean-build clean-pyc dist ## package and upload a release to pypi.org
-	.venv/py36/bin/twine check dist/*
-	.venv/py36/bin/twine upload dist/*
+upload: .venv/py39/bin/python clean-build clean-pyc dist ## package and upload a release to pypi.org
+	.venv/py39/bin/twine check dist/*
+	.venv/py39/bin/twine upload dist/*
 
-release: clean .venv/py36/bin/python ## Create a new version, package and upload it
-	.venv/py36/bin/python ./scripts/release.py
+release: clean .venv/py39/bin/python ## Create a new version, package and upload it
+	.venv/py39/bin/python ./scripts/release.py
 
 
-dist: .venv/py36/bin/python clean-build clean-pyc ## builds source and wheel package
+dist: .venv/py39/bin/python clean-build clean-pyc ## builds source and wheel package
 	@$< setup.py sdist
 	@$< setup.py bdist_wheel
 	ls -l dist
 
-dist-check: .venv/py36/bin/python  ## Check all dist files for correctness
-	.venv/py36/bin/twine check dist/*
+dist-check: .venv/py39/bin/python  ## Check all dist files for correctness
+	.venv/py39/bin/twine check dist/*
 
 install: clean-build clean-pyc ## install the package to the active Python's site-packages
 	pip install .
@@ -145,12 +139,12 @@ develop-docs: develop  ## generate Sphinx HTML documentation, including API docs
 	$(MAKE) -C docs html
 	@echo "open docs/_build/html/index.html"
 
-.venv/py36/bin/jupyter: .venv/py36/bin/py.test
+.venv/py39/bin/jupyter: .venv/py39/bin/py.test
 
 # How to execute notebook files
-%.ipynb.log: %.ipynb .venv/py36/bin/jupyter
+%.ipynb.log: %.ipynb .venv/py39/bin/jupyter
 	@echo ""
-	@.venv/py36/bin/jupyter nbconvert --to notebook --execute --inplace --allow-errors --ExecutePreprocessor.kernel_name='python3' --config=/dev/null $< 2>&1 | tee $@
+	@.venv/py39/bin/jupyter nbconvert --to notebook --execute --inplace --allow-errors --ExecutePreprocessor.kernel_name='python3' --config=/dev/null $< 2>&1 | tee $@
 
 NOTEBOOKFILES = $(shell find docs/ -iname '*.ipynb'  -maxdepth 1)
 NOTEBOOKLOGS = $(patsubst %.ipynb,%.ipynb.log,$(NOTEBOOKFILES))
@@ -158,11 +152,11 @@ NOTEBOOKLOGS = $(patsubst %.ipynb,%.ipynb.log,$(NOTEBOOKFILES))
 notebooks: $(NOTEBOOKLOGS)  ## re-evaluate the notebooks
 	@echo ""
 	@echo "All notebook are now up to date; the were executed using the python3 kernel"
-	@.venv/py36/bin/jupyter kernelspec list | grep python3
+	@.venv/py39/bin/jupyter kernelspec list | grep python3
 
-jupyter-notebook: .venv/py36/bin/jupyter  ## run a notebook server for editing the examples
-	.venv/py36/bin/jupyter notebook --config=/dev/null
+jupyter-notebook: .venv/py39/bin/jupyter  ## run a notebook server for editing the examples
+	.venv/py39/bin/jupyter notebook --config=/dev/null
 
-jupyter-lab: .venv/py36/bin/jupyter  ## run a jupyterlab server for editing the examples
-	@.venv/py36/bin/pip install jupyterlab
-	.venv/py36/bin/jupyter lab --config=/dev/null
+jupyter-lab: .venv/py39/bin/jupyter  ## run a jupyterlab server for editing the examples
+	@.venv/py39/bin/pip install jupyterlab
+	.venv/py39/bin/jupyter lab --config=/dev/null

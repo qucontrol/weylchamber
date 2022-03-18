@@ -27,7 +27,7 @@ def g1g2g3(U: Gate, ndigits=DEFAULT_WEYL_PRECISSION) -> GTuple:
     values are rounded to the given precision, cf. the `ndigits` parameter of
     the built-in :func:`round` function.
 
-    >>> print("%.2f %.2f %.2f" % g1g2g3(qutip.gates.cnot()))
+    >>> print("%.2f %.2f %.2f" % g1g2g3(qutip.qip.operations.cnot()))
     0.00 0.00 1.00
     """
     # mathematically, the determinant of U and UB is the same, but
@@ -55,7 +55,7 @@ def g1g2g3_from_c1c2c3(
     parameter of the built-in :func:`round` function)
 
     Example:
-        >>> CNOT = qutip.gates.cnot()
+        >>> CNOT = qutip.qip.operations.cnot()
         >>> print("%.2f %.2f %.2f" % g1g2g3_from_c1c2c3(*c1c2c3(CNOT)))
         0.00 0.00 1.00
     """

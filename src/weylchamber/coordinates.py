@@ -32,7 +32,7 @@ def c1c2c3(U: Gate, ndigits=DEFAULT_WEYL_PRECISSION) -> CTuple:
     Algorithm from Childs et al., PRA 68, 052311 (2003).
 
     Example:
-        >>> print("%.2f %.2f %.2f" % c1c2c3(qutip.gates.cnot()))
+        >>> print("%.2f %.2f %.2f" % c1c2c3(qutip.qip.operations.cnot()))
         0.50 0.00 0.00
     """
     U = qutip.Qobj(U, dims=[[2, 2], [2, 2]])
@@ -65,10 +65,10 @@ def point_in_weyl_chamber(
 
     Examples:
 
-        >>> BGATE = qutip.gates.berkeley()
+        >>> BGATE = qutip.qip.operations.berkeley()
         >>> point_in_weyl_chamber(*c1c2c3(BGATE))
         True
-        >>> point_in_weyl_chamber(*c1c2c3(qutip.gates.identity([2, 2])))
+        >>> point_in_weyl_chamber(*c1c2c3(qutip.identity([2, 2])))
         True
 
         The coordinates may also be array-like, in which case a boolean numpy
@@ -169,10 +169,10 @@ def _point_in_PE(c1, c2, c3, check_weyl=False):
     """Return True if the coordinates c1, c2, c3 are inside the
     perfect-entangler polyhedron
 
-    >>> BGATE = qutip.gates.berkeley()
+    >>> BGATE = qutip.qip.operations.berkeley()
     >>> _point_in_PE(*c1c2c3(BGATE))
     True
-    >>> _point_in_PE(*c1c2c3(qutip.gates.identity(4)))
+    >>> _point_in_PE(*c1c2c3(qutip.identity(4)))
     False
 
     >>> res = _point_in_PE([0.0, 0.5, 0.8], [1.0, 0.25, 0.0], [1.0, 0.25, 0.0])
@@ -330,7 +330,7 @@ def canonical_gate(c1: float, c2: float, c3: float) -> qutip.Qobj:
         ...      [0.000000+0.707107j, 0.000000+0.000000j, 0.000000+0.000000j, 0.707107+0.000000j]],
         ... dims=[[2,2], [2,2]])
         >>> U = canonical_gate(0.5,0,0)
-        >>> assert (U - gate).norm() < 1e-6
+        >>> assert (U - gate).norm() < 1e-5
         >>> assert np.max(np.abs(
         ...     np.array(c1c2c3(U)) - np.array([0.5, 0, 0]))) < 1e-15
         """
