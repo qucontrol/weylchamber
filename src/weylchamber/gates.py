@@ -113,9 +113,9 @@ def gate(basis, states):
 
         >>> from qutip import ket
         >>> basis = [ket(nums) for nums in [(0, 0), (0, 1), (1, 0), (1, 1)]]
-        >>> states = mapped_basis(qutip.gates.cnot(), basis)
+        >>> states = mapped_basis(qutip.qip.operations.cnot(), basis)
         >>> U = gate(basis, states)
-        >>> assert (U - qutip.gates.cnot()).norm() < 1e-15
+        >>> assert (U - qutip.qip.operations.cnot()).norm() < 1e-15
     """
     if not (len(basis) == len(states) == 4):
         raise ValueError(
@@ -135,7 +135,7 @@ def mapped_basis(gate, basis):
 
         >>> from qutip import ket
         >>> basis = [ket(nums) for nums in [(0, 0), (0, 1), (1, 0), (1, 1)]]
-        >>> states = mapped_basis(qutip.gates.cnot(), basis)
+        >>> states = mapped_basis(qutip.qip.operations.cnot(), basis)
         >>> assert (states[0] - ket((0,0))).norm() < 1e-15
         >>> assert (states[1] - ket((0,1))).norm() < 1e-15
         >>> assert (states[2] - ket((1,1))).norm() < 1e-15  # swap (1, 1) ...

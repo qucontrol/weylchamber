@@ -90,11 +90,11 @@ def concurrence(c1: float, c2: float, c3: float) -> float:
     Example:
         >>> import qutip
         >>> from weylchamber.coordinates import c1c2c3
-        >>> '%.1f' % concurrence(*c1c2c3(qutip.gates.swap()))
+        >>> '%.1f' % concurrence(*c1c2c3(qutip.qip.operations.swap()))
         '0.0'
-        >>> '%.1f' % concurrence(*c1c2c3(qutip.gates.cnot()))
+        >>> '%.1f' % concurrence(*c1c2c3(qutip.qip.operations.cnot()))
         '1.0'
-        >>> '%.1f' % concurrence(*c1c2c3(qutip.gates.identity([2, 2])))
+        >>> '%.1f' % concurrence(*c1c2c3(qutip.identity([2, 2])))
         '0.0'
     """
     if ((c1 + c2) >= 0.5) and (c1 - c2 <= 0.5) and ((c2 + c3) <= 0.5):
@@ -120,9 +120,9 @@ def F_PE(g1: float, g2: float, g3: float) -> float:
     Example:
         >>> import qutip
         >>> from weylchamber.local_invariants import g1g2g3
-        >>> "%.1f" % F_PE(*g1g2g3(qutip.gates.cnot()))
+        >>> "%.1f" % F_PE(*g1g2g3(qutip.qip.operations.cnot()))
         '0.0'
-        >>> "%.1f" % F_PE(*g1g2g3(qutip.gates.identity([2, 2])))
+        >>> "%.1f" % F_PE(*g1g2g3(qutip.identity([2, 2])))
         '2.0'
     """
     return g3 * np.sqrt(g1 ** 2 + g2 ** 2) - g1 + 0.0

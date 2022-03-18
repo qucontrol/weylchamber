@@ -23,7 +23,7 @@ def test_cartan_decomposition_random():
 def test_cartan_decomposition_cnot():
     warnings.filterwarnings(
         'ignore', message='the matrix subclass is not the recommended way')
-    U = qutip.gates.cnot()
+    U = qutip.qip.operations.cnot()
     phasefactor = np.linalg.det(U.full())**0.25
     C = concurrence(*c1c2c3(U))
     assert C == 1
