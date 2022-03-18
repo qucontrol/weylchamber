@@ -27,7 +27,7 @@ except OSError:
 requirements = ['numpy', 'scipy', 'matplotlib', 'qutip']
 
 dev_requirements = [
-    'better-apidoc==0.3.1',
+    'better-apidoc==0.3.2',
     'click',
     'coverage',
     'flake8',
