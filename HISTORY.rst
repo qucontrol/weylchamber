@@ -2,6 +2,17 @@
 History
 =======
 
+
+0.4.0 (2022-03-18)
+------------------
+
+* Drop: Support for Python 3.5-3.7
+* Add: Support for Python 3.8-3.9
+* Update: Use QuTiP 4.6
+
+This is a maintenance release updating to the latest versions of Python and QuTiP and dropping support of versions that have reached end-of-life
+
+
 0.3.2 (2019-08-02)
 ------------------
 
