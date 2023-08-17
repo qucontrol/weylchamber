@@ -310,9 +310,6 @@ class WeylChamber():
             ax.set_ylabel(r'$c_2$', labelpad=self.c2_labelpad)
         if self.show_c3_label:
             ax.set_zlabel(r'$c_3$', labelpad=self.c3_labelpad)
-        ax.set_xlim(0,1)
-        ax.set_ylim(0,0.5)
-        ax.set_zlim(0,0.5)
         ax.xaxis.set_ticks([0, 0.25, 0.5, 0.75, 1])
         ax.xaxis.set_ticklabels(['0', '', r'$\pi/2$', '', r'$\pi$'])
         ax.yaxis.set_ticks([0, 0.1, 0.2, 0.3, 0.4, 0.5])
