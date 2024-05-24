@@ -255,9 +255,9 @@ class WeylChamber():
         ax.view_init(elev=self.elev, azim=self.azim)
         ax.patch.set_facecolor(self.facecolor)
         if self.panecolor is not None:
-            ax.w_xaxis.set_pane_color(self.panecolor)
-            ax.w_yaxis.set_pane_color(self.panecolor)
-            ax.w_zaxis.set_pane_color(self.panecolor)
+            ax.xaxis.set_pane_color(self.panecolor)
+            ax.yaxis.set_pane_color(self.panecolor)
+            ax.zaxis.set_pane_color(self.panecolor)
         if self.z_axis_left:
             tmp_planes = ax.zaxis._PLANES
             ax.zaxis._PLANES = (tmp_planes[2], tmp_planes[3],
