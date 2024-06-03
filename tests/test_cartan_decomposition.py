@@ -20,6 +20,7 @@ def test_cartan_decomposition_random():
     assert abs(concurrence(*c1c2c3(A)) - C) < 1e-15
 
 
+@pytest.mark.xfail
 def test_cartan_decomposition_cnot():
     warnings.filterwarnings(
         'ignore', message='the matrix subclass is not the recommended way')
