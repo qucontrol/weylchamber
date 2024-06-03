@@ -24,7 +24,7 @@ try:
 except OSError:
     history = ''
 
-requirements = ['numpy', 'scipy', 'matplotlib', 'qutip']
+requirements = ['numpy', 'scipy', 'matplotlib>=3.3.0', 'qutip']
 
 dev_requirements = [
     'better-apidoc==0.3.2',
