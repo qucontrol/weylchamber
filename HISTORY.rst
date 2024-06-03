@@ -2,6 +2,11 @@
 History
 =======
 
+0.5.0 (2024-06-03)
+------------------
+
+* Drop: Compatibility with matplotlib < 3.3
+* Drop: Compatibility with qutip >= 5.0
 
 0.4.0 (2022-03-18)
 ------------------
