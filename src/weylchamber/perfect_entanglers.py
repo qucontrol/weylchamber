@@ -90,9 +90,9 @@ def concurrence(c1: float, c2: float, c3: float) -> float:
     Example:
         >>> import qutip
         >>> from weylchamber.coordinates import c1c2c3
-        >>> '%.1f' % concurrence(*c1c2c3(qutip.qip.operations.swap()))
+        >>> '%.1f' % concurrence(*c1c2c3(qutip.core.gates.swap()))
         '0.0'
-        >>> '%.1f' % concurrence(*c1c2c3(qutip.qip.operations.cnot()))
+        >>> '%.1f' % concurrence(*c1c2c3(qutip.core.gates.cnot()))
         '1.0'
         >>> '%.1f' % concurrence(*c1c2c3(qutip.identity([2, 2])))
         '0.0'
@@ -120,7 +120,7 @@ def F_PE(g1: float, g2: float, g3: float) -> float:
     Example:
         >>> import qutip
         >>> from weylchamber.local_invariants import g1g2g3
-        >>> "%.1f" % F_PE(*g1g2g3(qutip.qip.operations.cnot()))
+        >>> "%.1f" % F_PE(*g1g2g3(qutip.core.gates.cnot()))
         '0.0'
         >>> "%.1f" % F_PE(*g1g2g3(qutip.identity([2, 2])))
         '2.0'
@@ -360,7 +360,7 @@ def _get_a_kl_PE(UB):
         a_kl_coeffs = -a_kl_coeffs
         # Without this corrections, gates would be pushed towards [SWAP]
 
-    return a_kl_coeffs
+    return qutip.Qobj(a_kl_coeffs, dims=[[2, 2], [2, 2]])
 
 
 def _cmat4_det(m):

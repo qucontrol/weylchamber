@@ -8,15 +8,6 @@ The weylchamber package
 .. image:: https://img.shields.io/pypi/v/weylchamber.svg
    :alt: weylchamber on the Python Package Index
    :target: https://pypi.python.org/pypi/weylchamber
-.. image:: https://img.shields.io/travis/qucontrol/weylchamber.svg
-   :alt: Travis Continuous Integration
-   :target: https://travis-ci.org/qucontrol/weylchamber
-.. image:: https://ci.appveyor.com/api/projects/status/a407jfh3gl74o1m4?svg=true
-   :alt: AppVeyor Continuous Integration
-   :target: https://ci.appveyor.com/project/goerz/weylchamber
-.. image:: https://img.shields.io/coveralls/github/qucontrol/weylchamber.svg
-   :alt: Coveralls
-   :target: https://coveralls.io/github/qucontrol/weylchamber?branch=master
 .. image:: https://readthedocs.org/projects/weylchamber/badge/?version=latest
    :alt: Documentation Status
    :target: https://weylchamber.readthedocs.io/en/latest/?badge=latest
