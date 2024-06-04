@@ -2,21 +2,6 @@
 The weylchamber package
 =======================
 
-.. raw:: html
-
-    <a href="https://github.com/qucontrol/weylchamber">
-        <img src="https://img.shields.io/badge/github-qucontrol/weylchamber-blue.svg" alt="Source code on Github" />
-    </a><a href="https://qucontrol.github.io/weylchamber/">
-        <img src="https://img.shields.io/badge/docs-gh--pages-blue.svg" alt="Documentation" />
-    </a><a href="https://pypi.python.org/pypi/weylchamber">
-        <img src="https://img.shields.io/pypi/v/weylchamber.svg" alt="weylchamber on the Python Package Index" />
-    </a><a href="https://github.com/qucontrol/weylchamber/actions?query=workflow%3ADocs">
-        <img src="https://github.com/qucontrol/weylchamber/actions/workflows/docs.yml/badge.svg?branch=master" alt="Documentation Status" />
-    </a><a href="https://opensource.org/licenses/BSD-3-Clause">
-        <img src="https://img.shields.io/badge/License-BSD-green.svg" alt="BSD License" />
-    </a>
-
-
 Python package for analyzing two-qubit gates in the Weyl chamber
 
 Development of the ``weylchamber`` package happens on `Github`_.

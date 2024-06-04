@@ -2,6 +2,14 @@
 History
 =======
 
+0.6.0 (2024-06-04)
+------------------
+
+* Update: qutip >= 5.0 is now required
+* Drop: Compatibility with qutip < 5.0
+* Removed: function ``cartan_decomposition``. This would return wrong results, and it is not clear how to implement it correctly.
+
+
 0.5.0 (2024-06-03)
 ------------------
 
