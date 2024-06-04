@@ -1,0 +1,147 @@
+name: Docs
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+      - 'release-*'
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - master
+
+jobs:
+
+  build_docs:
+    name: Build Sphinx docs
+    runs-on: ubuntu-24.04
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        name: Install Python 3.9
+        with:
+          python-version: 3.9
+
+      - name: Install zip-files
+        run: pip install zip-files
+
+      - name: Install apt packages
+        run: sudo apt-get install graphviz imagemagick pandoc
+
+      - name: Generate HTML Documentation
+        run: make docs
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(python -c 'print([line.split("=")[-1].strip()[1:-1] for line in open("./src/weylchamber/__init__.py", encoding="utf8").readlines() if line.startswith("__version__")][0], end="")')
+
+      - name: Zip the HTML documentation
+        run: zip-folder --debug --auto-root --outfile "weylchamber-docs-${{ steps.get_version.outputs.VERSION }}.zip" docs/_build/html
+
+      - uses: actions/upload-artifact@v4
+        name: Upload documentation artifacts
+        with:
+          name: weylchamber-docs
+          # We need at least two files in the artifact to avoid a weird
+          # double-zip file. Hence README.md
+          path: |
+            README.md
+            ./weylchamber-docs-${{ steps.get_version.outputs.VERSION }}.*
+
+  deploy_gh_pages:
+    name: Deploy documentation to gh-pages
+    if: always() && needs.build_docs.result == 'success' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/'))
+    runs-on: ubuntu-24.04
+    needs: [build_docs]
+    steps:
+
+      - uses: actions/setup-python@v5
+        name: Install Python 3.9
+        with:
+          python-version: 3.9
+
+      - name: Install deploy requirements
+        run: pip install docs-versions-menu
+
+      - name: Get branch name
+        shell: bash
+        run: |
+          echo ${{ github.ref }}
+          echo "BRANCH_NAME=$(echo ${GITHUB_REF##*/} | tr / -)" >> $GITHUB_ENV
+          cat $GITHUB_ENV
+
+      - uses: actions/checkout@v4
+        name: Check out gh-pages branch (full history)
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v2
+        name: Download weylchamber-docs artifact
+        with:
+          name: weylchamber-docs
+          path: _weylchamber_docs
+
+      - name: Unzip html documentation
+        working-directory: _weylchamber_docs
+        shell: bash
+        run: |
+          unzip *.zip -d _unzip
+          mv _unzip/* _unzip/${{ env.BRANCH_NAME }}
+
+      - name: Rsync html documentation into place
+        run: rsync -av --delete _weylchamber_docs/_unzip/${{ env.BRANCH_NAME }}/ ./${{ env.BRANCH_NAME }}/
+
+      - name: Set download links
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          echo "[html]: https://github.com/qucontrol/w/releases/download/${{ env.BRANCH_NAME }}/weylchamber-${{ env.BRANCH_NAME }}.zip" >> ./${{ env.BRANCH_NAME }}/_downloads
+
+      - name: Remove artifact files
+        shell: bash
+        run: rm -rf _weylchamber_docs
+
+      - name: Run docs-versions-menu
+        run: docs-versions-menu
+
+      - name: Get the previous commit message
+        id: get_previous_commit
+        run: |
+          git log --format=%B -n 1 | tee .git/_github_actions_commit_msg
+          echo ::set-output name=log::$(cat .git/_github_actions_commit_msg)
+          echo ::set-output name=lastline::$(cat .git/_github_actions_commit_msg | grep -v '^$' | tail -n1)
+          echo ::set-output name=author::$(git log --format=%an -n 1)
+
+      - name: Set git configuration
+        shell: bash
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          echo "Committing to gh-pages"
+          echo "# GIT ADD"
+          git add -A --verbose
+          echo "# GIT STATUS"
+          git status
+          echo "# GIT COMMIT"
+          if [[ "${{ steps.get_previous_commit.outputs.author }}" == "github-actions"* && "${{ steps.get_previous_commit.outputs.lastline }}" == *"${{ github.ref }}"* ]];
+          then
+            # we ammend if the previous commit was down by Github Actions and was based on the same branch/tag name
+            echo "Amending previous commit"
+            echo "Deployed from commit ${GITHUB_SHA} (${GITHUB_REF})" >> .git/_github_actions_commit_msg
+            git commit --verbose --amend -F .git/_github_actions_commit_msg
+          else
+            echo "Making new commit"
+            git commit --verbose -m "Auto-update from Github Actions Workflow" -m "Deployed from commit ${GITHUB_SHA} (${GITHUB_REF})"
+          fi
+          git log -n 1
+
+      - name: Push changes
+        run: git push --verbose --force
