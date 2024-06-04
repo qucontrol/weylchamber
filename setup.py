@@ -43,6 +43,7 @@ dev_requirements = [
     'sphinx-autobuild',
     'sphinx-autodoc-typehints',
     'sphinx_rtd_theme',
+    'docs-versions-menu',
     'twine',
     'watermark',
     'wheel',
