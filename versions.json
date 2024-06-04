@@ -1,1 +1,1 @@
-{"folders": ["master"], "default-branch": "master", "labels": {"master": "master"}, "versions": ["master"], "warnings": {"master": ["unreleased"]}, "latest": null, "downloads": {"master": []}}
+{"folders": ["master", "v0.6.0"], "default-branch": "master", "labels": {"master": "master", "v0.6.0": "v0.6.0 (latest)"}, "versions": ["master", "v0.6.0"], "warnings": {"master": ["unreleased"], "v0.6.0": []}, "latest": "v0.6.0", "downloads": {"master": [], "v0.6.0": [["html", "https://github.com/qucontrol/w/releases/download/v0.6.0/weylchamber-v0.6.0.zip"]]}}

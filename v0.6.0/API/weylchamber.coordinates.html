@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>weylchamber.coordinates module &mdash; weylchamber c756cfb documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" href="../_static/mycss.css" type="text/css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=1bd04038"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/docs-versions-menu.js?v=3d6a1aea"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/SVG"], "TeX": {"extensions": ["AMSmath.js", "AMSsymbols.js", "noErrors.js", "noUndefined.js"], "Macros": {"tr": ["{\\operatorname{tr}}", 0], "diag": ["{\\operatorname{diag}}", 0], "abs": ["{\\operatorname{abs}}", 0], "pop": ["{\\operatorname{pop}}", 0], "ee": ["{\\text{e}}", 0], "ii": ["{\\text{i}}", 0], "aux": ["{\\text{aux}}", 0], "opt": ["{\\text{opt}}", 0], "tgt": ["{\\text{tgt}}", 0], "init": ["{\\text{init}}", 0], "lab": ["{\\text{lab}}", 0], "rwa": ["{\\text{rwa}}", 0], "bra": ["{\\langle#1\\vert}", 1], "ket": ["{\\vert#1\\rangle}", 1], "Bra": ["{\\left\\langle#1\\right\\vert}", 1], "Braket": ["{\\left\\langle #1\\vphantom{#2} \\mid #2\\vphantom{#1}\\right\\rangle}", 2], "Ket": ["{\\left\\vert#1\\right\\rangle}", 1], "mat": ["{\\mathbf{#1}}", 1], "op": ["{\\hat{#1}}", 1], "Op": ["{\\hat{#1}}", 1], "dd": ["{\\,\\text{d}}", 0], "daggered": ["{^{\\dagger}}", 0], "transposed": ["{^{\\text{T}}}", 0], "Liouville": ["{\\mathcal{L}}", 0], "DynMap": ["{\\mathcal{E}}", 0], "identity": ["{\\mathbf{1}}", 0], "Norm": ["{\\lVert#1\\rVert}", 1], "Abs": ["{\\left\\vert#1\\right\\vert}", 1], "avg": ["{\\langle#1\\rangle}", 1], "Avg": ["{\\left\\langle#1\\right\\rangle}", 1], "AbsSq": ["{\\left\\vert#1\\right\\vert^2}", 1], "Re": ["{\\operatorname{Re}}", 0], "Im": ["{\\operatorname{Im}}", 0], "Real": ["{\\mathbb{R}}", 0], "Complex": ["{\\mathbb{C}}", 0], "Integer": ["{\\mathbb{N}}", 0]}}, "tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="weylchamber.gates module" href="weylchamber.gates.html" />
+    <link rel="prev" title="weylchamber package" href="weylchamber.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            weylchamber
+          </a>
+              <div class="version">
+                0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">The weylchamber package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="weylchamber.html">API of the weylchamber package</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">weylchamber.coordinates module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#summary">Summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.coordinates.c1c2c3"><code class="docutils literal notranslate"><span class="pre">c1c2c3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.coordinates.canonical_gate"><code class="docutils literal notranslate"><span class="pre">canonical_gate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.coordinates.from_magic"><code class="docutils literal notranslate"><span class="pre">from_magic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.coordinates.point_in_region"><code class="docutils literal notranslate"><span class="pre">point_in_region()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.coordinates.point_in_weyl_chamber"><code class="docutils literal notranslate"><span class="pre">point_in_weyl_chamber()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.coordinates.random_gate"><code class="docutils literal notranslate"><span class="pre">random_gate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.coordinates.random_weyl_point"><code class="docutils literal notranslate"><span class="pre">random_weyl_point()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.coordinates.to_magic"><code class="docutils literal notranslate"><span class="pre">to_magic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.coordinates.weyl_region"><code class="docutils literal notranslate"><span class="pre">weyl_region()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.gates.html">weylchamber.gates module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.local_invariants.html">weylchamber.local_invariants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.perfect_entanglers.html">weylchamber.perfect_entanglers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.prec.html">weylchamber.prec module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.visualize.html">weylchamber.visualize module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.html#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">weylchamber</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="weylchamber.html">weylchamber package</a> &raquo;</li>
+        
+      <li>weylchamber.coordinates module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-weylchamber.coordinates">
+<span id="weylchamber-coordinates-module"></span><h1>weylchamber.coordinates module<a class="headerlink" href="#module-weylchamber.coordinates" title="Link to this heading">¶</a></h1>
+<p>Calculation of Weyl chamber coordinates</p>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
+<p>Functions:</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#weylchamber.coordinates.c1c2c3" title="weylchamber.coordinates.c1c2c3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">c1c2c3</span></code></a></p></td>
+<td><p>Calculate Weyl chamber coordinates <span class="math notranslate nohighlight">\((c_1, c_2, c_3)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#weylchamber.coordinates.canonical_gate" title="weylchamber.coordinates.canonical_gate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canonical_gate</span></code></a></p></td>
+<td><p>Return the canonical gate for the given <span class="math notranslate nohighlight">\((c_1, c_2, c_3)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#weylchamber.coordinates.from_magic" title="weylchamber.coordinates.from_magic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_magic</span></code></a></p></td>
+<td><p>The inverse of <a class="reference internal" href="#weylchamber.coordinates.to_magic" title="weylchamber.coordinates.to_magic"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_magic()</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#weylchamber.coordinates.point_in_region" title="weylchamber.coordinates.point_in_region"><code class="xref py py-obj docutils literal notranslate"><span class="pre">point_in_region</span></code></a></p></td>
+<td><p>Check if <span class="math notranslate nohighlight">\((c_1, c_2, c_3)\)</span> are in the given region of the Weyl chamber</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#weylchamber.coordinates.point_in_weyl_chamber" title="weylchamber.coordinates.point_in_weyl_chamber"><code class="xref py py-obj docutils literal notranslate"><span class="pre">point_in_weyl_chamber</span></code></a></p></td>
+<td><p>Check if the coordinates <span class="math notranslate nohighlight">\((c_1, c_2, c_3)\)</span> are inside the Weyl chamber</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#weylchamber.coordinates.random_gate" title="weylchamber.coordinates.random_gate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random_gate</span></code></a></p></td>
+<td><p>Return a random two-qubit gate</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#weylchamber.coordinates.random_weyl_point" title="weylchamber.coordinates.random_weyl_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random_weyl_point</span></code></a></p></td>
+<td><p>Return a random point <span class="math notranslate nohighlight">\((c_1, c_2, c_3)\)</span> in the Weyl chamber (units of π)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#weylchamber.coordinates.to_magic" title="weylchamber.coordinates.to_magic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_magic</span></code></a></p></td>
+<td><p>Convert <cite>A</cite> from the canonical basis to the the &quot;magic&quot; Bell basis</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#weylchamber.coordinates.weyl_region" title="weylchamber.coordinates.weyl_region"><code class="xref py py-obj docutils literal notranslate"><span class="pre">weyl_region</span></code></a></p></td>
+<td><p>Return the region of the Weyl chamber the given point is in.</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">__all__</span></code>: <a class="reference internal" href="#weylchamber.coordinates.c1c2c3" title="weylchamber.coordinates.c1c2c3"><code class="xref py py-func docutils literal notranslate"><span class="pre">c1c2c3</span></code></a>, <a class="reference internal" href="#weylchamber.coordinates.canonical_gate" title="weylchamber.coordinates.canonical_gate"><code class="xref py py-func docutils literal notranslate"><span class="pre">canonical_gate</span></code></a>, <a class="reference internal" href="#weylchamber.coordinates.from_magic" title="weylchamber.coordinates.from_magic"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_magic</span></code></a>, <a class="reference internal" href="#weylchamber.coordinates.point_in_region" title="weylchamber.coordinates.point_in_region"><code class="xref py py-func docutils literal notranslate"><span class="pre">point_in_region</span></code></a>, <a class="reference internal" href="#weylchamber.coordinates.point_in_weyl_chamber" title="weylchamber.coordinates.point_in_weyl_chamber"><code class="xref py py-func docutils literal notranslate"><span class="pre">point_in_weyl_chamber</span></code></a>, <a class="reference internal" href="#weylchamber.coordinates.random_gate" title="weylchamber.coordinates.random_gate"><code class="xref py py-func docutils literal notranslate"><span class="pre">random_gate</span></code></a>, <a class="reference internal" href="#weylchamber.coordinates.random_weyl_point" title="weylchamber.coordinates.random_weyl_point"><code class="xref py py-func docutils literal notranslate"><span class="pre">random_weyl_point</span></code></a>, <a class="reference internal" href="#weylchamber.coordinates.to_magic" title="weylchamber.coordinates.to_magic"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_magic</span></code></a>, <a class="reference internal" href="#weylchamber.coordinates.weyl_region" title="weylchamber.coordinates.weyl_region"><code class="xref py py-func docutils literal notranslate"><span class="pre">weyl_region</span></code></a></p>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="weylchamber.coordinates.c1c2c3">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.coordinates.</span></span><span class="sig-name descname"><span class="pre">c1c2c3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndigits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/coordinates.html#c1c2c3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.coordinates.c1c2c3" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate Weyl chamber coordinates <span class="math notranslate nohighlight">\((c_1, c_2, c_3)\)</span></p>
+<p>Given U (in canonical basis), calculate the Weyl Chamber coordinates
+<span class="math notranslate nohighlight">\((c_1, c_2, c_3)\)</span>, in units of π.</p>
+<p>In order to facility numerical stability, the resulting coordinates are
+rounded to the given precision (cf. <cite>ndigits</cite> parameter of the built-in
+<cite>round</cite> function). Otherwise, rounding errors would likely to result in
+points that are not in the Weyl chamber, e.g. (0.1, 0.0, 1.0e-13)</p>
+<p>Algorithm from Childs et al., PRA 68, 052311 (2003).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.12/library/typing.html#typing.Tuple" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3.12/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3.12/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3.12/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.2f</span><span class="s2"> </span><span class="si">%.2f</span><span class="s2"> </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">c1c2c3</span><span class="p">(</span><span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">cnot</span><span class="p">()))</span>
+<span class="go">0.50 0.00 0.00</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="weylchamber.coordinates.canonical_gate">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.coordinates.</span></span><span class="sig-name descname"><span class="pre">canonical_gate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/coordinates.html#canonical_gate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.coordinates.canonical_gate" title="Link to this definition">¶</a></dt>
+<dd><p>Return the canonical gate for the given <span class="math notranslate nohighlight">\((c_1, c_2, c_3)\)</span></p>
+<p>The canonical gate is defined as
+:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://qutip.readthedocs.io/en/qutip-5.0.x/apidoc/classes.html#qutip.core.qobj.Qobj" title="(in QuTiP: Quantum Toolbox in Python v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Qobj</span></code></a></span></p>
+<div class="math notranslate nohighlight">
+\[\Op{A} = e^{i \frac{\pi}{2} \left(
+    c_1 \Op{\sigma}_x \Op{\sigma}_x +
+    c_2 \Op{\sigma}_y \Op{\sigma}_y +
+    c_3 \Op{\sigma}_z \Op{\sigma}_z \right)}\]</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gate</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[[</span><span class="mf">0.707107</span><span class="o">+</span><span class="mf">0.000000</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.000000</span><span class="o">+</span><span class="mf">0.000000</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.000000</span><span class="o">+</span><span class="mf">0.000000</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.000000</span><span class="o">+</span><span class="mf">0.707107</span><span class="n">j</span><span class="p">],</span>
+<span class="gp">... </span>     <span class="p">[</span><span class="mf">0.000000</span><span class="o">+</span><span class="mf">0.000000</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.707107</span><span class="o">+</span><span class="mf">0.000000</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.000000</span><span class="o">+</span><span class="mf">0.707107</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.000000</span><span class="o">+</span><span class="mf">0.000000</span><span class="n">j</span><span class="p">],</span>
+<span class="gp">... </span>     <span class="p">[</span><span class="mf">0.000000</span><span class="o">+</span><span class="mf">0.000000</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.000000</span><span class="o">+</span><span class="mf">0.707107</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.707107</span><span class="o">+</span><span class="mf">0.000000</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.000000</span><span class="o">+</span><span class="mf">0.000000</span><span class="n">j</span><span class="p">],</span>
+<span class="gp">... </span>     <span class="p">[</span><span class="mf">0.000000</span><span class="o">+</span><span class="mf">0.707107</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.000000</span><span class="o">+</span><span class="mf">0.000000</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.000000</span><span class="o">+</span><span class="mf">0.000000</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.707107</span><span class="o">+</span><span class="mf">0.000000</span><span class="n">j</span><span class="p">]],</span>
+<span class="gp">... </span><span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">U</span> <span class="o">=</span> <span class="n">canonical_gate</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="p">(</span><span class="n">U</span> <span class="o">-</span> <span class="n">gate</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">c1c2c3</span><span class="p">(</span><span class="n">U</span><span class="p">))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])))</span> <span class="o">&lt;</span> <span class="mf">1e-15</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="weylchamber.coordinates.from_magic">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.coordinates.</span></span><span class="sig-name descname"><span class="pre">from_magic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/coordinates.html#from_magic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.coordinates.from_magic" title="Link to this definition">¶</a></dt>
+<dd><p>The inverse of <a class="reference internal" href="#weylchamber.coordinates.to_magic" title="weylchamber.coordinates.to_magic"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_magic()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://qutip.readthedocs.io/en/qutip-5.0.x/apidoc/classes.html#qutip.core.qobj.Qobj" title="(in QuTiP: Quantum Toolbox in Python v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Qobj</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="weylchamber.coordinates.point_in_region">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.coordinates.</span></span><span class="sig-name descname"><span class="pre">point_in_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_weyl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/coordinates.html#point_in_region"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.coordinates.point_in_region" title="Link to this definition">¶</a></dt>
+<dd><p>Check if <span class="math notranslate nohighlight">\((c_1, c_2, c_3)\)</span> are in the given region of the Weyl chamber</p>
+<p>The regions are ‘W0’ (between origin O and perfect entanglers polyhedron),
+‘W0*’ (between point A1 and perfect entangler polyhedron), ‘W1’ (between A3
+point and perfect entanglers polyhedron), and ‘PE’ (inside perfect
+entanglers polyhedron)</p>
+<p>If the <cite>check_weyl</cite> parameter is given a True, raise a ValueError for any
+points outside of the Weyl chamber</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.12/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">weylchamber.visualize</span> <span class="kn">import</span> <span class="n">WeylChamber</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W0&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">WeylChamber</span><span class="o">.</span><span class="n">O</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W0&#39;</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W0&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">WeylChamber</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W0&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">WeylChamber</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;PE&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">WeylChamber</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W0*&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">WeylChamber</span><span class="o">.</span><span class="n">A1</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W0*&#39;</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W1&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">WeylChamber</span><span class="o">.</span><span class="n">A3</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W1&#39;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W1&#39;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;PE&#39;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The function may be also applied against arrays:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W1&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.25</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">res</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="weylchamber.coordinates.point_in_weyl_chamber">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.coordinates.</span></span><span class="sig-name descname"><span class="pre">point_in_weyl_chamber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_exception</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/coordinates.html#point_in_weyl_chamber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.coordinates.point_in_weyl_chamber" title="Link to this definition">¶</a></dt>
+<dd><p>Check if the coordinates <span class="math notranslate nohighlight">\((c_1, c_2, c_3)\)</span> are inside the Weyl chamber</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.12/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">BGATE</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">berkeley</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_weyl_chamber</span><span class="p">(</span><span class="o">*</span><span class="n">c1c2c3</span><span class="p">(</span><span class="n">BGATE</span><span class="p">))</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_weyl_chamber</span><span class="p">(</span><span class="o">*</span><span class="n">c1c2c3</span><span class="p">(</span><span class="n">qutip</span><span class="o">.</span><span class="n">identity</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The coordinates may also be array-like, in which case a boolean numpy
+array is returned.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="n">point_in_weyl_chamber</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">res</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>If <cite>raise_exception</cite> is True, raise an <a class="reference external" href="https://docs.python.org/3.12/library/exceptions.html#ValueError" title="(in Python v3.12)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> if any values
+are outside the Weyl chamber.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">point_in_weyl_chamber</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="go">(1, 0.5, 0) is not in the Weyl chamber</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="weylchamber.coordinates.random_gate">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.coordinates.</span></span><span class="sig-name descname"><span class="pre">random_gate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/coordinates.html#random_gate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.coordinates.random_gate" title="Link to this definition">¶</a></dt>
+<dd><p>Return a random two-qubit gate</p>
+<p>If region is not None, the gate will be in the specified region of the Weyl
+chamber.  The following region names are allowed:
+:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://qutip.readthedocs.io/en/qutip-5.0.x/apidoc/classes.html#qutip.core.qobj.Qobj" title="(in QuTiP: Quantum Toolbox in Python v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Qobj</span></code></a></span></p>
+<ul class="simple">
+<li><p>‘SQ’: single qubit gates, consisting of the Weyl chamber points O, A2</p></li>
+<li><p>‘PE’: polyhedron of perfect entanglers</p></li>
+<li><p>‘W0’: region between point O and the PE polyhedron</p></li>
+<li><p>‘W0*’: region between point A2 and the PE polyhedron</p></li>
+<li><p>‘W1’: region between point A3 ([SWAP]) and the PE polyhedron</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="weylchamber.coordinates.random_weyl_point">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.coordinates.</span></span><span class="sig-name descname"><span class="pre">random_weyl_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/coordinates.html#random_weyl_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.coordinates.random_weyl_point" title="Link to this definition">¶</a></dt>
+<dd><p>Return a random point <span class="math notranslate nohighlight">\((c_1, c_2, c_3)\)</span> in the Weyl chamber (units of π)</p>
+<p>If region is given in [‘W0’, ‘W0*’, ‘W1’, ‘PE’], the point will be in the
+specified region of the Weyl chamber</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.12/library/typing.html#typing.Tuple" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3.12/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3.12/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3.12/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="n">random_weyl_point</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_weyl_chamber</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="n">random_weyl_point</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="s1">&#39;PE&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;PE&#39;</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="n">random_weyl_point</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="s1">&#39;W0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W0&#39;</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="n">random_weyl_point</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="s1">&#39;W0*&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W0*&#39;</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="n">random_weyl_point</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="s1">&#39;W1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point_in_region</span><span class="p">(</span><span class="s1">&#39;W1&#39;</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="weylchamber.coordinates.to_magic">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.coordinates.</span></span><span class="sig-name descname"><span class="pre">to_magic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/coordinates.html#to_magic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.coordinates.to_magic" title="Link to this definition">¶</a></dt>
+<dd><p>Convert <cite>A</cite> from the canonical basis to the the “magic” Bell basis</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://qutip.readthedocs.io/en/qutip-5.0.x/apidoc/classes.html#qutip.core.qobj.Qobj" title="(in QuTiP: Quantum Toolbox in Python v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Qobj</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="weylchamber.coordinates.weyl_region">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.coordinates.</span></span><span class="sig-name descname"><span class="pre">weyl_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_weyl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/coordinates.html#weyl_region"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.coordinates.weyl_region" title="Link to this definition">¶</a></dt>
+<dd><p>Return the region of the Weyl chamber the given point is in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One of ‘W0’, ‘W0*’, ‘W1’, ‘PE’</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">weylchamber.visualize</span> <span class="kn">import</span> <span class="n">WeylChamber</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">weyl_region</span><span class="p">(</span><span class="o">*</span><span class="n">WeylChamber</span><span class="o">.</span><span class="n">O</span><span class="p">))</span>
+<span class="go">W0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">weyl_region</span><span class="p">(</span><span class="o">*</span><span class="n">WeylChamber</span><span class="o">.</span><span class="n">A1</span><span class="p">))</span>
+<span class="go">W0*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">weyl_region</span><span class="p">(</span><span class="o">*</span><span class="n">WeylChamber</span><span class="o">.</span><span class="n">A3</span><span class="p">))</span>
+<span class="go">W1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">weyl_region</span><span class="p">(</span><span class="o">*</span><span class="n">WeylChamber</span><span class="o">.</span><span class="n">L</span><span class="p">))</span>
+<span class="go">PE</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">weyl_region</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+<span class="go">W0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">weyl_region</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+<span class="go">W0*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">weyl_region</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="go">PE</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">weyl_region</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">))</span>
+<span class="go">W1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">weyl_region</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="go">(1, 0.5, 0) is not in the Weyl chamber</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">weyl_region</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">check_weyl</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="go">W0*</span>
+</pre></div>
+</div>
+<p>Only scalar values are accepted for c1, c2, c3</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="weylchamber.html" class="btn btn-neutral float-left" title="weylchamber package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="weylchamber.gates.html" class="btn btn-neutral float-right" title="weylchamber.gates module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Michael Goerz.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

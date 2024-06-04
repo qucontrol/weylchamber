@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>weylchamber.coordinates &mdash; weylchamber c756cfb documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" href="../../_static/mycss.css" type="text/css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=1bd04038"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/docs-versions-menu.js?v=3d6a1aea"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            weylchamber
+          </a>
+              <div class="version">
+                0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">The weylchamber package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../API/weylchamber.html">API of the weylchamber package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">weylchamber</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>weylchamber.coordinates</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for weylchamber.coordinates</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Calculation of Weyl chamber coordinates&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">less</span><span class="p">,</span> <span class="n">greater</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">logical_and</span> <span class="k">as</span> <span class="n">And</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">logical_or</span> <span class="k">as</span> <span class="n">Or</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">less_equal</span> <span class="k">as</span> <span class="n">less_eq</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">greater_equal</span> <span class="k">as</span> <span class="n">greater_eq</span>
+<span class="kn">import</span> <span class="nn">qutip</span>
+
+<span class="kn">from</span> <span class="nn">.gates</span> <span class="kn">import</span> <span class="n">Qmagic</span><span class="p">,</span> <span class="n">SxSx</span><span class="p">,</span> <span class="n">SySy</span><span class="p">,</span> <span class="n">SzSz</span>
+<span class="kn">from</span> <span class="nn">.prec</span> <span class="kn">import</span> <span class="n">DEFAULT_WEYL_PRECISSION</span>
+<span class="kn">from</span> <span class="nn">._types</span> <span class="kn">import</span> <span class="n">Gate</span><span class="p">,</span> <span class="n">CTuple</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;c1c2c3&#39;</span><span class="p">,</span> <span class="s1">&#39;canonical_gate&#39;</span><span class="p">,</span> <span class="s1">&#39;from_magic&#39;</span><span class="p">,</span> <span class="s1">&#39;point_in_region&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;point_in_weyl_chamber&#39;</span><span class="p">,</span> <span class="s1">&#39;random_gate&#39;</span><span class="p">,</span> <span class="s1">&#39;random_weyl_point&#39;</span><span class="p">,</span> <span class="s1">&#39;to_magic&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;weyl_region&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="c1c2c3">
+<a class="viewcode-back" href="../../API/weylchamber.coordinates.html#weylchamber.coordinates.c1c2c3">[docs]</a>
+<span class="k">def</span> <span class="nf">c1c2c3</span><span class="p">(</span><span class="n">U</span><span class="p">:</span> <span class="n">Gate</span><span class="p">,</span> <span class="n">ndigits</span><span class="o">=</span><span class="n">DEFAULT_WEYL_PRECISSION</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CTuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate Weyl chamber coordinates $(c_1, c_2, c_3)$</span>
+
+<span class="sd">    Given U (in canonical basis), calculate the Weyl Chamber coordinates</span>
+<span class="sd">    $(c_1, c_2, c_3)$, in units of π.</span>
+
+<span class="sd">    In order to facility numerical stability, the resulting coordinates are</span>
+<span class="sd">    rounded to the given precision (cf. `ndigits` parameter of the built-in</span>
+<span class="sd">    `round` function). Otherwise, rounding errors would likely to result in</span>
+<span class="sd">    points that are not in the Weyl chamber, e.g. (0.1, 0.0, 1.0e-13)</span>
+
+<span class="sd">    Algorithm from Childs et al., PRA 68, 052311 (2003).</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; print(&quot;%.2f %.2f %.2f&quot; % c1c2c3(qutip.core.gates.cnot()))</span>
+<span class="sd">        0.50 0.00 0.00</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+    <span class="k">if</span> <span class="n">U</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Gates must have a 4×4 shape&quot;</span><span class="p">)</span>
+    <span class="n">U_tilde</span> <span class="o">=</span> <span class="n">SySy</span> <span class="o">*</span> <span class="n">U</span><span class="o">.</span><span class="n">trans</span><span class="p">()</span> <span class="o">*</span> <span class="n">SySy</span>
+    <span class="n">ev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span>
+        <span class="p">((</span><span class="n">U</span> <span class="o">*</span> <span class="n">U_tilde</span><span class="p">)</span><span class="o">.</span><span class="n">full</span><span class="p">())</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">complex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">full</span><span class="p">()))))</span>
+    <span class="n">two_S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">ev</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">two_S</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">two_S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">:</span>
+            <span class="n">two_S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">2.0</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">two_S</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># sort decreasing</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">S</span><span class="p">)))</span>
+    <span class="n">S</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="o">-</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="o">-</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+    <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">S</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">c3</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">c1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">c1</span>
+        <span class="n">c3</span> <span class="o">=</span> <span class="o">-</span><span class="n">c3</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">c1</span><span class="o">+</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ndigits</span><span class="p">),</span>  <span class="c1"># adding 0.0 turns -0.0 into +0.0</span>
+            <span class="nb">round</span><span class="p">(</span><span class="n">c2</span><span class="o">+</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ndigits</span><span class="p">),</span>
+            <span class="nb">round</span><span class="p">(</span><span class="n">c3</span><span class="o">+</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ndigits</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="point_in_weyl_chamber">
+<a class="viewcode-back" href="../../API/weylchamber.coordinates.html#weylchamber.coordinates.point_in_weyl_chamber">[docs]</a>
+<span class="k">def</span> <span class="nf">point_in_weyl_chamber</span><span class="p">(</span>
+        <span class="n">c1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c3</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the coordinates $(c_1, c_2, c_3)$ are inside the Weyl chamber</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">        &gt;&gt;&gt; BGATE = qutip.core.gates.berkeley()</span>
+<span class="sd">        &gt;&gt;&gt; point_in_weyl_chamber(*c1c2c3(BGATE))</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; point_in_weyl_chamber(*c1c2c3(qutip.identity([2, 2])))</span>
+<span class="sd">        True</span>
+
+<span class="sd">        The coordinates may also be array-like, in which case a boolean numpy</span>
+<span class="sd">        array is returned.</span>
+
+<span class="sd">        &gt;&gt;&gt; res = point_in_weyl_chamber(</span>
+<span class="sd">        ...     [0.0,0.5,0.8], [1.0,0.25,0.0], [1.0,0.25,0.0])</span>
+<span class="sd">        &gt;&gt;&gt; assert np.all(res == np.array([False,  True,  True]))</span>
+
+<span class="sd">        If `raise_exception` is True, raise an :exc:`ValueError` if any values</span>
+<span class="sd">        are outside the Weyl chamber.</span>
+
+<span class="sd">        &gt;&gt;&gt; try:</span>
+<span class="sd">        ...     point_in_weyl_chamber(1.0, 0.5, 0, raise_exception=True)</span>
+<span class="sd">        ... except ValueError as e:</span>
+<span class="sd">        ...     print(e)</span>
+<span class="sd">        (1, 0.5, 0) is not in the Weyl chamber</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">Or</span><span class="p">(</span>
+        <span class="n">And</span><span class="p">(</span><span class="n">And</span><span class="p">(</span>
+          <span class="n">less</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">less_eq</span><span class="p">(</span><span class="n">c2</span><span class="p">,</span> <span class="n">c1</span><span class="p">)),</span> <span class="n">less_eq</span><span class="p">(</span><span class="n">c3</span><span class="p">,</span> <span class="n">c2</span><span class="p">)),</span>
+        <span class="n">And</span><span class="p">(</span><span class="n">And</span><span class="p">(</span>
+          <span class="n">greater_eq</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">less_eq</span><span class="p">(</span><span class="n">c2</span><span class="p">,</span> <span class="mf">1.0</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">c1</span><span class="p">))),</span> <span class="n">less_eq</span><span class="p">(</span><span class="n">c3</span><span class="p">,</span> <span class="n">c2</span><span class="p">))</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">raise_exception</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">c1</span><span class="p">):</span>  <span class="c1"># assume c2, c3 are scalar, too</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;(</span><span class="si">%g</span><span class="s2">, </span><span class="si">%g</span><span class="s2">, </span><span class="si">%g</span><span class="s2">) is not in the Weyl chamber&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Not all values (c1, c2, c3) are in the Weyl chamber&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="point_in_region">
+<a class="viewcode-back" href="../../API/weylchamber.coordinates.html#weylchamber.coordinates.point_in_region">[docs]</a>
+<span class="k">def</span> <span class="nf">point_in_region</span><span class="p">(</span>
+        <span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">c1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c3</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">check_weyl</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if $(c_1, c_2, c_3)$ are in the given region of the Weyl chamber</span>
+
+<span class="sd">    The regions are &#39;W0&#39; (between origin O and perfect entanglers polyhedron),</span>
+<span class="sd">    &#39;W0*&#39; (between point A1 and perfect entangler polyhedron), &#39;W1&#39; (between A3</span>
+<span class="sd">    point and perfect entanglers polyhedron), and &#39;PE&#39; (inside perfect</span>
+<span class="sd">    entanglers polyhedron)</span>
+
+<span class="sd">    If the `check_weyl` parameter is given a True, raise a ValueError for any</span>
+<span class="sd">    points outside of the Weyl chamber</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from weylchamber.visualize import WeylChamber</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;W0&#39;, *WeylChamber.O)</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;W0&#39;, 0.2, 0.05, 0.0)</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;W0&#39;, *WeylChamber.L)</span>
+<span class="sd">        False</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;W0&#39;, *WeylChamber.Q)</span>
+<span class="sd">        False</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;PE&#39;, *WeylChamber.Q)</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;W0*&#39;, *WeylChamber.A1)</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;W0*&#39;, 0.8, 0.1, 0.1)</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;W1&#39;, *WeylChamber.A3)</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;W1&#39;, 0.5, 0.4, 0.25)</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;W1&#39;, 0.5, 0.25, 0)</span>
+<span class="sd">        False</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;PE&#39;, 0.5, 0.25, 0)</span>
+<span class="sd">        True</span>
+
+<span class="sd">        The function may be also applied against arrays::</span>
+
+<span class="sd">        &gt;&gt;&gt; res = point_in_region(&#39;W1&#39;, [0.5,0.5], [0.4,0.25], [0.25,0.0])</span>
+<span class="sd">        &gt;&gt;&gt; assert np.all(res == np.array([ True, False]))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">regions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;W0&#39;</span><span class="p">,</span> <span class="s1">&#39;W0*&#39;</span><span class="p">,</span> <span class="s1">&#39;W1&#39;</span><span class="p">,</span> <span class="s1">&#39;PE&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">region</span> <span class="o">==</span> <span class="s1">&#39;PE&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_point_in_PE</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">check_weyl</span><span class="o">=</span><span class="n">check_weyl</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">in_weyl</span> <span class="o">=</span> <span class="n">point_in_weyl_chamber</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="n">check_weyl</span><span class="p">)</span>
+        <span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+        <span class="n">c2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
+        <span class="n">c3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">c3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">region</span> <span class="o">==</span> <span class="s1">&#39;W0&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">And</span><span class="p">(</span><span class="n">in_weyl</span><span class="p">,</span> <span class="n">less</span><span class="p">(</span><span class="n">c1</span><span class="o">+</span><span class="n">c2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">region</span> <span class="o">==</span> <span class="s1">&#39;W0*&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">And</span><span class="p">(</span><span class="n">in_weyl</span><span class="p">,</span> <span class="n">greater</span><span class="p">(</span><span class="n">c1</span><span class="o">-</span><span class="n">c2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">region</span> <span class="o">==</span> <span class="s1">&#39;W1&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">And</span><span class="p">(</span><span class="n">in_weyl</span><span class="p">,</span> <span class="n">greater</span><span class="p">(</span><span class="n">c2</span><span class="o">+</span><span class="n">c3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;region </span><span class="si">%s</span><span class="s2"> is not in </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="n">regions</span><span class="p">))</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_point_in_PE</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">check_weyl</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the coordinates c1, c2, c3 are inside the</span>
+<span class="sd">    perfect-entangler polyhedron</span>
+
+<span class="sd">    &gt;&gt;&gt; BGATE = qutip.core.gates.berkeley()</span>
+<span class="sd">    &gt;&gt;&gt; _point_in_PE(*c1c2c3(BGATE))</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; _point_in_PE(*c1c2c3(qutip.identity(4)))</span>
+<span class="sd">    False</span>
+
+<span class="sd">    &gt;&gt;&gt; res = _point_in_PE([0.0, 0.5, 0.8], [1.0, 0.25, 0.0], [1.0, 0.25, 0.0])</span>
+<span class="sd">    &gt;&gt;&gt; assert np.all(res == np.array([False,  True, False]))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">in_weyl</span> <span class="o">=</span> <span class="n">point_in_weyl_chamber</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="n">check_weyl</span><span class="p">)</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">c1</span><span class="p">);</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">c2</span><span class="p">);</span> <span class="n">c3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">c3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">And</span><span class="p">(</span><span class="n">in_weyl</span><span class="p">,</span>
+        <span class="n">And</span><span class="p">(</span><span class="n">And</span><span class="p">(</span>
+            <span class="n">greater_eq</span><span class="p">(</span><span class="n">c1</span><span class="o">+</span><span class="n">c2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">less_eq</span><span class="p">(</span><span class="n">c1</span><span class="o">-</span><span class="n">c2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)),</span> <span class="n">less_eq</span><span class="p">(</span><span class="n">c2</span><span class="o">+</span><span class="n">c3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="weyl_region">
+<a class="viewcode-back" href="../../API/weylchamber.coordinates.html#weylchamber.coordinates.weyl_region">[docs]</a>
+<span class="k">def</span> <span class="nf">weyl_region</span><span class="p">(</span><span class="n">c1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c3</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">check_weyl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the region of the Weyl chamber the given point is in.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        One of &#39;W0&#39;, &#39;W0*&#39;, &#39;W1&#39;, &#39;PE&#39;</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">        &gt;&gt;&gt; from weylchamber.visualize import WeylChamber</span>
+<span class="sd">        &gt;&gt;&gt; print(weyl_region(*WeylChamber.O))</span>
+<span class="sd">        W0</span>
+<span class="sd">        &gt;&gt;&gt; print(weyl_region(*WeylChamber.A1))</span>
+<span class="sd">        W0*</span>
+<span class="sd">        &gt;&gt;&gt; print(weyl_region(*WeylChamber.A3))</span>
+<span class="sd">        W1</span>
+<span class="sd">        &gt;&gt;&gt; print(weyl_region(*WeylChamber.L))</span>
+<span class="sd">        PE</span>
+<span class="sd">        &gt;&gt;&gt; print(weyl_region(0.2, 0.05, 0.0))</span>
+<span class="sd">        W0</span>
+<span class="sd">        &gt;&gt;&gt; print(weyl_region(0.8, 0.1, 0.1))</span>
+<span class="sd">        W0*</span>
+<span class="sd">        &gt;&gt;&gt; print(weyl_region(0.5, 0.25, 0))</span>
+<span class="sd">        PE</span>
+<span class="sd">        &gt;&gt;&gt; print(weyl_region(0.5, 0.4, 0.25))</span>
+<span class="sd">        W1</span>
+<span class="sd">        &gt;&gt;&gt; try:</span>
+<span class="sd">        ...     weyl_region(1.0, 0.5, 0)</span>
+<span class="sd">        ... except ValueError as e:</span>
+<span class="sd">        ...     print(e)</span>
+<span class="sd">        (1, 0.5, 0) is not in the Weyl chamber</span>
+<span class="sd">        &gt;&gt;&gt; print(weyl_region(1.0, 0.1, 0, check_weyl=False))</span>
+<span class="sd">        W0*</span>
+
+<span class="sd">    Only scalar values are accepted for c1, c2, c3</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">point_in_weyl_chamber</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="n">check_weyl</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">c1</span><span class="o">+</span><span class="n">c2</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;W0&#39;</span>
+    <span class="k">elif</span> <span class="n">c1</span><span class="o">-</span><span class="n">c2</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;W0*&#39;</span>
+    <span class="k">elif</span> <span class="n">c2</span><span class="o">+</span><span class="n">c3</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;W1&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;PE&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="to_magic">
+<a class="viewcode-back" href="../../API/weylchamber.coordinates.html#weylchamber.coordinates.to_magic">[docs]</a>
+<span class="k">def</span> <span class="nf">to_magic</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">Gate</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert `A` from the canonical basis to the the &quot;magic&quot; Bell basis&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Gates must have a 4×4 shape&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Qmagic</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span> <span class="o">*</span> <span class="n">Qmagic</span></div>
+
+
+
+<div class="viewcode-block" id="from_magic">
+<a class="viewcode-back" href="../../API/weylchamber.coordinates.html#weylchamber.coordinates.from_magic">[docs]</a>
+<span class="k">def</span> <span class="nf">from_magic</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">Gate</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; The inverse of :func:`.to_magic`&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Gates must have a 4×4 shape&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Qmagic</span> <span class="o">*</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span> <span class="o">*</span> <span class="n">Qmagic</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="random_weyl_point">
+<a class="viewcode-back" href="../../API/weylchamber.coordinates.html#weylchamber.coordinates.random_weyl_point">[docs]</a>
+<span class="k">def</span> <span class="nf">random_weyl_point</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CTuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a random point $(c_1, c_2, c_3)$ in the Weyl chamber (units of π)</span>
+
+<span class="sd">    If region is given in [&#39;W0&#39;, &#39;W0*&#39;, &#39;W1&#39;, &#39;PE&#39;], the point will be in the</span>
+<span class="sd">    specified region of the Weyl chamber</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; c1, c2, c3 = random_weyl_point()</span>
+<span class="sd">        &gt;&gt;&gt; point_in_weyl_chamber(c1, c2, c3)</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; c1, c2, c3 = random_weyl_point(region=&#39;PE&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;PE&#39;, c1, c2, c3)</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; c1, c2, c3 = random_weyl_point(region=&#39;W0&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;W0&#39;, c1, c2, c3)</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; c1, c2, c3 = random_weyl_point(region=&#39;W0*&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;W0*&#39;, c1, c2, c3)</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; c1, c2, c3 = random_weyl_point(region=&#39;W1&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; point_in_region(&#39;W1&#39;, c1, c2, c3)</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
+        <span class="n">c2</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
+        <span class="n">c3</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">point_in_weyl_chamber</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">region</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">point_in_region</span><span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_U2</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi1</span><span class="p">,</span> <span class="n">phi2</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return a unitary gate as numpy array using the parametrization</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        U = e^{i \phi} \begin{bmatrix}</span>
+<span class="sd">             \cos\theta e^{ i\phi_1}  &amp; \sin\theta e^{ i\phi_2}\\</span>
+<span class="sd">            -\sin\theta e^{-i\phi_2}  &amp; \cos\theta e^{-i\phi_1}\\</span>
+<span class="sd">            \end{bmatrix}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">exp</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span>
+    <span class="k">return</span> <span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span>  <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">phi1</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">phi2</span><span class="p">)</span> <span class="p">],</span>
+        <span class="p">[</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">phi2</span><span class="p">),</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">phi1</span><span class="p">)</span> <span class="p">]])</span>
+
+
+<span class="k">def</span> <span class="nf">_SQ_unitary</span><span class="p">(</span>
+        <span class="n">phi_left</span><span class="p">,</span> <span class="n">theta_left</span><span class="p">,</span> <span class="n">phi1_left</span><span class="p">,</span> <span class="n">phi2_left</span><span class="p">,</span> <span class="n">phi_right</span><span class="p">,</span> <span class="n">theta_right</span><span class="p">,</span>
+        <span class="n">phi1_right</span><span class="p">,</span> <span class="n">phi2_right</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a non-entangling two-qubit gate (a two-qubit gate locally</span>
+<span class="sd">    equivalent to the identity)&quot;&quot;&quot;</span>
+    <span class="n">Id</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">_U2</span><span class="p">(</span><span class="n">phi_left</span><span class="p">,</span> <span class="n">theta_left</span><span class="p">,</span> <span class="n">phi1_left</span><span class="p">,</span> <span class="n">phi2_left</span><span class="p">),</span> <span class="n">Id</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">Id</span><span class="p">,</span> <span class="n">_U2</span><span class="p">(</span><span class="n">phi_right</span><span class="p">,</span> <span class="n">theta_right</span><span class="p">,</span> <span class="n">phi1_right</span><span class="p">,</span> <span class="n">phi2_right</span><span class="p">))),</span>
+        <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+
+
+<div class="viewcode-block" id="canonical_gate">
+<a class="viewcode-back" href="../../API/weylchamber.coordinates.html#weylchamber.coordinates.canonical_gate">[docs]</a>
+<span class="k">def</span> <span class="nf">canonical_gate</span><span class="p">(</span><span class="n">c1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c3</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return the canonical gate for the given $(c_1, c_2, c_3)$</span>
+
+<span class="sd">    The canonical gate is defined as</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \Op{A} = e^{i \frac{\pi}{2} \left(</span>
+<span class="sd">            c_1 \Op{\sigma}_x \Op{\sigma}_x +</span>
+<span class="sd">            c_2 \Op{\sigma}_y \Op{\sigma}_y +</span>
+<span class="sd">            c_3 \Op{\sigma}_z \Op{\sigma}_z \right)}</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; gate = qutip.Qobj(</span>
+<span class="sd">        ...     [[0.707107+0.000000j, 0.000000+0.000000j, 0.000000+0.000000j, 0.000000+0.707107j],</span>
+<span class="sd">        ...      [0.000000+0.000000j, 0.707107+0.000000j, 0.000000+0.707107j, 0.000000+0.000000j],</span>
+<span class="sd">        ...      [0.000000+0.000000j, 0.000000+0.707107j, 0.707107+0.000000j, 0.000000+0.000000j],</span>
+<span class="sd">        ...      [0.000000+0.707107j, 0.000000+0.000000j, 0.000000+0.000000j, 0.707107+0.000000j]],</span>
+<span class="sd">        ... dims=[[2,2], [2,2]])</span>
+<span class="sd">        &gt;&gt;&gt; U = canonical_gate(0.5,0,0)</span>
+<span class="sd">        &gt;&gt;&gt; assert (U - gate).norm() &lt; 1e-5</span>
+<span class="sd">        &gt;&gt;&gt; assert np.max(np.abs(</span>
+<span class="sd">        ...     np.array(c1c2c3(U)) - np.array([0.5, 0, 0]))) &lt; 1e-15</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mf">0.5</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">c1</span> <span class="o">*</span> <span class="n">SxSx</span> <span class="o">+</span> <span class="n">c2</span> <span class="o">*</span> <span class="n">SySy</span> <span class="o">+</span> <span class="n">c3</span> <span class="o">*</span> <span class="n">SzSz</span><span class="p">))</span><span class="o">.</span><span class="n">expm</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="random_gate">
+<a class="viewcode-back" href="../../API/weylchamber.coordinates.html#weylchamber.coordinates.random_gate">[docs]</a>
+<span class="k">def</span> <span class="nf">random_gate</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a random two-qubit gate</span>
+
+<span class="sd">    If region is not None, the gate will be in the specified region of the Weyl</span>
+<span class="sd">    chamber.  The following region names are allowed:</span>
+
+<span class="sd">    * &#39;SQ&#39;: single qubit gates, consisting of the Weyl chamber points O, A2</span>
+<span class="sd">    * &#39;PE&#39;: polyhedron of perfect entanglers</span>
+<span class="sd">    * &#39;W0&#39;: region between point O and the PE polyhedron</span>
+<span class="sd">    * &#39;W0*&#39;: region between point A2 and the PE polyhedron</span>
+<span class="sd">    * &#39;W1&#39;: region between point A3 ([SWAP]) and the PE polyhedron</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">region</span> <span class="o">==</span> <span class="s1">&#39;SQ&#39;</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_SQ_unitary</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">canonical_gate</span><span class="p">(</span><span class="o">*</span><span class="n">random_weyl_point</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">))</span>  <span class="c1"># Qobj</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_SQ_unitary</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">[:</span><span class="mi">8</span><span class="p">])</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">_SQ_unitary</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="mi">8</span><span class="p">:])</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Michael Goerz.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

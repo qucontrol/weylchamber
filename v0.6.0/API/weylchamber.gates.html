@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>weylchamber.gates module &mdash; weylchamber c756cfb documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" href="../_static/mycss.css" type="text/css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=1bd04038"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/docs-versions-menu.js?v=3d6a1aea"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/SVG"], "TeX": {"extensions": ["AMSmath.js", "AMSsymbols.js", "noErrors.js", "noUndefined.js"], "Macros": {"tr": ["{\\operatorname{tr}}", 0], "diag": ["{\\operatorname{diag}}", 0], "abs": ["{\\operatorname{abs}}", 0], "pop": ["{\\operatorname{pop}}", 0], "ee": ["{\\text{e}}", 0], "ii": ["{\\text{i}}", 0], "aux": ["{\\text{aux}}", 0], "opt": ["{\\text{opt}}", 0], "tgt": ["{\\text{tgt}}", 0], "init": ["{\\text{init}}", 0], "lab": ["{\\text{lab}}", 0], "rwa": ["{\\text{rwa}}", 0], "bra": ["{\\langle#1\\vert}", 1], "ket": ["{\\vert#1\\rangle}", 1], "Bra": ["{\\left\\langle#1\\right\\vert}", 1], "Braket": ["{\\left\\langle #1\\vphantom{#2} \\mid #2\\vphantom{#1}\\right\\rangle}", 2], "Ket": ["{\\left\\vert#1\\right\\rangle}", 1], "mat": ["{\\mathbf{#1}}", 1], "op": ["{\\hat{#1}}", 1], "Op": ["{\\hat{#1}}", 1], "dd": ["{\\,\\text{d}}", 0], "daggered": ["{^{\\dagger}}", 0], "transposed": ["{^{\\text{T}}}", 0], "Liouville": ["{\\mathcal{L}}", 0], "DynMap": ["{\\mathcal{E}}", 0], "identity": ["{\\mathbf{1}}", 0], "Norm": ["{\\lVert#1\\rVert}", 1], "Abs": ["{\\left\\vert#1\\right\\vert}", 1], "avg": ["{\\langle#1\\rangle}", 1], "Avg": ["{\\left\\langle#1\\right\\rangle}", 1], "AbsSq": ["{\\left\\vert#1\\right\\vert^2}", 1], "Re": ["{\\operatorname{Re}}", 0], "Im": ["{\\operatorname{Im}}", 0], "Real": ["{\\mathbb{R}}", 0], "Complex": ["{\\mathbb{C}}", 0], "Integer": ["{\\mathbb{N}}", 0]}}, "tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="weylchamber.local_invariants module" href="weylchamber.local_invariants.html" />
+    <link rel="prev" title="weylchamber.coordinates module" href="weylchamber.coordinates.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            weylchamber
+          </a>
+              <div class="version">
+                0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">The weylchamber package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="weylchamber.html">API of the weylchamber package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.coordinates.html">weylchamber.coordinates module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">weylchamber.gates module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#weylchamber.gates.Qmagic"><code class="docutils literal notranslate"><span class="pre">Qmagic</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#weylchamber.gates.SxSx"><code class="docutils literal notranslate"><span class="pre">SxSx</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#weylchamber.gates.SySy"><code class="docutils literal notranslate"><span class="pre">SySy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#weylchamber.gates.SzSz"><code class="docutils literal notranslate"><span class="pre">SzSz</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#summary">Summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.gates.bell_basis"><code class="docutils literal notranslate"><span class="pre">bell_basis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.gates.gate"><code class="docutils literal notranslate"><span class="pre">gate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.gates.mapped_basis"><code class="docutils literal notranslate"><span class="pre">mapped_basis()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.local_invariants.html">weylchamber.local_invariants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.perfect_entanglers.html">weylchamber.perfect_entanglers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.prec.html">weylchamber.prec module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.visualize.html">weylchamber.visualize module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.html#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">weylchamber</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="weylchamber.html">weylchamber package</a> &raquo;</li>
+        
+      <li>weylchamber.gates module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-weylchamber.gates">
+<span id="weylchamber-gates-module"></span><h1>weylchamber.gates module<a class="headerlink" href="#module-weylchamber.gates" title="Link to this heading">¶</a></h1>
+<p>Quantum gates required for Weyl chamber calculations</p>
+<p><strong>Module data:</strong></p>
+<dl class="py data">
+<dt class="sig sig-object py" id="weylchamber.gates.Qmagic">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.gates.</span></span><span class="sig-name descname"><span class="pre">Qmagic</span></span><a class="headerlink" href="#weylchamber.gates.Qmagic" title="Link to this definition">¶</a></dt>
+<dd><p>Transformation matrix to the “magic” Bell basis:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Op{Q} = \frac{1}{\sqrt{2}} \begin{pmatrix}
+   1 &amp; 0 &amp;  0 &amp;  i \\
+   0 &amp; i &amp;  1 &amp;  0 \\
+   0 &amp; i &amp; -1 &amp;  0 \\
+   1 &amp; 0 &amp;  0 &amp; -i
+\end{pmatrix}\end{split}\]</div>
+<p>See “Theorem 1” in Y. Makhlin, Quantum Inf. Process. 1, 243 (2002)</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="weylchamber.gates.SxSx">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.gates.</span></span><span class="sig-name descname"><span class="pre">SxSx</span></span><a class="headerlink" href="#weylchamber.gates.SxSx" title="Link to this definition">¶</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(\Op{\sigma}_x \otimes \Op{\sigma}_x\)</span> gate</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="weylchamber.gates.SySy">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.gates.</span></span><span class="sig-name descname"><span class="pre">SySy</span></span><a class="headerlink" href="#weylchamber.gates.SySy" title="Link to this definition">¶</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(\Op{\sigma}_y \otimes \Op{\sigma}_y\)</span> gate</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="weylchamber.gates.SzSz">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.gates.</span></span><span class="sig-name descname"><span class="pre">SzSz</span></span><a class="headerlink" href="#weylchamber.gates.SzSz" title="Link to this definition">¶</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(\Op{\sigma}_z \otimes \Op{\sigma}_z\)</span> gate</p>
+</dd></dl>
+
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
+<p>Functions:</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#weylchamber.gates.bell_basis" title="weylchamber.gates.bell_basis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bell_basis</span></code></a></p></td>
+<td><p>Two-qubit Bell basis associated with the given canonical basis</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#weylchamber.gates.gate" title="weylchamber.gates.gate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gate</span></code></a></p></td>
+<td><p>Two-qubit gate that maps <cite>basis</cite> to <cite>states</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#weylchamber.gates.mapped_basis" title="weylchamber.gates.mapped_basis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mapped_basis</span></code></a></p></td>
+<td><p>Result of applying <cite>gate</cite> to <cite>basis</cite></p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">__all__</span></code>: <a class="reference internal" href="#weylchamber.gates.Qmagic" title="weylchamber.gates.Qmagic"><code class="xref py py-data docutils literal notranslate"><span class="pre">Qmagic</span></code></a>, <a class="reference internal" href="#weylchamber.gates.SxSx" title="weylchamber.gates.SxSx"><code class="xref py py-data docutils literal notranslate"><span class="pre">SxSx</span></code></a>, <a class="reference internal" href="#weylchamber.gates.SySy" title="weylchamber.gates.SySy"><code class="xref py py-data docutils literal notranslate"><span class="pre">SySy</span></code></a>, <a class="reference internal" href="#weylchamber.gates.SzSz" title="weylchamber.gates.SzSz"><code class="xref py py-data docutils literal notranslate"><span class="pre">SzSz</span></code></a>, <a class="reference internal" href="#weylchamber.gates.bell_basis" title="weylchamber.gates.bell_basis"><code class="xref py py-func docutils literal notranslate"><span class="pre">bell_basis</span></code></a>, <a class="reference internal" href="#weylchamber.gates.gate" title="weylchamber.gates.gate"><code class="xref py py-func docutils literal notranslate"><span class="pre">gate</span></code></a>, <a class="reference internal" href="#weylchamber.gates.mapped_basis" title="weylchamber.gates.mapped_basis"><code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_basis</span></code></a></p>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="weylchamber.gates.bell_basis">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.gates.</span></span><span class="sig-name descname"><span class="pre">bell_basis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canonical_basis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/gates.html#bell_basis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.gates.bell_basis" title="Link to this definition">¶</a></dt>
+<dd><p>Two-qubit Bell basis associated with the given canonical basis</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">qutip</span> <span class="kn">import</span> <span class="n">ket</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">canonical_basis</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="n">ket</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="k">for</span> <span class="n">nums</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bell</span> <span class="o">=</span> <span class="n">bell_basis</span><span class="p">(</span><span class="n">canonical_basis</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_bell</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">(</span>     <span class="n">ket</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">+</span>      <span class="n">ket</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">ket</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">ket</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span>     <span class="n">ket</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span>      <span class="n">ket</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">ket</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">ket</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="p">(</span><span class="n">bell</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">_bell</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-15</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="p">(</span><span class="n">bell</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">_bell</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-15</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bell</span><span class="p">,</span> <span class="n">_bell</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">assert</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-15</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="weylchamber.gates.gate">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.gates.</span></span><span class="sig-name descname"><span class="pre">gate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">basis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/gates.html#gate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.gates.gate" title="Link to this definition">¶</a></dt>
+<dd><p>Two-qubit gate that maps <cite>basis</cite> to <cite>states</cite></p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">qutip</span> <span class="kn">import</span> <span class="n">ket</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">basis</span> <span class="o">=</span> <span class="p">[</span><span class="n">ket</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="k">for</span> <span class="n">nums</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">states</span> <span class="o">=</span> <span class="n">mapped_basis</span><span class="p">(</span><span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">cnot</span><span class="p">(),</span> <span class="n">basis</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">U</span> <span class="o">=</span> <span class="n">gate</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">states</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="p">(</span><span class="n">U</span> <span class="o">-</span> <span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">cnot</span><span class="p">())</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-15</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="weylchamber.gates.mapped_basis">
+<span class="sig-prename descclassname"><span class="pre">weylchamber.gates.</span></span><span class="sig-name descname"><span class="pre">mapped_basis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/gates.html#mapped_basis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.gates.mapped_basis" title="Link to this definition">¶</a></dt>
+<dd><p>Result of applying <cite>gate</cite> to <cite>basis</cite></p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">qutip</span> <span class="kn">import</span> <span class="n">ket</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">basis</span> <span class="o">=</span> <span class="p">[</span><span class="n">ket</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="k">for</span> <span class="n">nums</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">states</span> <span class="o">=</span> <span class="n">mapped_basis</span><span class="p">(</span><span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">cnot</span><span class="p">(),</span> <span class="n">basis</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="p">(</span><span class="n">states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ket</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)))</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-15</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="p">(</span><span class="n">states</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ket</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-15</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="p">(</span><span class="n">states</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">ket</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-15</span>  <span class="c1"># swap (1, 1) ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="p">(</span><span class="n">states</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">ket</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)))</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-15</span>  <span class="c1"># ... and (1, 0)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="weylchamber.coordinates.html" class="btn btn-neutral float-left" title="weylchamber.coordinates module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="weylchamber.local_invariants.html" class="btn btn-neutral float-right" title="weylchamber.local_invariants module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Michael Goerz.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
