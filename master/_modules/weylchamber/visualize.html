@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>weylchamber.visualize &mdash; weylchamber c756cfb documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" href="../../_static/mycss.css" type="text/css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=1bd04038"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/docs-versions-menu.js?v=3d6a1aea"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            weylchamber
+          </a>
+              <div class="version">
+                0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">The weylchamber package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../API/weylchamber.html">API of the weylchamber package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">weylchamber</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>weylchamber.visualize</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for weylchamber.visualize</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>  <span class="c1"># required to activate 2D plotting</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">proj3d</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">FancyArrowPatch</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;WeylChamber&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="WeylChamber">
+<a class="viewcode-back" href="../../API/weylchamber.visualize.html#weylchamber.visualize.WeylChamber">[docs]</a>
+<span class="k">class</span> <span class="nc">WeylChamber</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for plotting data in the Weyl Chamber</span>
+
+<span class="sd">    Class Attributes</span>
+<span class="sd">    ----------------</span>
+
+<span class="sd">    weyl_points: dict</span>
+<span class="sd">        Dictionary of Weyl chamber point names to (c1, c2, c3) coordinates (in</span>
+<span class="sd">        units of pi). Each point name is also a class attribute itself</span>
+<span class="sd">    normal: dict</span>
+<span class="sd">        Dictionary of Weyl chamber region name to normal vectors for the</span>
+<span class="sd">        surface that separates the region from the polyhedron of perfect</span>
+<span class="sd">        entanglers (pointing outwards from the PE&#39;s). The three regions are:</span>
+
+<span class="sd">        * &#39;W0&#39;: region from the origin point (O) to the PE polyhedron</span>
+<span class="sd">        * &#39;W0*&#39;: region from the A2 point to the PE polyhedron</span>
+<span class="sd">        * &#39;W1&#39;: region from the A2 point (SWAP gate) to the PE polyhedron</span>
+
+<span class="sd">    anchor: dict</span>
+<span class="sd">        Dictionary of anchor points for the normal vectors (i.e., an arbitrary</span>
+<span class="sd">        point on the surface that separates the region specified by the key</span>
+<span class="sd">        from the perfect entanglers polyhedron</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fig_width : float {8.5}</span>
+<span class="sd">        Figure width, in cm</span>
+<span class="sd">    fig_height: float {6.0}</span>
+<span class="sd">        Figure height, in cm</span>
+<span class="sd">    left_margin: float {0.0}</span>
+<span class="sd">        Distance from left figure edge to axes, in cm</span>
+<span class="sd">    bottom_margin: float {0.0}</span>
+<span class="sd">        Distance from bottom figure edge to axes, in cm</span>
+<span class="sd">    right_margin: float {0.3}</span>
+<span class="sd">        Distance from right figure edge to axes, in cm</span>
+<span class="sd">    top_margin: float {0.0}</span>
+<span class="sd">        Distance from top figure edge to axes, in cm</span>
+<span class="sd">    azim: float {-50}</span>
+<span class="sd">        azimuthal view angle in degrees</span>
+<span class="sd">    elev: float {-20}</span>
+<span class="sd">        elevation view angle in degrees</span>
+<span class="sd">    dpi: int {300}</span>
+<span class="sd">        Resolution to use when saving to dpi, or showing interactively</span>
+<span class="sd">    linecolor: str {&#39;black&#39;}</span>
+<span class="sd">        Color to be used when drawing lines (e.g. the edges of the Weyl</span>
+<span class="sd">        chamber)</span>
+<span class="sd">    show_c1_label: bool</span>
+<span class="sd">        Whether or not to show the c1 axis label</span>
+<span class="sd">    show_c2_label: bool</span>
+<span class="sd">        Whether or not to show the c2 axis label</span>
+<span class="sd">    show_c3_label: bool</span>
+<span class="sd">        Whether or not to show the c3 axis label</span>
+<span class="sd">    c1_labelpad: float</span>
+<span class="sd">        Label padding for c1 label</span>
+<span class="sd">    c2_labelpad: float</span>
+<span class="sd">        Label padding for c2 label</span>
+<span class="sd">    c3_labelpad: float</span>
+<span class="sd">        Label padding for c3 label</span>
+<span class="sd">    c1_tickspad: float</span>
+<span class="sd">        Padding for c1 tick labels</span>
+<span class="sd">    c2_tickspad: float</span>
+<span class="sd">        Padding for c2 tick labels</span>
+<span class="sd">    c3_tickspad: float</span>
+<span class="sd">        Padding for c2 tick labels</span>
+<span class="sd">    weyl_edges: list</span>
+<span class="sd">        List of tuples (point1, point2, foreground) where point1 and point2 are</span>
+<span class="sd">        keys in `weyl_points`, and foreground is a logical to indicate whether</span>
+<span class="sd">        the edge is in the background or foreground (depending on the</span>
+<span class="sd">        perspective of the plot). Describes the lines that make up the Weyl</span>
+<span class="sd">        chamber.</span>
+<span class="sd">    weyl_edge_fg_properties: dict</span>
+<span class="sd">        Properties to be used when drawing foreground weyl_edges</span>
+<span class="sd">    weyl_edge_bg_properties: dict</span>
+<span class="sd">        Properties to be used when drawing background weyl_edges</span>
+<span class="sd">    PE_edges: list</span>
+<span class="sd">        List of tuples (point1, point2, foreground) where point1 and point2 are</span>
+<span class="sd">        keys in weyl_points, and foreground is a logical to indicate whether</span>
+<span class="sd">        the edge is in the background or foreground (depending on the</span>
+<span class="sd">        perspective of the plot). Desribes the lines that make up the</span>
+<span class="sd">        polyhedron of perfect entanglers</span>
+<span class="sd">    PE_edge_fg_properties: dict</span>
+<span class="sd">        Properties to be used when drawing foreground PE_edges</span>
+<span class="sd">    PE_edge_bg_properties: dict</span>
+<span class="sd">        Properties to be used when drawing background PE_edges</span>
+<span class="sd">    labels: dict</span>
+<span class="sd">        label names =&gt; array (c1, c2, c3) where label should be drawn</span>
+<span class="sd">    tex_labels: logical {True}</span>
+<span class="sd">        If True wrap label names in dollar signs to produce a latex string.</span>
+<span class="sd">    label_properties: dict</span>
+<span class="sd">        Properties to be used when drawing labels</span>
+<span class="sd">    z_axis_left: logical {True}</span>
+<span class="sd">        If True, draw z-axis on the left</span>
+<span class="sd">    grid: logical {False}</span>
+<span class="sd">        Show a grid on panes?</span>
+<span class="sd">    panecolor: None or tuple  {(1.0, 1.0, 1.0, 0.0)}</span>
+<span class="sd">        Color (r, g, b, alpha) with values in [0,1] for the c1, c2, and c3</span>
+<span class="sd">        panes</span>
+<span class="sd">    facecolor: str {&#39;None&#39;}</span>
+<span class="sd">        Name of color for figure background</span>
+<span class="sd">    ticklabelsize: float {7}</span>
+<span class="sd">        font size for tick labels</span>
+<span class="sd">    full_cube: logical {False}</span>
+<span class="sd">        if True, draw all three axes in the range [0,1]. This may result in a</span>
+<span class="sd">        less distorted view of the Weyl chamber</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">A1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">A2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">A3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">O</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">L</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">M</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">N</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">P</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">Q</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">weyl_points</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A1&#39;</span> <span class="p">:</span> <span class="n">A1</span><span class="p">,</span> <span class="s1">&#39;A2&#39;</span> <span class="p">:</span> <span class="n">A2</span><span class="p">,</span> <span class="s1">&#39;A3&#39;</span> <span class="p">:</span> <span class="n">A3</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span> <span class="p">:</span> <span class="n">O</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span> <span class="p">:</span> <span class="n">L</span><span class="p">,</span>
+                   <span class="s1">&#39;M&#39;</span> <span class="p">:</span> <span class="n">M</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span> <span class="p">:</span> <span class="n">N</span><span class="p">,</span> <span class="s1">&#39;P&#39;</span> <span class="p">:</span> <span class="n">P</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">:</span> <span class="n">Q</span><span class="p">}</span>
+    <span class="n">normal</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;W0&#39;</span> <span class="p">:</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+              <span class="s1">&#39;W0*&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+              <span class="s1">&#39;W1&#39;</span> <span class="p">:</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))}</span>
+    <span class="n">anchor</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;W0&#39;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span> <span class="s1">&#39;W0*&#39;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span> <span class="s1">&#39;W1&#39;</span><span class="p">:</span> <span class="n">A2</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fig</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ax</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_artists</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">azim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">50</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elev</span> <span class="o">=</span> <span class="mi">20</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig_width</span> <span class="o">=</span> <span class="mf">8.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig_height</span> <span class="o">=</span> <span class="mf">6.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_margin</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bottom_margin</span> <span class="o">=</span>  <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_margin</span> <span class="o">=</span>  <span class="mf">0.3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">top_margin</span> <span class="o">=</span>  <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linecolor</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_c1_label</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_c2_label</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_c3_label</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c1_labelpad</span> <span class="o">=</span> <span class="o">-</span><span class="mi">9</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c2_labelpad</span> <span class="o">=</span> <span class="o">-</span><span class="mi">14</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c3_labelpad</span> <span class="o">=</span> <span class="o">-</span><span class="mi">14</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c1_tickspad</span> <span class="o">=</span> <span class="o">-</span><span class="mf">6.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c2_tickspad</span> <span class="o">=</span> <span class="o">-</span><span class="mf">4.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c3_tickspad</span> <span class="o">=</span> <span class="o">-</span><span class="mf">6.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weyl_edge_fg_properties</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;linestyle&#39;</span><span class="p">:</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;lw&#39;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weyl_edge_bg_properties</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;linestyle&#39;</span><span class="p">:</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;lw&#39;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PE_edge_fg_properties</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;linestyle&#39;</span><span class="p">:</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;lw&#39;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PE_edge_bg_properties</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;linestyle&#39;</span><span class="p">:</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;lw&#39;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weyl_edges</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="s1">&#39;A1&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">,</span> <span class="s1">&#39;A2&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;A2&#39;</span><span class="p">,</span> <span class="s1">&#39;A3&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;A3&#39;</span><span class="p">,</span> <span class="s1">&#39;A1&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;A3&#39;</span><span class="p">,</span>  <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+            <span class="p">[</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="s1">&#39;A2&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PE_edges</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">,</span>  <span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">,</span>  <span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span>  <span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;A2&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span>  <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">,</span>  <span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span>  <span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;P&#39;</span><span class="p">,</span>  <span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="s1">&#39;A2&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;A_1&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">A1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="o">-</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.04</span> <span class="p">,</span> <span class="mf">0.00</span><span class="p">)),</span>
+            <span class="s1">&#39;A_2&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">A2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">)),</span>
+            <span class="s1">&#39;A_3&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">A3</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+            <span class="s1">&#39;O&#39;</span>   <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">O</span>  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="o">-</span><span class="mf">0.025</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)),</span>
+            <span class="s1">&#39;L&#39;</span>   <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="o">-</span><span class="mf">0.075</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)),</span>
+            <span class="s1">&#39;M&#39;</span>   <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span>  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.05</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+            <span class="s1">&#39;N&#39;</span>   <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span>  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="o">-</span><span class="mf">0.075</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.009</span><span class="p">)),</span>
+            <span class="s1">&#39;P&#39;</span>   <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">P</span>  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.008</span><span class="p">)),</span>
+            <span class="s1">&#39;Q&#39;</span>   <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span>  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">)),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_properties</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span>  <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="s1">&#39;small&#39;</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tex_labels</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">z_axis_left</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">panecolor</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">facecolor</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ticklabelsize</span> <span class="o">=</span> <span class="mi">7</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">full_cube</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scatter</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">figsize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tuple (width, height) of figure size in inches&quot;&quot;&quot;</span>
+        <span class="n">cm2inch</span> <span class="o">=</span> <span class="mf">0.39370079</span> <span class="c1"># conversion factor cm to inch</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fig_width</span><span class="o">*</span><span class="n">cm2inch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig_height</span><span class="o">*</span><span class="n">cm2inch</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a reference to the figure on which the Weyl chamber has been</span>
+<span class="sd">        rendered. Undefined unless the `render` method has been called.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fig</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ax</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a reference to the Axes instance on which the Weyl chamber</span>
+<span class="sd">        has been rendered. Undefined unless the `render` method has been</span>
+<span class="sd">        called.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ax</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">artists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of rendered artists. This includes only artists that</span>
+<span class="sd">        were created as part of a plotting command, not things like the edges</span>
+<span class="sd">        of the Weyl chamber or the perfect entanglers polyhedron&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_artists</span>
+
+    <span class="k">def</span> <span class="nf">_repr_png_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+        <span class="kn">from</span> <span class="nn">IPython.core.pylabtools</span> <span class="kn">import</span> <span class="n">print_figure</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dpi</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">fig_data</span> <span class="o">=</span> <span class="n">print_figure</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;png&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig_data</span>
+
+    <span class="k">def</span> <span class="nf">_repr_svg_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+        <span class="kn">from</span> <span class="nn">IPython.core.pylabtools</span> <span class="kn">import</span> <span class="n">print_figure</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dpi</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">fig_data</span> <span class="o">=</span> <span class="n">print_figure</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;svg&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig_data</span>
+
+<div class="viewcode-block" id="WeylChamber.render">
+<a class="viewcode-back" href="../../API/weylchamber.visualize.html#weylchamber.visualize.WeylChamber.render">[docs]</a>
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Render the Weyl chamber on the given Axes3D object&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ax</span> <span class="o">=</span> <span class="n">ax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_artists</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="n">elev</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">elev</span><span class="p">,</span> <span class="n">azim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">azim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">facecolor</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">panecolor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_pane_color</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">panecolor</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_pane_color</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">panecolor</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">zaxis</span><span class="o">.</span><span class="n">set_pane_color</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">panecolor</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">z_axis_left</span><span class="p">:</span>
+            <span class="n">tmp_planes</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">zaxis</span><span class="o">.</span><span class="n">_PLANES</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">zaxis</span><span class="o">.</span><span class="n">_PLANES</span> <span class="o">=</span> <span class="p">(</span><span class="n">tmp_planes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">tmp_planes</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                                <span class="n">tmp_planes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tmp_planes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                <span class="n">tmp_planes</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">tmp_planes</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">zaxis</span><span class="o">.</span><span class="n">set_rotate_label</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">zaxis</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_rotation</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span>
+        <span class="c1"># background lines</span>
+        <span class="k">for</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">fg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">weyl_edges</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">fg</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_draw_line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                               <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">weyl_edge_bg_properties</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">fg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">PE_edges</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">fg</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_draw_line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                               <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">PE_edge_bg_properties</span><span class="p">)</span>
+        <span class="c1"># scatter plots</span>
+        <span class="k">for</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">kwargs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scatter</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_artists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">scatter3D</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="k">pass</span> <span class="c1"># plot everything else</span>
+        <span class="c1"># labels</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">:</span>
+            <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">label</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tex_labels</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="s2">&quot;$</span><span class="si">%s</span><span class="s2">$&quot;</span> <span class="o">%</span> <span class="n">label</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">label_properties</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">label_properties</span><span class="p">)</span>
+        <span class="c1"># foreground lines</span>
+        <span class="k">for</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">fg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">weyl_edges</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fg</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_draw_line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">weyl_edge_fg_properties</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">fg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">PE_edges</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fg</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_draw_line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">PE_edge_fg_properties</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$c_1/\pi$&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$c_2/\pi$&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$c_3/\pi$&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_cube</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_c1_label</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$c_1$&#39;</span><span class="p">,</span> <span class="n">labelpad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">c1_labelpad</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_c2_label</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$c_2$&#39;</span><span class="p">,</span> <span class="n">labelpad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">c2_labelpad</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_c3_label</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$c_3$&#39;</span><span class="p">,</span> <span class="n">labelpad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">c3_labelpad</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">([</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\pi/2$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\pi$&#39;</span><span class="p">])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">([</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\pi/2$&#39;</span><span class="p">])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">zaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">zaxis</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">([</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\pi/2$&#39;</span><span class="p">])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">c1_tickspad</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">c2_tickspad</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">c2_tickspad</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">set_va</span><span class="p">(</span><span class="s1">&#39;center&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">()]</span>
+        <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">set_ha</span><span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">()]</span>
+        <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">set_va</span><span class="p">(</span><span class="s1">&#39;center&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_zticklabels</span><span class="p">()]</span>
+        <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">set_ha</span><span class="p">(</span><span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_zticklabels</span><span class="p">()]</span></div>
+
+
+<div class="viewcode-block" id="WeylChamber.plot">
+<a class="viewcode-back" href="../../API/weylchamber.visualize.html#weylchamber.visualize.WeylChamber.plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a plot of the Weyl chamber on the given figure, or create a</span>
+<span class="sd">        new figure if fig argument is not given.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">fig</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dpi</span><span class="p">)</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig_width</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_margin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_margin</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig_height</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bottom_margin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_margin</span><span class="p">)</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">left_margin</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">fig_width</span><span class="p">,</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">bottom_margin</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">fig_height</span><span class="p">,</span>
+               <span class="n">w</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">fig_width</span><span class="p">,</span> <span class="n">h</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">fig_height</span><span class="p">]</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeylChamber.scatter">
+<a class="viewcode-back" href="../../API/weylchamber.visualize.html#weylchamber.visualize.WeylChamber.scatter">[docs]</a>
+    <span class="k">def</span> <span class="nf">scatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a scatter plot to the Weyl chamber</span>
+
+<span class="sd">        All keyword arguments will be passed to matplotlib scatter3D</span>
+<span class="sd">        function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scatter</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="WeylChamber.add_point">
+<a class="viewcode-back" href="../../API/weylchamber.visualize.html#weylchamber.visualize.WeylChamber.add_point">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">scatter_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a point to a scatter plot with the given `scatter_index`.</span>
+
+<span class="sd">        If there is no existing scatter plot with that index, a new one will be</span>
+<span class="sd">        created.  The arguments of the scatter plot are updated with the given</span>
+<span class="sd">        kwargs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">c1s</span><span class="p">,</span> <span class="n">c2s</span><span class="p">,</span> <span class="n">c3s</span><span class="p">,</span> <span class="n">kw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scatter</span><span class="p">[</span><span class="n">scatter_index</span><span class="p">]</span>
+            <span class="n">kw</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scatter</span><span class="p">[</span><span class="n">scatter_index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c1s</span><span class="p">,</span> <span class="p">[</span><span class="n">c1</span><span class="p">,</span> <span class="p">]),</span>
+                                            <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c2s</span><span class="p">,</span> <span class="p">[</span><span class="n">c2</span><span class="p">,</span> <span class="p">]),</span>
+                                            <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c3s</span><span class="p">,</span> <span class="p">[</span><span class="n">c3</span><span class="p">,</span> <span class="p">]),</span>
+                                            <span class="n">kw</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scatter</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">c1</span><span class="p">,</span> <span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">c2</span><span class="p">,</span> <span class="p">]),</span>
+                                  <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">c3</span><span class="p">,</span> <span class="p">]),</span> <span class="n">kwargs</span><span class="p">))</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_draw_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw a line from origin to end onto the given axis. Both origin and</span>
+<span class="sd">        end must either be 3-tuples, or names of Weyl points. All keyword</span>
+<span class="sd">        arguments are passed to the `ax.plot` method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">origin</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">weyl_points</span><span class="p">:</span>
+                <span class="n">o1</span><span class="p">,</span> <span class="n">o2</span><span class="p">,</span> <span class="n">o3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weyl_points</span><span class="p">[</span><span class="n">origin</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">o1</span><span class="p">,</span> <span class="n">o2</span><span class="p">,</span> <span class="n">o3</span> <span class="o">=</span> <span class="n">origin</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;origin &#39;</span><span class="si">%s</span><span class="s2">&#39; is not in weyl_points &quot;</span>
+                             <span class="s2">&quot;or a list (c1, c2, c3)&quot;</span> <span class="o">%</span> <span class="n">origin</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">end</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">weyl_points</span><span class="p">:</span>
+                <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weyl_points</span><span class="p">[</span><span class="n">end</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="n">end</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;origin &#39;</span><span class="si">%s</span><span class="s2">&#39; is not in weyl_points &quot;</span>
+                             <span class="s2">&quot;or a list (c1, c2, c3)&quot;</span> <span class="o">%</span> <span class="n">origin</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">o1</span><span class="p">,</span> <span class="n">c1</span><span class="p">],</span> <span class="p">[</span><span class="n">o2</span><span class="p">,</span> <span class="n">c2</span><span class="p">],</span> <span class="p">[</span><span class="n">o3</span><span class="p">,</span> <span class="n">c3</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_draw_arrow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>  <span class="c1"># pragma: nocover</span>
+        <span class="c1"># currently undocumented/unused feature, but can be useful when having</span>
+        <span class="c1"># to mark a point in an error in a publication graphic</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">origin</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">weyl_points</span><span class="p">:</span>
+                <span class="n">o1</span><span class="p">,</span> <span class="n">o2</span><span class="p">,</span> <span class="n">o3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weyl_points</span><span class="p">[</span><span class="n">origin</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">o1</span><span class="p">,</span> <span class="n">o2</span><span class="p">,</span> <span class="n">o3</span> <span class="o">=</span> <span class="n">origin</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;origin &#39;</span><span class="si">%s</span><span class="s2">&#39; is not in weyl_points &quot;</span>
+                             <span class="s2">&quot;or a list (c1, c2, c3)&quot;</span> <span class="o">%</span> <span class="n">origin</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">end</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">weyl_points</span><span class="p">:</span>
+                <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weyl_points</span><span class="p">[</span><span class="n">end</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="n">end</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;origin &#39;</span><span class="si">%s</span><span class="s2">&#39; is not in weyl_points &quot;</span>
+                             <span class="s2">&quot;or a list (c1, c2, c3)&quot;</span> <span class="o">%</span> <span class="n">origin</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">_Arrow3D</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">o1</span><span class="p">,</span> <span class="n">c1</span><span class="p">],</span> <span class="p">[</span><span class="n">o2</span><span class="p">,</span> <span class="n">c2</span><span class="p">],</span> <span class="p">[</span><span class="n">o3</span><span class="p">,</span> <span class="n">c3</span><span class="p">],</span> <span class="n">mutation_scale</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+            <span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-|&gt;&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></div>
+
+
+
+<span class="k">class</span> <span class="nc">_Arrow3D</span><span class="p">(</span><span class="n">FancyArrowPatch</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">FancyArrowPatch</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verts3d</span> <span class="o">=</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span>
+
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">renderer</span><span class="p">):</span>
+        <span class="n">xs3d</span><span class="p">,</span> <span class="n">ys3d</span><span class="p">,</span> <span class="n">zs3d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verts3d</span>
+        <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span> <span class="o">=</span> <span class="n">proj3d</span><span class="o">.</span><span class="n">proj_transform</span><span class="p">(</span><span class="n">xs3d</span><span class="p">,</span> <span class="n">ys3d</span><span class="p">,</span> <span class="n">zs3d</span><span class="p">,</span> <span class="n">renderer</span><span class="o">.</span><span class="n">M</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_positions</span><span class="p">((</span><span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ys</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ys</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">FancyArrowPatch</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">renderer</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Michael Goerz.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

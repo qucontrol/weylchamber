@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>weylchamber.visualize module &mdash; weylchamber c756cfb documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" href="../_static/mycss.css" type="text/css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=1bd04038"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/docs-versions-menu.js?v=3d6a1aea"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="weylchamber.prec module" href="weylchamber.prec.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            weylchamber
+          </a>
+              <div class="version">
+                0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">The weylchamber package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="weylchamber.html">API of the weylchamber package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.coordinates.html">weylchamber.coordinates module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.gates.html">weylchamber.gates module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.local_invariants.html">weylchamber.local_invariants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.perfect_entanglers.html">weylchamber.perfect_entanglers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.prec.html">weylchamber.prec module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">weylchamber.visualize module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#summary">Summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#weylchamber.visualize.WeylChamber"><code class="docutils literal notranslate"><span class="pre">WeylChamber</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="weylchamber.html#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">weylchamber</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="weylchamber.html">weylchamber package</a> &raquo;</li>
+        
+      <li>weylchamber.visualize module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-weylchamber.visualize">
+<span id="weylchamber-visualize-module"></span><h1>weylchamber.visualize module<a class="headerlink" href="#module-weylchamber.visualize" title="Link to this heading">¶</a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
+<p>Classes:</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#weylchamber.visualize.WeylChamber" title="weylchamber.visualize.WeylChamber"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WeylChamber</span></code></a></p></td>
+<td><p>Class for plotting data in the Weyl Chamber</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">__all__</span></code>: <a class="reference internal" href="#weylchamber.visualize.WeylChamber" title="weylchamber.visualize.WeylChamber"><code class="xref py py-class docutils literal notranslate"><span class="pre">WeylChamber</span></code></a></p>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">weylchamber.visualize.</span></span><span class="sig-name descname"><span class="pre">WeylChamber</span></span><a class="reference internal" href="../_modules/weylchamber/visualize.html#WeylChamber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.visualize.WeylChamber" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.12/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class for plotting data in the Weyl Chamber</p>
+<dl class="field-list simple">
+<dt class="field-odd">Class Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weyl_points</strong> (<em>dict</em>) – Dictionary of Weyl chamber point names to (c1, c2, c3) coordinates (in
+units of pi). Each point name is also a class attribute itself</p></li>
+<li><p><strong>normal</strong> (<em>dict</em>) – Dictionary of Weyl chamber region name to normal vectors for the
+surface that separates the region from the polyhedron of perfect
+entanglers (pointing outwards from the PE’s). The three regions are:</p>
+<ul>
+<li><p>‘W0’: region from the origin point (O) to the PE polyhedron</p></li>
+<li><p>‘W0*’: region from the A2 point to the PE polyhedron</p></li>
+<li><p>‘W1’: region from the A2 point (SWAP gate) to the PE polyhedron</p></li>
+</ul>
+</li>
+<li><p><strong>anchor</strong> (<em>dict</em>) – Dictionary of anchor points for the normal vectors (i.e., an arbitrary
+point on the surface that separates the region specified by the key
+from the perfect entanglers polyhedron</p></li>
+</ul>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>fig_width</strong> (<em>float {8.5}</em>) – Figure width, in cm</p></li>
+<li><p><strong>fig_height</strong> (<em>float {6.0}</em>) – Figure height, in cm</p></li>
+<li><p><strong>left_margin</strong> (<em>float {0.0}</em>) – Distance from left figure edge to axes, in cm</p></li>
+<li><p><strong>bottom_margin</strong> (<em>float {0.0}</em>) – Distance from bottom figure edge to axes, in cm</p></li>
+<li><p><strong>right_margin</strong> (<em>float {0.3}</em>) – Distance from right figure edge to axes, in cm</p></li>
+<li><p><strong>top_margin</strong> (<em>float {0.0}</em>) – Distance from top figure edge to axes, in cm</p></li>
+<li><p><strong>azim</strong> (<em>float {-50}</em>) – azimuthal view angle in degrees</p></li>
+<li><p><strong>elev</strong> (<em>float {-20}</em>) – elevation view angle in degrees</p></li>
+<li><p><strong>dpi</strong> (<em>int {300}</em>) – Resolution to use when saving to dpi, or showing interactively</p></li>
+<li><p><strong>linecolor</strong> (<em>str {‘black’}</em>) – Color to be used when drawing lines (e.g. the edges of the Weyl
+chamber)</p></li>
+<li><p><strong>show_c1_label</strong> (<em>bool</em>) – Whether or not to show the c1 axis label</p></li>
+<li><p><strong>show_c2_label</strong> (<em>bool</em>) – Whether or not to show the c2 axis label</p></li>
+<li><p><strong>show_c3_label</strong> (<em>bool</em>) – Whether or not to show the c3 axis label</p></li>
+<li><p><strong>c1_labelpad</strong> (<em>float</em>) – Label padding for c1 label</p></li>
+<li><p><strong>c2_labelpad</strong> (<em>float</em>) – Label padding for c2 label</p></li>
+<li><p><strong>c3_labelpad</strong> (<em>float</em>) – Label padding for c3 label</p></li>
+<li><p><strong>c1_tickspad</strong> (<em>float</em>) – Padding for c1 tick labels</p></li>
+<li><p><strong>c2_tickspad</strong> (<em>float</em>) – Padding for c2 tick labels</p></li>
+<li><p><strong>c3_tickspad</strong> (<em>float</em>) – Padding for c2 tick labels</p></li>
+<li><p><strong>weyl_edges</strong> (<em>list</em>) – List of tuples (point1, point2, foreground) where point1 and point2 are
+keys in <cite>weyl_points</cite>, and foreground is a logical to indicate whether
+the edge is in the background or foreground (depending on the
+perspective of the plot). Describes the lines that make up the Weyl
+chamber.</p></li>
+<li><p><strong>weyl_edge_fg_properties</strong> (<em>dict</em>) – Properties to be used when drawing foreground weyl_edges</p></li>
+<li><p><strong>weyl_edge_bg_properties</strong> (<em>dict</em>) – Properties to be used when drawing background weyl_edges</p></li>
+<li><p><strong>PE_edges</strong> (<em>list</em>) – List of tuples (point1, point2, foreground) where point1 and point2 are
+keys in weyl_points, and foreground is a logical to indicate whether
+the edge is in the background or foreground (depending on the
+perspective of the plot). Desribes the lines that make up the
+polyhedron of perfect entanglers</p></li>
+<li><p><strong>PE_edge_fg_properties</strong> (<em>dict</em>) – Properties to be used when drawing foreground PE_edges</p></li>
+<li><p><strong>PE_edge_bg_properties</strong> (<em>dict</em>) – Properties to be used when drawing background PE_edges</p></li>
+<li><p><strong>labels</strong> (<em>dict</em>) – label names =&gt; array (c1, c2, c3) where label should be drawn</p></li>
+<li><p><strong>tex_labels</strong> (<em>logical {True}</em>) – If True wrap label names in dollar signs to produce a latex string.</p></li>
+<li><p><strong>label_properties</strong> (<em>dict</em>) – Properties to be used when drawing labels</p></li>
+<li><p><strong>z_axis_left</strong> (<em>logical {True}</em>) – If True, draw z-axis on the left</p></li>
+<li><p><strong>grid</strong> (<em>logical {False}</em>) – Show a grid on panes?</p></li>
+<li><p><strong>panecolor</strong> (<em>None or tuple  {(1.0, 1.0, 1.0, 0.0)}</em>) – Color (r, g, b, alpha) with values in [0,1] for the c1, c2, and c3
+panes</p></li>
+<li><p><strong>facecolor</strong> (<em>str {‘None’}</em>) – Name of color for figure background</p></li>
+<li><p><strong>ticklabelsize</strong> (<em>float {7}</em>) – font size for tick labels</p></li>
+<li><p><strong>full_cube</strong> (<em>logical {False}</em>) – if True, draw all three axes in the range [0,1]. This may result in a
+less distorted view of the Weyl chamber</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.A1">
+<span class="sig-name descname"><span class="pre">A1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">array([1,</span> <span class="pre">0,</span> <span class="pre">0])</span></em><a class="headerlink" href="#weylchamber.visualize.WeylChamber.A1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.A2">
+<span class="sig-name descname"><span class="pre">A2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">array([0.5,</span> <span class="pre">0.5,</span> <span class="pre">0.</span> <span class="pre">])</span></em><a class="headerlink" href="#weylchamber.visualize.WeylChamber.A2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.A3">
+<span class="sig-name descname"><span class="pre">A3</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">array([0.5,</span> <span class="pre">0.5,</span> <span class="pre">0.5])</span></em><a class="headerlink" href="#weylchamber.visualize.WeylChamber.A3" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.O">
+<span class="sig-name descname"><span class="pre">O</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">array([0,</span> <span class="pre">0,</span> <span class="pre">0])</span></em><a class="headerlink" href="#weylchamber.visualize.WeylChamber.O" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.L">
+<span class="sig-name descname"><span class="pre">L</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">array([0.5,</span> <span class="pre">0.</span> <span class="pre">,</span> <span class="pre">0.</span> <span class="pre">])</span></em><a class="headerlink" href="#weylchamber.visualize.WeylChamber.L" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.M">
+<span class="sig-name descname"><span class="pre">M</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">array([0.75,</span> <span class="pre">0.25,</span> <span class="pre">0.</span>&#160; <span class="pre">])</span></em><a class="headerlink" href="#weylchamber.visualize.WeylChamber.M" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.N">
+<span class="sig-name descname"><span class="pre">N</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">array([0.75,</span> <span class="pre">0.25,</span> <span class="pre">0.25])</span></em><a class="headerlink" href="#weylchamber.visualize.WeylChamber.N" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.P">
+<span class="sig-name descname"><span class="pre">P</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">array([0.25,</span> <span class="pre">0.25,</span> <span class="pre">0.25])</span></em><a class="headerlink" href="#weylchamber.visualize.WeylChamber.P" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.Q">
+<span class="sig-name descname"><span class="pre">Q</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">array([0.25,</span> <span class="pre">0.25,</span> <span class="pre">0.</span>&#160; <span class="pre">])</span></em><a class="headerlink" href="#weylchamber.visualize.WeylChamber.Q" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.weyl_points">
+<span class="sig-name descname"><span class="pre">weyl_points</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'A1':</span> <span class="pre">array([1,</span> <span class="pre">0,</span> <span class="pre">0]),</span> <span class="pre">'A2':</span> <span class="pre">array([0.5,</span> <span class="pre">0.5,</span> <span class="pre">0.</span> <span class="pre">]),</span> <span class="pre">'A3':</span> <span class="pre">array([0.5,</span> <span class="pre">0.5,</span> <span class="pre">0.5]),</span> <span class="pre">'L':</span> <span class="pre">array([0.5,</span> <span class="pre">0.</span> <span class="pre">,</span> <span class="pre">0.</span> <span class="pre">]),</span> <span class="pre">'M':</span> <span class="pre">array([0.75,</span> <span class="pre">0.25,</span> <span class="pre">0.</span>&#160; <span class="pre">]),</span> <span class="pre">'N':</span> <span class="pre">array([0.75,</span> <span class="pre">0.25,</span> <span class="pre">0.25]),</span> <span class="pre">'O':</span> <span class="pre">array([0,</span> <span class="pre">0,</span> <span class="pre">0]),</span> <span class="pre">'P':</span> <span class="pre">array([0.25,</span> <span class="pre">0.25,</span> <span class="pre">0.25]),</span> <span class="pre">'Q':</span> <span class="pre">array([0.25,</span> <span class="pre">0.25,</span> <span class="pre">0.</span>&#160; <span class="pre">])}</span></em><a class="headerlink" href="#weylchamber.visualize.WeylChamber.weyl_points" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.normal">
+<span class="sig-name descname"><span class="pre">normal</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'W0':</span> <span class="pre">array([-0.70710678,</span> <span class="pre">-0.70710678,</span>&#160; <span class="pre">0.</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">]),</span> <span class="pre">'W0*':</span> <span class="pre">array([</span> <span class="pre">0.70710678,</span> <span class="pre">-0.70710678,</span>&#160; <span class="pre">0.</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">]),</span> <span class="pre">'W1':</span> <span class="pre">array([0.</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">,</span> <span class="pre">0.70710678,</span> <span class="pre">0.70710678])}</span></em><a class="headerlink" href="#weylchamber.visualize.WeylChamber.normal" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.anchor">
+<span class="sig-name descname"><span class="pre">anchor</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'W0':</span> <span class="pre">array([0.5,</span> <span class="pre">0.</span> <span class="pre">,</span> <span class="pre">0.</span> <span class="pre">]),</span> <span class="pre">'W0*':</span> <span class="pre">array([0.5,</span> <span class="pre">0.</span> <span class="pre">,</span> <span class="pre">0.</span> <span class="pre">]),</span> <span class="pre">'W1':</span> <span class="pre">array([0.5,</span> <span class="pre">0.5,</span> <span class="pre">0.</span> <span class="pre">])}</span></em><a class="headerlink" href="#weylchamber.visualize.WeylChamber.anchor" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.figsize">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">figsize</span></span><a class="headerlink" href="#weylchamber.visualize.WeylChamber.figsize" title="Link to this definition">¶</a></dt>
+<dd><p>Tuple (width, height) of figure size in inches</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.fig">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fig</span></span><a class="headerlink" href="#weylchamber.visualize.WeylChamber.fig" title="Link to this definition">¶</a></dt>
+<dd><p>Return a reference to the figure on which the Weyl chamber has been
+rendered. Undefined unless the <cite>render</cite> method has been called.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.ax">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ax</span></span><a class="headerlink" href="#weylchamber.visualize.WeylChamber.ax" title="Link to this definition">¶</a></dt>
+<dd><p>Return a reference to the Axes instance on which the Weyl chamber
+has been rendered. Undefined unless the <cite>render</cite> method has been
+called.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.artists">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">artists</span></span><a class="headerlink" href="#weylchamber.visualize.WeylChamber.artists" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of rendered artists. This includes only artists that
+were created as part of a plotting command, not things like the edges
+of the Weyl chamber or the perfect entanglers polyhedron</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/visualize.html#WeylChamber.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.visualize.WeylChamber.render" title="Link to this definition">¶</a></dt>
+<dd><p>Render the Weyl chamber on the given Axes3D object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/visualize.html#WeylChamber.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.visualize.WeylChamber.plot" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a plot of the Weyl chamber on the given figure, or create a
+new figure if fig argument is not given.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.scatter">
+<span class="sig-name descname"><span class="pre">scatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c3</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/visualize.html#WeylChamber.scatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.visualize.WeylChamber.scatter" title="Link to this definition">¶</a></dt>
+<dd><p>Add a scatter plot to the Weyl chamber</p>
+<p>All keyword arguments will be passed to matplotlib scatter3D
+function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="weylchamber.visualize.WeylChamber.add_point">
+<span class="sig-name descname"><span class="pre">add_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/weylchamber/visualize.html#WeylChamber.add_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#weylchamber.visualize.WeylChamber.add_point" title="Link to this definition">¶</a></dt>
+<dd><p>Add a point to a scatter plot with the given <cite>scatter_index</cite>.</p>
+<p>If there is no existing scatter plot with that index, a new one will be
+created.  The arguments of the scatter plot are updated with the given
+kwargs.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="weylchamber.prec.html" class="btn btn-neutral float-left" title="weylchamber.prec module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Michael Goerz.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>weylchamber.local_invariants &mdash; weylchamber c756cfb documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" href="../../_static/mycss.css" type="text/css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=1bd04038"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/docs-versions-menu.js?v=3d6a1aea"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            weylchamber
+          </a>
+              <div class="version">
+                0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">The weylchamber package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../API/weylchamber.html">API of the weylchamber package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">weylchamber</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>weylchamber.local_invariants</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for weylchamber.local_invariants</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">pi</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">leastsq</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">qutip</span>
+
+<span class="kn">from</span> <span class="nn">.prec</span> <span class="kn">import</span> <span class="n">DEFAULT_WEYL_PRECISSION</span>
+<span class="kn">from</span> <span class="nn">._types</span> <span class="kn">import</span> <span class="n">Gate</span><span class="p">,</span> <span class="n">GTuple</span>
+<span class="kn">from</span> <span class="nn">.coordinates</span> <span class="kn">import</span> <span class="n">to_magic</span><span class="p">,</span> <span class="n">c1c2c3</span><span class="p">,</span> <span class="n">_SQ_unitary</span><span class="p">,</span> <span class="n">canonical_gate</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;g1g2g3&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;g1g2g3_from_c1c2c3&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;J_T_LI&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;closest_LI&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;make_LI_krotov_chi_constructor&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="g1g2g3">
+<a class="viewcode-back" href="../../API/weylchamber.local_invariants.html#weylchamber.local_invariants.g1g2g3">[docs]</a>
+<span class="k">def</span> <span class="nf">g1g2g3</span><span class="p">(</span><span class="n">U</span><span class="p">:</span> <span class="n">Gate</span><span class="p">,</span> <span class="n">ndigits</span><span class="o">=</span><span class="n">DEFAULT_WEYL_PRECISSION</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GTuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate local invariants $(g_1, g_3, g_3)$</span>
+
+<span class="sd">    Given a two-qubit gate, calculate local invariants $(g_1, g_2, g_3)$.</span>
+<span class="sd">    U must be in the canonical basis. For numerical stability, the resulting</span>
+<span class="sd">    values are rounded to the given precision, cf. the `ndigits` parameter of</span>
+<span class="sd">    the built-in :func:`round` function.</span>
+
+<span class="sd">    &gt;&gt;&gt; print(&quot;%.2f %.2f %.2f&quot; % g1g2g3(qutip.core.gates.cnot()))</span>
+<span class="sd">    0.00 0.00 1.00</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># mathematically, the determinant of U and UB is the same, but</span>
+    <span class="c1"># we seem to get better numerical accuracy if we calculate detU with</span>
+    <span class="c1"># the rotated U</span>
+    <span class="n">UB</span> <span class="o">=</span> <span class="n">to_magic</span><span class="p">(</span><span class="n">U</span><span class="p">)</span><span class="o">.</span><span class="n">full</span><span class="p">()</span>  <span class="c1"># instance of np.ndarray</span>
+    <span class="n">detU</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">UB</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">UB</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">UB</span>
+    <span class="n">g1_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">m</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mf">16.0</span> <span class="o">*</span> <span class="n">detU</span><span class="p">)</span>
+    <span class="n">g3</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">m</span> <span class="o">@</span> <span class="n">m</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">detU</span><span class="p">)</span>
+    <span class="n">g1</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">g1_2</span><span class="o">.</span><span class="n">real</span> <span class="o">+</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ndigits</span><span class="p">)</span>  <span class="c1"># adding 0.0 turns -0.0 into +0.0</span>
+    <span class="n">g2</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">g1_2</span><span class="o">.</span><span class="n">imag</span> <span class="o">+</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ndigits</span><span class="p">)</span>
+    <span class="n">g3</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">g3</span><span class="o">.</span><span class="n">real</span> <span class="o">+</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ndigits</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">g3</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="g1g2g3_from_c1c2c3">
+<a class="viewcode-back" href="../../API/weylchamber.local_invariants.html#weylchamber.local_invariants.g1g2g3_from_c1c2c3">[docs]</a>
+<span class="k">def</span> <span class="nf">g1g2g3_from_c1c2c3</span><span class="p">(</span>
+    <span class="n">c1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c3</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ndigits</span><span class="o">=</span><span class="n">DEFAULT_WEYL_PRECISSION</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GTuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate local invariants from the Weyl chamber coordinates</span>
+
+<span class="sd">    Calculate the local invariants $(g_1, g_2, g_3)$ from the Weyl chamber</span>
+<span class="sd">    coordinates $(c_1, c_2, c_3)$, in units of π. The result is rounded to the</span>
+<span class="sd">    given precision, in order to enhance numerical stability (cf. `ndigits`</span>
+<span class="sd">    parameter of the built-in :func:`round` function)</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; CNOT = qutip.core.gates.cnot()</span>
+<span class="sd">        &gt;&gt;&gt; print(&quot;%.2f %.2f %.2f&quot; % g1g2g3_from_c1c2c3(*c1c2c3(CNOT)))</span>
+<span class="sd">        0.00 0.00 1.00</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c1</span> <span class="o">*=</span> <span class="n">pi</span>
+    <span class="n">c2</span> <span class="o">*=</span> <span class="n">pi</span>
+    <span class="n">c3</span> <span class="o">*=</span> <span class="n">pi</span>
+    <span class="n">g1</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span>
+        <span class="n">cos</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">c3</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="o">-</span> <span class="n">sin</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">c3</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="o">+</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">ndigits</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">g2</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">0.25</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">c1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">c2</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">c3</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ndigits</span><span class="p">)</span>
+    <span class="n">g3</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">g1</span> <span class="o">-</span> <span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">c1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">c2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">c3</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ndigits</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">g3</span></div>
+
+
+
+<div class="viewcode-block" id="J_T_LI">
+<a class="viewcode-back" href="../../API/weylchamber.local_invariants.html#weylchamber.local_invariants.J_T_LI">[docs]</a>
+<span class="k">def</span> <span class="nf">J_T_LI</span><span class="p">(</span><span class="n">O</span><span class="p">:</span> <span class="n">Gate</span><span class="p">,</span> <span class="n">U</span><span class="p">:</span> <span class="n">Gate</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate value of the local-invariants functional</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        O: The optimal gate</span>
+<span class="sd">        U: The achieved gate</span>
+<span class="sd">        form (str): form of the functional to use, &#39;g&#39; or &#39;c&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">form</span> <span class="o">==</span> <span class="s1">&#39;g&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">g1g2g3</span><span class="p">(</span><span class="n">O</span><span class="p">))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">g1g2g3</span><span class="p">(</span><span class="n">U</span><span class="p">)))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">form</span> <span class="o">==</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span>
+        <span class="n">delta_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">c1c2c3</span><span class="p">(</span><span class="n">O</span><span class="p">))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">c1c2c3</span><span class="p">(</span><span class="n">U</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">delta_c</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Illegal value for &#39;form&#39;&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="closest_LI">
+<a class="viewcode-back" href="../../API/weylchamber.local_invariants.html#weylchamber.local_invariants.closest_LI">[docs]</a>
+<span class="k">def</span> <span class="nf">closest_LI</span><span class="p">(</span>
+    <span class="n">U</span><span class="p">:</span> <span class="n">Gate</span><span class="p">,</span> <span class="n">c1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c3</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;leastsq&#39;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mf">1.0e-6</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find the closest gate that has the given Weyl chamber coordinates</span>
+
+<span class="sd">    The `c1`, `c2`, `c3` are given in units of π</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">canonical_gate</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">f_U</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_SQ_unitary</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">[:</span><span class="mi">8</span><span class="p">])</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">_SQ_unitary</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="mi">8</span><span class="p">:])</span>
+
+    <span class="k">return</span> <span class="n">_closest_gate</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">f_U</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_closest_gate</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">f_U</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">x_max</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;leastsq&#39;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mf">1.0e-6</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find the closest gate to U that fulfills the parametrization implied by</span>
+<span class="sd">    the function f_U</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        U (Gate): Target gate</span>
+<span class="sd">        f_U (callable): function that takes an array of n values and returns an</span>
+<span class="sd">            gate.</span>
+<span class="sd">        n (integer): Number of parameters (size of the argument of f_U)</span>
+<span class="sd">        x_max (float): Maximum value for each element of the array passed as an</span>
+<span class="sd">            argument to f_U. There is no way to have different a different</span>
+<span class="sd">            range for the different elements</span>
+<span class="sd">        method (str): Name of mimimization method, either &#39;leastsq&#39; or any of</span>
+<span class="sd">            the gradient-free methods implemented by scipy.optimize.mimize</span>
+<span class="sd">        limit (float): absolute error of the distance between the target gate</span>
+<span class="sd">            and the optimized gate for convergence. The limit is automatically</span>
+<span class="sd">            increased by an order of magnitude every 100 iterations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;_closests_gate with method </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;leastsq&#39;</span><span class="p">:</span>
+
+        <span class="k">def</span> <span class="nf">f_minimize</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">_vectorize</span><span class="p">(</span><span class="n">f_U</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">-</span> <span class="n">U</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">imag</span><span class="p">])</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="k">def</span> <span class="nf">f_minimize</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">_norm</span><span class="p">(</span><span class="n">U</span> <span class="o">-</span> <span class="n">f_U</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+
+    <span class="n">dist_min</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">iter</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="nb">iter</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">limit</span> <span class="o">*=</span> <span class="mi">10</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;_closests_gate limit -&gt; </span><span class="si">%.2e</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+        <span class="n">p0</span> <span class="o">=</span> <span class="n">x_max</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;leastsq&#39;</span><span class="p">:</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">leastsq</span><span class="p">(</span><span class="n">f_minimize</span><span class="p">,</span> <span class="n">p0</span><span class="p">)</span>
+            <span class="n">U_min</span> <span class="o">=</span> <span class="n">f_U</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">info</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]:</span>
+                <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">f_minimize</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+            <span class="n">U_min</span> <span class="o">=</span> <span class="n">f_U</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">success</span>
+        <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="n">_norm</span><span class="p">(</span><span class="n">U_min</span> <span class="o">-</span> <span class="n">U</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;_closests_gate dist = </span><span class="si">%.5e</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dist_min</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dist_min</span> <span class="o">=</span> <span class="n">dist</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;_closests_gate dist_min -&gt; </span><span class="si">%.5e</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dist_min</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s2">&quot;_closests_gate delta_dist = </span><span class="si">%.5e</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">dist</span> <span class="o">-</span> <span class="n">dist_min</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">dist</span> <span class="o">-</span> <span class="n">dist_min</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">limit</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">U_min</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">dist</span> <span class="o">&lt;</span> <span class="n">dist_min</span><span class="p">:</span>
+                        <span class="n">dist_min</span> <span class="o">=</span> <span class="n">dist</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                            <span class="s2">&quot;_closests_gate dist_min -&gt; </span><span class="si">%.5e</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dist_min</span>
+                        <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_vectorize</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return vectorization of multi-dimensional numpy array or matrix `a`</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; a = np.array([1,2,3,4])</span>
+<span class="sd">        &gt;&gt;&gt; _vectorize(a)</span>
+<span class="sd">        array([1, 2, 3, 4])</span>
+
+<span class="sd">        &gt;&gt;&gt; a = np.array([[1,2],[3,4]])</span>
+<span class="sd">        &gt;&gt;&gt; _vectorize(a)</span>
+<span class="sd">        array([1, 3, 2, 4])</span>
+
+<span class="sd">        &gt;&gt;&gt; _vectorize(a, order=&#39;C&#39;)</span>
+<span class="sd">        array([1, 2, 3, 4])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">full</span><span class="p">()</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">size</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_norm</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the norm of a vector or matrix `v`, matching the inner product</span>
+<span class="sd">    defined in the `inner` routine. An algorithm like</span>
+<span class="sd">    Gram-Schmidt-Orthonormalization will only work if the choice of norm and</span>
+<span class="sd">    inner product are compatible.</span>
+
+<span class="sd">    If `v` is a vector, the norm is the 2-norm (i.e. the standard Euclidian</span>
+<span class="sd">    vector norm).</span>
+
+<span class="sd">    If `v` is a matrix, the norm is the Hilbert-Schmidt (aka Frobenius) norm.</span>
+<span class="sd">    Note that the HS norm of a matrix is identical to the 2-norm of any</span>
+<span class="sd">    vectorization of that matrix (e.g. writing the columns of the matrix</span>
+<span class="sd">    underneat each other). Also, the HS norm of the m x 1 matrix is the same as</span>
+<span class="sd">    the 2-norm of the equivalent m-dimensional vector.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">):</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">full</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">spmatrix</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="make_LI_krotov_chi_constructor">
+<a class="viewcode-back" href="../../API/weylchamber.local_invariants.html#weylchamber.local_invariants.make_LI_krotov_chi_constructor">[docs]</a>
+<span class="k">def</span> <span class="nf">make_LI_krotov_chi_constructor</span><span class="p">(</span><span class="n">gate</span><span class="p">,</span> <span class="n">canonical_basis</span><span class="p">,</span> <span class="n">unitarity_weight</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return a constructor for the χ&#39;s in an LI optimization.</span>
+
+<span class="sd">    Return a `chi_constructor` that determines the boundary condition of the</span>
+<span class="sd">    backwards propagation in an optimization towards the local equivalence</span>
+<span class="sd">    class of `gate` in Krotov&#39;s method, based on the foward-propagtion of the</span>
+<span class="sd">    Bell states.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        gate (qutip.Qobj): A 4×4 quantum gate, in the `canonical_basis`.</span>
+<span class="sd">        canonical_basis (list[qutip.Qobj]): A list of four basis states that</span>
+<span class="sd">            define the canonical basis $\ket{00}$, $\ket{01}$, $\ket{10}$, and</span>
+<span class="sd">            $\ket{11}$ of the logical subspace.</span>
+<span class="sd">        unitarity_weight (float): A weight in [0, 1] that determines how much</span>
+<span class="sd">            emphasis is placed on  maintaining population in the logical</span>
+<span class="sd">            subspace.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        callable: a function ``chi_constructor(fw_states_T, *args)`` that</span>
+<span class="sd">        receive the result of a foward propagation of the Bell states (obtained</span>
+<span class="sd">        from `canonical_basis` via :func:`weylchamber.gates.bell_basis`), and</span>
+<span class="sd">        returns a list of statex $\ket{\chi}$ that are the boundary condition</span>
+<span class="sd">        for the backward propagation in Krotov&#39;s method. Positional arguments</span>
+<span class="sd">        beyond `fw_states_T` are ignored.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># see make_PE_krotov_chi_constructor</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_get_a_kl_PE</span><span class="p">(</span><span class="n">UB</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the 4×4 `A_kl` coefficient matrix (:class:`qutip.Qobj`)</span>
+<span class="sd">    for the perfect-entanglers functional, for a given gate `UB` in the Bell</span>
+<span class="sd">    basis.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Michael Goerz.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

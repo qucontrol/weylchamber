@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial &mdash; weylchamber c756cfb documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" href="_static/mycss.css" type="text/css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=1bd04038"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/docs-versions-menu.js?v=3d6a1aea"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/SVG"], "TeX": {"extensions": ["AMSmath.js", "AMSsymbols.js", "noErrors.js", "noUndefined.js"], "Macros": {"tr": ["{\\operatorname{tr}}", 0], "diag": ["{\\operatorname{diag}}", 0], "abs": ["{\\operatorname{abs}}", 0], "pop": ["{\\operatorname{pop}}", 0], "ee": ["{\\text{e}}", 0], "ii": ["{\\text{i}}", 0], "aux": ["{\\text{aux}}", 0], "opt": ["{\\text{opt}}", 0], "tgt": ["{\\text{tgt}}", 0], "init": ["{\\text{init}}", 0], "lab": ["{\\text{lab}}", 0], "rwa": ["{\\text{rwa}}", 0], "bra": ["{\\langle#1\\vert}", 1], "ket": ["{\\vert#1\\rangle}", 1], "Bra": ["{\\left\\langle#1\\right\\vert}", 1], "Braket": ["{\\left\\langle #1\\vphantom{#2} \\mid #2\\vphantom{#1}\\right\\rangle}", 2], "Ket": ["{\\left\\vert#1\\right\\rangle}", 1], "mat": ["{\\mathbf{#1}}", 1], "op": ["{\\hat{#1}}", 1], "Op": ["{\\hat{#1}}", 1], "dd": ["{\\,\\text{d}}", 0], "daggered": ["{^{\\dagger}}", 0], "transposed": ["{^{\\text{T}}}", 0], "Liouville": ["{\\mathcal{L}}", 0], "DynMap": ["{\\mathcal{E}}", 0], "identity": ["{\\mathbf{1}}", 0], "Norm": ["{\\lVert#1\\rVert}", 1], "Abs": ["{\\left\\vert#1\\right\\vert}", 1], "avg": ["{\\langle#1\\rangle}", 1], "Avg": ["{\\left\\langle#1\\right\\rangle}", 1], "AbsSq": ["{\\left\\vert#1\\right\\vert^2}", 1], "Re": ["{\\operatorname{Re}}", 0], "Im": ["{\\operatorname{Im}}", 0], "Real": ["{\\mathbb{R}}", 0], "Complex": ["{\\mathbb{C}}", 0], "Integer": ["{\\mathbb{N}}", 0]}}, "tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="weylchamber package" href="API/weylchamber.html" />
+    <link rel="prev" title="History" href="history.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            weylchamber
+          </a>
+              <div class="version">
+                0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">The weylchamber package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="API/weylchamber.html">API of the weylchamber package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">weylchamber</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p><span class="raw-html"><a href="http://nbviewer.jupyter.org/github/qucontrol/weylchamber/blob/c756cfb//home/runner/work/weylchamber/weylchamber/docs/tutorial.ipynb" target="_blank"><img alt="Render on nbviewer" src="https://img.shields.io/badge/render%20on-nbviewer-orange.svg" style="vertical-align:text-bottom"></a>&nbsp;<a href="https://mybinder.org/v2/gh/qucontrol/weylchamber/c756cfb?filepath=/home/runner/work/weylchamber/weylchamber/docs/tutorial.ipynb" target="_blank"><img alt="Launch Binder" src="https://mybinder.org/badge_logo.svg" style="vertical-align:text-bottom"></a></span></p>
+<section id="Tutorial">
+<h1>Tutorial<a class="headerlink" href="#Tutorial" title="Link to this heading">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># NBVAL_IGNORE_OUTPUT</span>
+<span class="o">%</span><span class="k">load_ext</span> watermark
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">qutip</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">weylchamber</span>
+<span class="kn">from</span> <span class="nn">weylchamber.visualize</span> <span class="kn">import</span> <span class="n">WeylChamber</span>
+<span class="o">%</span><span class="k">watermark</span> -v --iversions
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Python implementation: CPython
+Python version       : 3.9.16
+IPython version      : 8.18.1
+
+numpy      : 1.26.4
+qutip      : 5.0.2
+matplotlib : 3.9.0
+weylchamber: 0.5.0+dev
+
+</pre></div></div>
+</div>
+<p><span class="math notranslate nohighlight">\(\newcommand{Re}[0]{\operatorname{Re}} \newcommand{Im}[0]{\operatorname{Im}} \newcommand{dd}[0]{\,\text{d}} \newcommand{abs}[0]{\operatorname{abs}}\)</span></p>
+<p>Every two-qubit gate is associated with a point in the “Weyl-chamber” that may be visualized in three dimensions as the following polyhedron:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">WeylChamber</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial_4_0.png" src="_images/tutorial_4_0.png" />
+</div>
+</div>
+<p>Note: if you run this interactively, and switch to an interactive matplotlib backend, e.g.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%matplotlib tk
+</pre></div>
+</div>
+<p>you will be able to rotate the 3D plot to get a better intuition.</p>
+<p>Consider the following common two-qubit gates:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IDENTITY</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">identity</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">IDENTITY</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims=[[2, 2], [2, 2]], shape=(4, 4), type='oper', dtype=Dia, isherm=True$$\left(\begin{array}{cc}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 1 &amp; 0\\0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)$$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CNOT</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">cnot</span><span class="p">()</span>
+<span class="n">CNOT</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims=[[2, 2], [2, 2]], shape=(4, 4), type='oper', dtype=CSR, isherm=True$$\left(\begin{array}{cc}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 0 &amp; 1\\0 &amp; 0 &amp; 1 &amp; 0\end{array}\right)$$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CPHASE</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">cphase</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">CPHASE</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims=[[2, 2], [2, 2]], shape=(4, 4), type='oper', dtype=CSR, isherm=True$$\left(\begin{array}{cc}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 1 &amp; 0\\0 &amp; 0 &amp; 0 &amp; -1\end{array}\right)$$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">BGATE</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">berkeley</span><span class="p">()</span>
+<span class="n">BGATE</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims=[[2, 2], [2, 2]], shape=(4, 4), type='oper', dtype=Dense, isherm=False$$\left(\begin{array}{cc}0.924 &amp; 0 &amp; 0 &amp; 0.383j\\0 &amp; 0.383 &amp; 0.924j &amp; 0\\0 &amp; 0.924j &amp; 0.383 &amp; 0\\0.383j &amp; 0 &amp; 0 &amp; 0.924\end{array}\right)$$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iSWAP</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">iswap</span><span class="p">()</span>
+<span class="n">iSWAP</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims=[[2, 2], [2, 2]], shape=(4, 4), type='oper', dtype=CSR, isherm=False$$\left(\begin{array}{cc}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 1j &amp; 0\\0 &amp; 1j &amp; 0 &amp; 0\\0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)$$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sqrtISWAP</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">sqrtiswap</span><span class="p">()</span>
+<span class="n">sqrtISWAP</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims=[[2, 2], [2, 2]], shape=(4, 4), type='oper', dtype=CSR, isherm=False$$\left(\begin{array}{cc}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 0.707 &amp; 0.707j &amp; 0\\0 &amp; 0.707j &amp; 0.707 &amp; 0\\0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)$$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sqrtSWAP</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">sqrtswap</span><span class="p">()</span>
+<span class="n">sqrtSWAP</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims=[[2, 2], [2, 2]], shape=(4, 4), type='oper', dtype=CSR, isherm=False$$\left(\begin{array}{cc}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; (0.500+0.500j) &amp; (0.500-0.500j) &amp; 0\\0 &amp; (0.500-0.500j) &amp; (0.500+0.500j) &amp; 0\\0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)$$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MGATE</span> <span class="o">=</span> <span class="n">weylchamber</span><span class="o">.</span><span class="n">canonical_gate</span><span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">MGATE</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+Quantum object: dims=[[2, 2], [2, 2]], shape=(4, 4), type='oper', dtype=Dense, isherm=False$$\left(\begin{array}{cc}0.707 &amp; 0 &amp; 0 &amp; 0.707j\\0 &amp; 0 &amp; 1j &amp; 0\\0 &amp; 1j &amp; 0 &amp; 0\\0.707j &amp; 0 &amp; 0 &amp; 0.707\end{array}\right)$$</div></div>
+</div>
+<p>All of these gates are situatated at special points in the Weyl chamber. We can print their Weyl chamber coordinates and add a point in the graphical representation</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">=</span> <span class="n">WeylChamber</span><span class="p">();</span>
+<span class="n">list_of_gates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;Identity&#39;</span><span class="p">,</span> <span class="n">IDENTITY</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;CNOT&#39;</span><span class="p">,</span> <span class="n">CNOT</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;CPHASE&#39;</span><span class="p">,</span> <span class="n">CPHASE</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;BGATE&#39;</span><span class="p">,</span> <span class="n">BGATE</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;iSWAP&#39;</span><span class="p">,</span> <span class="n">iSWAP</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;sqrtISWAP&#39;</span><span class="p">,</span> <span class="n">sqrtISWAP</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;sqrtSWAP&#39;</span><span class="p">,</span> <span class="n">sqrtSWAP</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;MGATE&#39;</span><span class="p">,</span> <span class="n">MGATE</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Weyl Chamber Coordinates&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">gate</span><span class="p">)</span> <span class="ow">in</span> <span class="n">list_of_gates</span><span class="p">:</span>
+    <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="n">weylchamber</span><span class="o">.</span><span class="n">c1c2c3</span><span class="p">(</span><span class="n">gate</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%10s</span><span class="s2">: </span><span class="se">\t</span><span class="si">%.2f</span><span class="s2">π </span><span class="si">%.2f</span><span class="s2">π </span><span class="si">%.2f</span><span class="s2">π&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">))</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">add_point</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Weyl Chamber Coordinates
+----------------------------------
+  Identity:     0.00π 0.00π 0.00π
+      CNOT:     0.50π 0.00π 0.00π
+    CPHASE:     0.50π 0.00π 0.00π
+     BGATE:     0.50π 0.25π 0.00π
+     iSWAP:     0.50π 0.50π 0.00π
+ sqrtISWAP:     0.25π 0.25π 0.00π
+  sqrtSWAP:     0.75π 0.25π 0.25π
+     MGATE:     0.75π 0.25π 0.00π
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/goerz/Documents/Programming/weylchamber/.venv/py39/lib/python3.9/site-packages/numpy/linalg/linalg.py:2180: RuntimeWarning: divide by zero encountered in det
+  r = _umath_linalg.det(a, signature=signature)
+/Users/goerz/Documents/Programming/weylchamber/.venv/py39/lib/python3.9/site-packages/numpy/linalg/linalg.py:2180: RuntimeWarning: invalid value encountered in det
+  r = _umath_linalg.det(a, signature=signature)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial_16_2.png" src="_images/tutorial_16_2.png" />
+</div>
+</div>
+<p>The gates locally equivalent to the controlled-phase gates are on an the axis 0 - A1 in the Weyl chamber:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span>
+    <span class="n">weylchamber</span><span class="o">.</span><span class="n">c1c2c3</span><span class="p">(</span><span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">cphase</span><span class="p">(</span><span class="n">phase</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">phase</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">20</span><span class="p">)]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/goerz/Documents/Programming/weylchamber/.venv/py39/lib/python3.9/site-packages/numpy/linalg/linalg.py:2180: RuntimeWarning: divide by zero encountered in det
+  r = _umath_linalg.det(a, signature=signature)
+/Users/goerz/Documents/Programming/weylchamber/.venv/py39/lib/python3.9/site-packages/numpy/linalg/linalg.py:2180: RuntimeWarning: invalid value encountered in det
+  r = _umath_linalg.det(a, signature=signature)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial_19_0.png" src="_images/tutorial_19_0.png" />
+</div>
+</div>
+<p>The Weyl chamber coordinates <span class="math notranslate nohighlight">\((c_1, c_2, c_3)\)</span> are closely associated with the <em>local invariants</em> <span class="math notranslate nohighlight">\((g_1, g_2, g_3)\)</span></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Local Invariants&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">gate</span><span class="p">)</span> <span class="ow">in</span> <span class="n">list_of_gates</span><span class="p">:</span>
+    <span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">g3</span> <span class="o">=</span> <span class="n">weylchamber</span><span class="o">.</span><span class="n">g1g2g3</span><span class="p">(</span><span class="n">gate</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%10s</span><span class="s2">: </span><span class="se">\t</span><span class="si">%5.2f</span><span class="s2"> </span><span class="si">%5.2f</span><span class="s2"> </span><span class="si">%5.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">g3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Local Invariants
+----------------------------------
+  Identity:      1.00  0.00  3.00
+      CNOT:      0.00  0.00  1.00
+    CPHASE:      0.00  0.00  1.00
+     BGATE:      0.00  0.00  0.00
+     iSWAP:      0.00  0.00 -1.00
+ sqrtISWAP:      0.25  0.00  1.00
+  sqrtSWAP:      0.00 -0.25  0.00
+     MGATE:      0.25 -0.00  1.00
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/goerz/Documents/Programming/weylchamber/.venv/py39/lib/python3.9/site-packages/numpy/linalg/linalg.py:2180: RuntimeWarning: divide by zero encountered in det
+  r = _umath_linalg.det(a, signature=signature)
+/Users/goerz/Documents/Programming/weylchamber/.venv/py39/lib/python3.9/site-packages/numpy/linalg/linalg.py:2180: RuntimeWarning: invalid value encountered in det
+  r = _umath_linalg.det(a, signature=signature)
+</pre></div></div>
+</div>
+<p>This shows that the MGATE and <span class="math notranslate nohighlight">\(\sqrt{\text{iSWAP}}\)</span> are actually locally equivalent, despite being different Weyl chamber coordinates (M and Q, respectively)</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="history.html" class="btn btn-neutral float-left" title="History" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="API/weylchamber.html" class="btn btn-neutral float-right" title="weylchamber package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Michael Goerz.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

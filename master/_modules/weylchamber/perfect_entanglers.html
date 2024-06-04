@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>weylchamber.perfect_entanglers &mdash; weylchamber c756cfb documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" href="../../_static/mycss.css" type="text/css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=1bd04038"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/docs-versions-menu.js?v=3d6a1aea"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            weylchamber
+          </a>
+              <div class="version">
+                0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">The weylchamber package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../API/weylchamber.html">API of the weylchamber package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">weylchamber</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>weylchamber.perfect_entanglers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for weylchamber.perfect_entanglers</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">qutip</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">sin</span>
+
+<span class="kn">from</span> <span class="nn">.coordinates</span> <span class="kn">import</span> <span class="n">_point_in_PE</span><span class="p">,</span> <span class="n">weyl_region</span><span class="p">,</span> <span class="n">c1c2c3</span><span class="p">,</span> <span class="n">from_magic</span>
+<span class="kn">from</span> <span class="nn">.gates</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Qmagic</span><span class="p">,</span>
+    <span class="n">bell_basis</span> <span class="k">as</span> <span class="n">get_bell_basis</span><span class="p">,</span>
+    <span class="n">gate</span> <span class="k">as</span> <span class="n">construct_gate</span><span class="p">,</span>
+    <span class="n">mapped_basis</span> <span class="k">as</span> <span class="n">apply_gate</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">._types</span> <span class="kn">import</span> <span class="n">CTuple</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;project_to_PE&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;F_PE&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;concurrence&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;make_PE_krotov_chi_constructor&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="c1">#: Dictionary of Weyl chamber region name to normal vectors for the</span>
+<span class="c1">#: surface that separates the region from the polyhedron of perfect</span>
+<span class="c1">#: entanglers (pointing outwards from the PE&#39;s). The three regions are:</span>
+<span class="c1">#:</span>
+<span class="c1">#: * &#39;W0&#39;: region from the origin point (O) to the PE polyhedron</span>
+<span class="c1">#: * &#39;W0*&#39;: region from the A2 point to the PE polyhedron</span>
+<span class="c1">#: * &#39;W1&#39;: region from the A2 point (SWAP gate) to the PE polyhedron</span>
+<span class="n">_normal</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;W0&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+    <span class="s1">&#39;W0*&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+    <span class="s1">&#39;W1&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+<span class="p">}</span>
+
+
+<span class="c1">#: Dictionary of anchor points for the normal vectors (i.e., an arbitrary</span>
+<span class="c1">#: point on the surface that separates the region specified by the key</span>
+<span class="c1">#: from the perfect entanglers polyhedron</span>
+<span class="n">_anchor</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;W0&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+    <span class="s1">&#39;W0*&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+    <span class="s1">&#39;W1&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="project_to_PE">
+<a class="viewcode-back" href="../../API/weylchamber.perfect_entanglers.html#weylchamber.perfect_entanglers.project_to_PE">[docs]</a>
+<span class="k">def</span> <span class="nf">project_to_PE</span><span class="p">(</span><span class="n">c1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c3</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">check_weyl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CTuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Project onto the boundary surface of the perfect entanglers</span>
+
+<span class="sd">    Return new tuple (c1&#39;, c2&#39;, c3&#39;) obtained by projecting the given input</span>
+<span class="sd">    point (c1, c2, c3) onto the closest boundary of the perfect entanglers</span>
+<span class="sd">    polyhedron. If the input point already is a perfect entangler, it will be</span>
+<span class="sd">    returned unchanged</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from weylchamber.visualize import WeylChamber</span>
+<span class="sd">        &gt;&gt;&gt; print(&quot;%.2f, %.2f, %.2f&quot; % tuple(project_to_PE(*WeylChamber.A3)))</span>
+<span class="sd">        0.50, 0.25, 0.25</span>
+<span class="sd">        &gt;&gt;&gt; print(&quot;%.3f, %.3f, %.3f&quot; % tuple(project_to_PE(0.5, 0.5, 0.25)))</span>
+<span class="sd">        0.500, 0.375, 0.125</span>
+<span class="sd">        &gt;&gt;&gt; print(&quot;%.3f, %.3f, %.3f&quot; % tuple(project_to_PE(0.25, 0, 0)))</span>
+<span class="sd">        0.375, 0.125, 0.000</span>
+<span class="sd">        &gt;&gt;&gt; print(&quot;%.3f, %.3f, %.3f&quot; % tuple(project_to_PE(0.75, 0, 0)))</span>
+<span class="sd">        0.625, 0.125, 0.000</span>
+<span class="sd">        &gt;&gt;&gt; print(&quot;%.3f, %.3f, %.3f&quot; % tuple(project_to_PE(0.3125, 0.0625, 0.01)))</span>
+<span class="sd">        0.375, 0.125, 0.010</span>
+<span class="sd">        &gt;&gt;&gt; print(&quot;%.1f, %.1f, %.1f&quot; % tuple(project_to_PE(0.5, 0, 0)))</span>
+<span class="sd">        0.5, 0.0, 0.0</span>
+<span class="sd">        &gt;&gt;&gt; print(&quot;%.1f, %.1f, %.1f&quot; % tuple(project_to_PE(0.5, 0.2, 0.2)))</span>
+<span class="sd">        0.5, 0.2, 0.2</span>
+<span class="sd">        &gt;&gt;&gt; try:</span>
+<span class="sd">        ...     project_to_PE(1.0, 0.5, 0)</span>
+<span class="sd">        ... except ValueError as e:</span>
+<span class="sd">        ...     print(e)</span>
+<span class="sd">        (1, 0.5, 0) is not in the Weyl chamber</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">_point_in_PE</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">region</span> <span class="o">=</span> <span class="n">weyl_region</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">check_weyl</span><span class="o">=</span><span class="n">check_weyl</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">))</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">_normal</span><span class="p">[</span><span class="n">region</span><span class="p">]</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">_anchor</span><span class="p">[</span><span class="n">region</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">p</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">inner</span><span class="p">((</span><span class="n">p</span> <span class="o">-</span> <span class="n">a</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span></div>
+
+
+
+<div class="viewcode-block" id="concurrence">
+<a class="viewcode-back" href="../../API/weylchamber.perfect_entanglers.html#weylchamber.perfect_entanglers.concurrence">[docs]</a>
+<span class="k">def</span> <span class="nf">concurrence</span><span class="p">(</span><span class="n">c1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c3</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the concurrence directly from the Weyl Chamber coordinates</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; import qutip</span>
+<span class="sd">        &gt;&gt;&gt; from weylchamber.coordinates import c1c2c3</span>
+<span class="sd">        &gt;&gt;&gt; &#39;%.1f&#39; % concurrence(*c1c2c3(qutip.core.gates.swap()))</span>
+<span class="sd">        &#39;0.0&#39;</span>
+<span class="sd">        &gt;&gt;&gt; &#39;%.1f&#39; % concurrence(*c1c2c3(qutip.core.gates.cnot()))</span>
+<span class="sd">        &#39;1.0&#39;</span>
+<span class="sd">        &gt;&gt;&gt; &#39;%.1f&#39; % concurrence(*c1c2c3(qutip.identity([2, 2])))</span>
+<span class="sd">        &#39;0.0&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">c1</span> <span class="o">+</span> <span class="n">c2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">c1</span> <span class="o">-</span> <span class="n">c2</span> <span class="o">&lt;=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="ow">and</span> <span class="p">((</span><span class="n">c2</span> <span class="o">+</span> <span class="n">c3</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">0.5</span><span class="p">):</span>
+        <span class="c1"># if we&#39;re inside the perfect-entangler polyhedron in the Weyl chamber</span>
+        <span class="c1"># the concurrence is 1 by definition. the &quot;regular&quot; formula gives wrong</span>
+        <span class="c1"># results in this case.</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">c1_c2_c3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">])</span>
+        <span class="n">c3_c1_c2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">c1_c2_c3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">c1_c2_c3</span> <span class="o">-</span> <span class="n">c3_c1_c2</span><span class="p">,</span> <span class="n">c1_c2_c3</span> <span class="o">+</span> <span class="n">c3_c1_c2</span><span class="p">))</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">m</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-15</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-15</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+
+
+<div class="viewcode-block" id="F_PE">
+<a class="viewcode-back" href="../../API/weylchamber.perfect_entanglers.html#weylchamber.perfect_entanglers.F_PE">[docs]</a>
+<span class="k">def</span> <span class="nf">F_PE</span><span class="p">(</span><span class="n">g1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g3</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evaluate the Perfect-Entangler Functional</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; import qutip</span>
+<span class="sd">        &gt;&gt;&gt; from weylchamber.local_invariants import g1g2g3</span>
+<span class="sd">        &gt;&gt;&gt; &quot;%.1f&quot; % F_PE(*g1g2g3(qutip.core.gates.cnot()))</span>
+<span class="sd">        &#39;0.0&#39;</span>
+<span class="sd">        &gt;&gt;&gt; &quot;%.1f&quot; % F_PE(*g1g2g3(qutip.identity([2, 2])))</span>
+<span class="sd">        &#39;2.0&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">g3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">g1</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">g2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">g1</span> <span class="o">+</span> <span class="mf">0.0</span></div>
+
+
+
+<div class="viewcode-block" id="make_PE_krotov_chi_constructor">
+<a class="viewcode-back" href="../../API/weylchamber.perfect_entanglers.html#weylchamber.perfect_entanglers.make_PE_krotov_chi_constructor">[docs]</a>
+<span class="k">def</span> <span class="nf">make_PE_krotov_chi_constructor</span><span class="p">(</span><span class="n">canonical_basis</span><span class="p">,</span> <span class="n">unitarity_weight</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return a constructor for the χ&#39;s in a PE optimization.</span>
+
+<span class="sd">    Return a `chi_constructor` that determines the boundary condition of the</span>
+<span class="sd">    backwards propagation in an optimization towards a perfect entangler in</span>
+<span class="sd">    Krotov&#39;s method, based on the foward-propagtion of the Bell states. In</span>
+<span class="sd">    detail, the function returns a callable function that calculates</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \ket{\chi_{i}}</span>
+<span class="sd">        =</span>
+<span class="sd">        \frac{\partial F_{PE}}{\partial \bra{\phi_i}}</span>
+<span class="sd">        \Bigg|_{\ket{\phi_{i}(T)}}</span>
+
+<span class="sd">    for all $i$ with $\ket{\phi_{0}(T)}, ..., \ket{\phi_{3}(T)}$ the forward</span>
+<span class="sd">    propagated Bell states at final time $T$, cf. Eq. (33b) in Ref. [1].</span>
+<span class="sd">    $F_{PE}$ is the perfect-entangler functional</span>
+<span class="sd">    :func:`~weylchamber.perfect_entanglers.F_PE`. For the details of the</span>
+<span class="sd">    derivative see Appendix G in Ref. [2].</span>
+
+<span class="sd">    References:</span>
+
+<span class="sd">    [1] `M. H. Goerz, et al., Phys. Rev. A 91, 062307 (2015)</span>
+<span class="sd">    &lt;https://doi.org/10.1103/PhysRevA.91.062307&gt;`_</span>
+
+<span class="sd">    [2] `M. H. Goerz, Optimizing Robust Quantum Gates in Open Quantum Systems.</span>
+<span class="sd">    PhD thesis, University of Kassel, 2015</span>
+<span class="sd">    &lt;https://michaelgoerz.net/research/diss_goerz.pdf&gt;`_</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        canonical_basis (list[qutip.Qobj]): A list of four basis states that</span>
+<span class="sd">            define the canonical basis $\ket{00}$, $\ket{01}$, $\ket{10}$, and</span>
+<span class="sd">            $\ket{11}$ of the logical subspace.</span>
+<span class="sd">        unitarity_weight (float): A weight in [0, 1] that determines how much</span>
+<span class="sd">            emphasis is placed on  maintaining population in the logical</span>
+<span class="sd">            subspace.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        callable: a function ``chi_constructor(fw_states_T, **kwargs)`` that</span>
+<span class="sd">        receives the result of a foward propagation of the Bell states</span>
+<span class="sd">        (obtained from `canonical_basis` via</span>
+<span class="sd">        :func:`weylchamber.gates.bell_basis`), and returns a list of statex</span>
+<span class="sd">        $\ket{\chi_{i}}$ that are the boundary condition for the backward</span>
+<span class="sd">        propagation in Krotov&#39;s method. Positional arguments beyond</span>
+<span class="sd">        `fw_states_T` are ignored.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">bell_basis</span> <span class="o">=</span> <span class="n">get_bell_basis</span><span class="p">(</span><span class="n">canonical_basis</span><span class="p">)</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">unitarity_weight</span>
+    <span class="k">if</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">w</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">chi_constructor</span><span class="p">(</span><span class="n">fw_states_T</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># *args is ignored, it exists so that the chi_constructor fits the</span>
+        <span class="c1"># krotov API directly</span>
+        <span class="n">UB</span> <span class="o">=</span> <span class="n">construct_gate</span><span class="p">(</span><span class="n">bell_basis</span><span class="p">,</span> <span class="n">fw_states_T</span><span class="p">)</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">Qmagic</span> <span class="o">*</span> <span class="n">_get_a_kl_PE</span><span class="p">(</span><span class="n">UB</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span>
+
+        <span class="n">chis</span> <span class="o">=</span> <span class="n">apply_gate</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">canonical_basis</span><span class="p">)</span>
+
+        <span class="c1"># unitarity corrections</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fw_states_T</span><span class="p">)</span>
+        <span class="n">chis_out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">bell_proj</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">fw_states_T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                <span class="n">bell_proj</span> <span class="o">+=</span> <span class="n">bell_basis</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">overlap</span><span class="p">(</span><span class="n">fw_states_T</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>            \
+                             <span class="o">*</span> <span class="n">bell_basis</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">chis_out</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mf">1.0</span><span class="o">-</span><span class="n">w</span><span class="p">)</span> <span class="o">*</span> <span class="n">chis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.25</span><span class="o">*</span><span class="n">w</span> <span class="o">*</span> <span class="n">bell_proj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">chis_out</span>
+
+    <span class="k">return</span> <span class="n">chi_constructor</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_get_a_kl_PE</span><span class="p">(</span><span class="n">UB</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the 4×4 `A_kl` coefficient matrix (:class:`qutip.Qobj`)</span>
+<span class="sd">    for the perfect-entanglers functional, for a given gate `UB` in the Bell</span>
+<span class="sd">    basis.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Compute auxiliary scalar quantities</span>
+    <span class="n">detU</span> <span class="o">=</span> <span class="n">_cmat4_det</span><span class="p">(</span><span class="n">UB</span><span class="p">)</span>
+    <span class="n">rcdetU1</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">detU</span>
+    <span class="n">mU</span> <span class="o">=</span> <span class="n">UB</span><span class="o">.</span><span class="n">trans</span><span class="p">()</span> <span class="o">*</span> <span class="n">UB</span>
+    <span class="n">tr_mU</span> <span class="o">=</span> <span class="n">mU</span><span class="o">.</span><span class="n">tr</span><span class="p">()</span>
+    <span class="n">tr_mU_sq</span> <span class="o">=</span> <span class="p">(</span><span class="n">mU</span><span class="o">*</span><span class="n">mU</span><span class="p">)</span><span class="o">.</span><span class="n">tr</span><span class="p">()</span>
+    <span class="n">g3</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="p">(</span><span class="n">tr_mU</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">tr_mU_sq</span><span class="p">)</span>
+    <span class="n">Re2Tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">tr_mU</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">16.0</span> <span class="c1"># This contains already the 1/16 factor</span>
+    <span class="n">Im2Tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">tr_mU</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">16.0</span> <span class="c1"># This contains already the 1/16 factor</span>
+    <span class="n">Tr2</span> <span class="o">=</span> <span class="n">tr_mU</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">16.0</span>            <span class="c1"># This contains already the 1/16 factor</span>
+
+    <span class="c1"># `alpha` and `beta` are the real and imaginary part of `UB`, respectively</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+    <span class="n">beta</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">UB</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">beta</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">UB</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+    <span class="n">beta</span>  <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+
+    <span class="c1"># The c1c2c3 function expects `UB` to be given in the canonical basis, thus</span>
+    <span class="c1"># we have to convert it from the Bell basis on input</span>
+    <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="n">c1c2c3</span><span class="p">(</span><span class="n">from_magic</span><span class="p">(</span><span class="n">UB</span><span class="p">))</span>
+
+    <span class="n">drcdetU1dAlpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="n">drcdetU1dBeta</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="n">dg3dAlpha</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="n">dg3dBeta</span>       <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="n">dRe2TrdAlpha</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+    <span class="n">dRe2TrdBeta</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+    <span class="n">dIm2TrdAlpha</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+    <span class="n">dIm2TrdBeta</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+    <span class="n">dTr2dAlpha</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="n">dTr2dBeta</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+
+    <span class="c1"># Compute auxiliary matrix quantities</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+
+            <span class="n">drcdetU1dAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">_dDetUdAlpha</span><span class="p">(</span><span class="n">UB</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="n">detU</span><span class="o">**</span><span class="mi">2</span>
+            <span class="n">drcdetU1dBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">=</span> <span class="o">-</span> <span class="n">_dDetUdBeta</span><span class="p">(</span><span class="n">UB</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>  <span class="o">/</span> <span class="n">detU</span><span class="o">**</span><span class="mi">2</span>
+
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                    <span class="n">dg3dAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">dg3dAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>                           \
+                                 <span class="o">+</span>       <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                 <span class="o">-</span>       <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                 <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                 <span class="o">-</span>       <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> \
+                                 <span class="o">+</span>       <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                 <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">dg3dBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">=</span> <span class="n">dg3dBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>                            \
+                                 <span class="o">+</span>       <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                 <span class="o">-</span>       <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                 <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                 <span class="o">-</span>       <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  \
+                                 <span class="o">+</span>       <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                 <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">dg3dAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">dg3dAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span>                  \
+                                 <span class="o">+</span>       <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                 <span class="o">-</span>       <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                 <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                 <span class="o">-</span>       <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  \
+                                 <span class="o">-</span>       <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                 <span class="o">-</span>       <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                 <span class="o">+</span>       <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  \
+                                 <span class="p">)</span>
+                    <span class="n">dg3dBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">=</span> <span class="n">dg3dBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span>                   \
+                                 <span class="o">-</span>       <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                 <span class="o">+</span>       <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                 <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                 <span class="o">+</span>       <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> \
+                                 <span class="o">+</span>       <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                 <span class="o">+</span>       <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                 <span class="o">-</span>       <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> \
+                                 <span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                    <span class="n">dTr2dAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">dTr2dAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>                         \
+                                <span class="o">+</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                <span class="o">-</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                <span class="o">-</span> <span class="mf">0.50</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">dTr2dBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">=</span> <span class="n">dTr2dBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>                          \
+                                <span class="o">+</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                <span class="o">-</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                <span class="o">-</span> <span class="mf">0.50</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">dTr2dAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">dTr2dAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span>                \
+                                <span class="o">+</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                <span class="o">-</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                <span class="o">+</span> <span class="mf">0.50</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                <span class="p">)</span>
+                    <span class="n">dTr2dBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">=</span> <span class="n">dTr2dBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span>                 \
+                                <span class="o">-</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  \
+                                <span class="o">+</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                <span class="o">-</span> <span class="mf">0.50</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>  <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                <span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                    <span class="n">dRe2TrdAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">dRe2TrdAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>          \
+                                  <span class="mf">0.25</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                <span class="o">-</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>   \
+                                <span class="p">)</span>
+                    <span class="n">dRe2TrdBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">=</span> <span class="n">dRe2TrdBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>           \
+                                   <span class="mf">0.25</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>   \
+                                 <span class="o">-</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                 <span class="p">)</span>
+                    <span class="n">dIm2TrdAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">dIm2TrdAlpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>          \
+                                    <span class="mf">0.50</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                    <span class="p">)</span>
+                    <span class="n">dIm2TrdBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>  <span class="o">=</span> <span class="n">dIm2TrdBeta</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>           \
+                                   <span class="mf">0.50</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> \
+                                   <span class="p">)</span>
+
+    <span class="c1"># Construct the a_kl coefficients with the previously computed quantities</span>
+    <span class="n">a_kl_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="n">a_kl_coeffs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span>                                                \
+            <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>                                                          \
+              <span class="o">-</span> <span class="n">drcdetU1dAlpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">g3</span> <span class="o">*</span> <span class="n">Re2Tr</span>                              \
+              <span class="o">-</span> <span class="n">rcdetU1</span> <span class="o">*</span> <span class="n">dg3dAlpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">Re2Tr</span>                              \
+              <span class="o">-</span> <span class="n">rcdetU1</span> <span class="o">*</span> <span class="n">g3</span> <span class="o">*</span> <span class="n">dRe2TrdAlpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span>                              \
+              <span class="o">-</span> <span class="n">drcdetU1dAlpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">g3</span> <span class="o">*</span> <span class="n">Im2Tr</span>                              \
+              <span class="o">-</span> <span class="n">rcdetU1</span> <span class="o">*</span> <span class="n">dg3dAlpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">Im2Tr</span>                              \
+              <span class="o">-</span> <span class="n">rcdetU1</span> <span class="o">*</span> <span class="n">g3</span> <span class="o">*</span> <span class="n">dIm2TrdAlpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span>                              \
+              <span class="o">+</span> <span class="n">drcdetU1dAlpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">Tr2</span>                                     \
+              <span class="o">+</span> <span class="n">rcdetU1</span> <span class="o">*</span> <span class="n">dTr2dAlpha</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">])</span>                                    \
+            <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span>                                                            \
+            <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>                                                          \
+              <span class="o">-</span> <span class="n">drcdetU1dBeta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">g3</span> <span class="o">*</span> <span class="n">Re2Tr</span>                               \
+              <span class="o">-</span> <span class="n">rcdetU1</span> <span class="o">*</span> <span class="n">dg3dBeta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">Re2Tr</span>                               \
+              <span class="o">-</span> <span class="n">rcdetU1</span> <span class="o">*</span> <span class="n">g3</span> <span class="o">*</span> <span class="n">dRe2TrdBeta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span>                               \
+              <span class="o">-</span> <span class="n">drcdetU1dBeta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">g3</span> <span class="o">*</span> <span class="n">Im2Tr</span>                               \
+              <span class="o">-</span> <span class="n">rcdetU1</span> <span class="o">*</span> <span class="n">dg3dBeta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">Im2Tr</span>                               \
+              <span class="o">-</span> <span class="n">rcdetU1</span> <span class="o">*</span> <span class="n">g3</span> <span class="o">*</span> <span class="n">dIm2TrdBeta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span>                               \
+              <span class="o">+</span> <span class="n">drcdetU1dBeta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">Tr2</span>                                      \
+              <span class="o">+</span> <span class="n">rcdetU1</span> <span class="o">*</span> <span class="n">dTr2dBeta</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">c2</span> <span class="o">+</span> <span class="n">c3</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">):</span>
+        <span class="c1"># UB is in the W1 region of the Weyl chamber (between the PE polyhedron</span>
+        <span class="c1"># and the SWAP gate at the A3 point). In this region, the PE-functional</span>
+        <span class="c1"># has the wrong sign (cf. Fig 6.1 in Goerz, PhD Thesis, Kassel).</span>
+        <span class="n">a_kl_coeffs</span> <span class="o">=</span> <span class="o">-</span><span class="n">a_kl_coeffs</span>
+        <span class="c1"># Without this corrections, gates would be pushed towards [SWAP]</span>
+
+    <span class="k">return</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">a_kl_coeffs</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+
+
+<span class="k">def</span> <span class="nf">_cmat4_det</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the complex determinant of a 4x4 matrix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        m (qutip.Qobj): A 4x4 quantum gate for a two-qubit system</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: The determinant $\det(m)$</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span>   <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>           \
+        <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>           \
+        <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>           \
+        <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>           \
+        <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>           \
+        <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>           \
+        <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>           \
+        <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>           \
+        <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>           \
+        <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>           \
+        <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>           \
+        <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+
+<span class="k">def</span> <span class="nf">_dDetUdAlpha</span><span class="p">(</span><span class="n">U</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \partial \det(U) / \partial \\alpha_{a,b} = \det(U&#39;_{a,b})</span>
+
+<span class="sd">    where $U&#39;$ is constructed from $U$ by replacing the row $a$ with the unit</span>
+<span class="sd">    vector $b$ and $\\alpha$ is the real part of $U$.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        U (qutip.Qobj): A 4x4 quantum gate for a two-qubit system</span>
+<span class="sd">        a (integer): An integer specifying the derivative</span>
+<span class="sd">        b (integer): An integer specifying the derivative</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: The derivative as specified by $a$ and $b$</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">U_prime</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="n">a</span><span class="p">:</span>
+                <span class="n">U_prime</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">U_prime</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+    <span class="n">U_prime</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">_cmat4_det</span><span class="p">(</span><span class="n">qutip</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">U_prime</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_dDetUdBeta</span><span class="p">(</span><span class="n">U</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \partial \det(U) / \partial \\beta_{a,b} = \det(U&#39;_{a,b})</span>
+
+<span class="sd">    where $U&#39;$ is constructed from $U$ by replacing the row $a$ with the unit</span>
+<span class="sd">    vector $b$ and $\\beta$ is the imaginary part of $U$.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        U (qutip.Qobj): A 4x4 quantum gate for a two-qubit system</span>
+<span class="sd">        a (integer): An integer specifying the derivative</span>
+<span class="sd">        b (integer): An integer specifying the derivative</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: The derivative as specified by $a$ and $b$</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">_dDetUdAlpha</span><span class="p">(</span><span class="n">U</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Michael Goerz.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
