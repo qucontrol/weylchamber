@@ -42,7 +42,7 @@ dev_requirements = [
     'sphinx',
     'sphinx-autobuild',
     'sphinx-autodoc-typehints',
-    'sphinx_rtd_theme',
+    'sphinx_rtd_theme==2.0.0',
     'docs-versions-menu',
     'twine',
     'watermark',
