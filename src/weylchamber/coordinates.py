@@ -32,7 +32,7 @@ def c1c2c3(U: Gate, ndigits=DEFAULT_WEYL_PRECISSION) -> CTuple:
     Algorithm from Childs et al., PRA 68, 052311 (2003).
 
     Example:
-        >>> print("%.2f %.2f %.2f" % c1c2c3(qutip.qip.operations.cnot()))
+        >>> print("%.2f %.2f %.2f" % c1c2c3(qutip.core.gates.cnot()))
         0.50 0.00 0.00
     """
     U = qutip.Qobj(U, dims=[[2, 2], [2, 2]])
@@ -65,7 +65,7 @@ def point_in_weyl_chamber(
 
     Examples:
 
-        >>> BGATE = qutip.qip.operations.berkeley()
+        >>> BGATE = qutip.core.gates.berkeley()
         >>> point_in_weyl_chamber(*c1c2c3(BGATE))
         True
         >>> point_in_weyl_chamber(*c1c2c3(qutip.identity([2, 2])))
@@ -169,7 +169,7 @@ def _point_in_PE(c1, c2, c3, check_weyl=False):
     """Return True if the coordinates c1, c2, c3 are inside the
     perfect-entangler polyhedron
 
-    >>> BGATE = qutip.qip.operations.berkeley()
+    >>> BGATE = qutip.core.gates.berkeley()
     >>> _point_in_PE(*c1c2c3(BGATE))
     True
     >>> _point_in_PE(*c1c2c3(qutip.identity(4)))

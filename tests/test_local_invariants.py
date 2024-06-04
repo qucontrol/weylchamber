@@ -8,7 +8,7 @@ def test_closest_LI_trivial_powell():
     """Test that a gate exactly at (c1, c2, c3) is in fact closest to itself"""
     warnings.filterwarnings(
         'ignore', message='the matrix subclass is not the recommended way')
-    CNOT = qutip.qip.operations.cnot()
+    CNOT = qutip.core.gates.cnot()
     U = closest_LI(CNOT, *c1c2c3(CNOT), method='Powell')
     assert isinstance(U, qutip.Qobj)
     assert (CNOT - U).norm() < 1e-8
@@ -18,7 +18,7 @@ def test_closest_LI_trivial_leastsq():
     """Test that a gate exactly at (c1, c2, c3) is in fact closest to itself"""
     warnings.filterwarnings(
         'ignore', message='the matrix subclass is not the recommended way')
-    CNOT = qutip.qip.operations.cnot()
+    CNOT = qutip.core.gates.cnot()
     U = closest_LI(CNOT, *c1c2c3(CNOT), method='leastsq')
     assert isinstance(U, qutip.Qobj)
     assert (CNOT - U).norm() < 1e-8

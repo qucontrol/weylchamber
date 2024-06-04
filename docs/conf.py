@@ -73,12 +73,12 @@ if os.getenv('SPELLCHECK'):
     spelling_ignore_pypi_package_names = True
 
 intersphinx_mapping = {
-    'python': ('https://docs.python.org/3.6', None),
+    'python': ('https://docs.python.org/3.12', None),
     'sympy': ('https://docs.sympy.org/latest/', None),
     'scipy': ('https://docs.scipy.org/doc/scipy/reference/', None),
     'numpy': ('https://docs.scipy.org/doc/numpy/', None),
     'matplotlib': ('https://matplotlib.org/', None),
-    'qutip': ('http://qutip.org/docs/latest/', None),
+    'qutip': ('https://qutip.readthedocs.io/en/qutip-5.0.x/', None),
 }
 
 # Add any paths that contain templates here, relative to this directory.
