@@ -7,8 +7,7 @@ import qutip
 
 from .prec import DEFAULT_WEYL_PRECISSION
 from ._types import Gate, GTuple
-from .coordinates import to_magic, c1c2c3, _SQ_unitary
-from .cartan_decomposition import canonical_gate
+from .coordinates import to_magic, c1c2c3, _SQ_unitary, canonical_gate
 
 __all__ = [
     'g1g2g3',

@@ -2,7 +2,6 @@
 
 __version__ = '0.5.0+dev'
 
-from .cartan_decomposition import *
 from .coordinates import *
 from .local_invariants import *
 from .perfect_entanglers import *
@@ -12,7 +11,6 @@ from . import prec
 
 
 __all__ = [
-    'cartan_decomposition',
     'c1c2c3',
     'canonical_gate',
     'from_magic',
