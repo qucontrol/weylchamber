@@ -2,18 +2,18 @@
 The weylchamber package
 =======================
 
-.. image:: https://img.shields.io/badge/github-qucontrol/weylchamber-blue.svg
-   :alt: Source code on Github
-   :target: https://github.com/qucontrol/weylchamber
-.. image:: https://img.shields.io/pypi/v/weylchamber.svg
-   :alt: weylchamber on the Python Package Index
-   :target: https://pypi.python.org/pypi/weylchamber
-.. image:: https://readthedocs.org/projects/weylchamber/badge/?version=latest
-   :alt: Documentation Status
-   :target: https://weylchamber.readthedocs.io/en/latest/?badge=latest
-.. image:: https://img.shields.io/badge/License-BSD-green.svg
-   :alt: BSD License
-   :target: https://opensource.org/licenses/BSD-3-Clause
+.. raw:: html
+
+    <a href="https://github.com/qucontrol/weylchamber">
+        <img src="https://img.shields.io/badge/github-qucontrol/weylchamber-blue.svg" alt="Source code on Github" />
+    </a><a href="https://pypi.python.org/pypi/weylchamber">
+        <img src="https://img.shields.io/pypi/v/weylchamber.svg" alt="weylchamber on the Python Package Index" />
+    </a><a href="https://weylchamber.readthedocs.io/en/latest/?badge=latest">
+        <img src="https://readthedocs.org/projects/weylchamber/badge/?version=latest" alt="Documentation Status" />
+    </a><a href="https://opensource.org/licenses/BSD-3-Clause">
+        <img src="https://img.shields.io/badge/License-BSD-green.svg" alt="BSD License" />
+    </a>
+
 
 Python package for analyzing two-qubit gates in the Weyl chamber
 
