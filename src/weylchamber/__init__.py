@@ -1,6 +1,6 @@
 """Top-level package for weylchamber."""
 
-__version__ = '0.6.0'
+__version__ = '0.6.0+dev'
 
 from .coordinates import *
 from .local_invariants import *
